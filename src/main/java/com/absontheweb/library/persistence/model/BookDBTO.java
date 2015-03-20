@@ -32,7 +32,7 @@ public class BookDBTO {
 	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(
-		name="authored_by", 
+		name="book_author", 
 		joinColumns = {@JoinColumn(name="book_id")}, 
 		inverseJoinColumns = {@JoinColumn(name="author_id")}
 	)

@@ -64,19 +64,19 @@ class BookBuilderBase<GeneratorT extends BookBuilderBase<GeneratorT>> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withAuthors(List<String> aValue) {
+	public GeneratorT withAuthors(List<Author> aValue) {
 		instance.setAuthors(aValue);
 
 		return (GeneratorT) this;
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withAddedAuthor(String aValue) {
+	public GeneratorT withAddedAuthor(Author aValue) {
 		if (instance.getAuthors() == null) {
-			instance.setAuthors(new ArrayList<String>());
+			instance.setAuthors(new ArrayList<Author>());
 		}
 
-		((ArrayList<String>) instance.getAuthors()).add(aValue);
+		((ArrayList<Author>) instance.getAuthors()).add(aValue);
 
 		return (GeneratorT) this;
 	}

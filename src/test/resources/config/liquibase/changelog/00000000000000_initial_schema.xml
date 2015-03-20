@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <property name="now" value="now()" dbms="mysql,h2"/>
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+
+    <changeSet id="00000000000000" author="luca" dbms="postgresql">
+        <createSequence sequenceName="hibernate_sequence" startValue="1000" incrementBy="1"/>
+    </changeSet>
+
+    <changeSet id="00000000000001" author="luca">
+    	
+        <createTable tableName="user">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="login" type="varchar(50)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="password" type="varchar(100)"/>
+            <column name="first_name" type="varchar(50)"/>
+            <column name="last_name" type="varchar(50)"/>
+            <column name="email" type="varchar(100)">
+                <constraints unique="true"/>
+            </column>
+            <column name="activated" type="boolean" valueBoolean="false">
+                <constraints nullable="false" />
+            </column>
+            <column name="lang_key" type="varchar(5)"/>
+            <column name="activation_key" type="varchar(20)"/>
+        </createTable>
+
+        <createIndex indexName="idx_user_login"
+            tableName="user"
+            unique="true">
+            <column name="login" type="varchar(50)"/>
+        </createIndex>
+
+        <createIndex indexName="idx_user_email"
+            tableName="user" unique="true">
+            <column name="email" type="varchar(100)"/>
+        </createIndex>
+
+        <createTable tableName="authority">
+            <column name="name" type="varchar(50)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="user_authority">
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="authority_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="user_id, authority_name" tableName="user_authority"/>
+
+
+        <addForeignKeyConstraint baseColumnNames="authority_name"
+                                 baseTableName="user_authority"
+                                 constraintName="fk_authority_name"
+                                 referencedColumnNames="name"
+                                 referencedTableName="authority"/>
+
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="user_authority"
+                                 constraintName="fk_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user"/>
+
+
+        <loadData encoding="UTF-8" file="config/liquibase/users.csv"
+                  separator=";" tableName="user">
+            <column name="activated" type="boolean"/>
+        </loadData>
+        
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/authorities.csv"
+                  separator=";"
+                  tableName="authority"/>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/users_authorities.csv"
+                  separator=";"
+                  tableName="user_authority"/>
+                  
+                  
+		<createTable tableName="book">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="varchar(150)">
+                <constraints nullable="false" />
+            </column>
+            <column name="isbn" type="varchar(30)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="description" type="varchar(3000)"/>
+            <column name="price" type="double"/>
+            <column name="year" type="integer"/>
+            <column name="currency" type="varchar(5)" />
+        </createTable>
+        
+        <createIndex indexName="idx_book_title" tableName="book">
+            <column name="title" type="varchar(150)"/>
+        </createIndex>
+        
+        <createIndex indexName="idx_book_isbn" tableName="book">
+            <column name="isbn" type="varchar(30)"/>
+        </createIndex>
+        
+        <createTable tableName="author">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="surname" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="birth_place" type="varchar(200)"/>
+            <column name="born" type="date"/>
+            <column name="died" type="date"/>
+        </createTable>
+        
+        <createTable tableName="book_author">
+            <column name="book_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="author_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="book_id, author_id" tableName="book_author"/>
+
+
+        <addForeignKeyConstraint baseColumnNames="author_id"
+                                 baseTableName="book_author"
+                                 constraintName="fk_author_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="author"/>
+
+        <addForeignKeyConstraint baseColumnNames="book_id"
+                                 baseTableName="book_author"
+                                 constraintName="fk_book_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="book"/>
+                                 
+		<loadData encoding="UTF-8"
+                  file="config/liquibase/book.csv"
+                  separator=";"
+                  tableName="book"/>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/author.csv"
+                  separator=";"
+                  tableName="author"/>
+                  
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/book_author.csv"
+                  separator=";"
+                  tableName="book_author"/>
+        
+
+ 	</changeSet>
+    
+</databaseChangeLog>

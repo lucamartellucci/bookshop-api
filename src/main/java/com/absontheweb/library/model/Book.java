@@ -8,7 +8,7 @@ public class Book {
 	private String title;
 	private String isbn;
 	private String description;
-	private List<String> authors;
+	private List<Author> authors;
 	private Double price;
 	private Integer year;
 	private Currency currency;
@@ -37,10 +37,10 @@ public class Book {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public List<String> getAuthors() {
+	public List<Author> getAuthors() {
 		return authors;
 	}
-	public void setAuthors(List<String> authors) {
+	public void setAuthors(List<Author> authors) {
 		this.authors = authors;
 	}
 	public Double getPrice() {
@@ -66,7 +66,7 @@ public class Book {
 		this.description = value;
 		return this;
 	}
-	public Book authors(List<String> value) {
+	public Book authors(List<Author> value) {
 		this.authors = value;
 		return this;
 	}

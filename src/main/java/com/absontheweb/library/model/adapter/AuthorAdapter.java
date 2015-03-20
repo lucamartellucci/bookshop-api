@@ -1,5 +1,8 @@
 package com.absontheweb.library.model.adapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -32,5 +35,20 @@ public class AuthorAdapter {
 	
 	public Book toDBTO(Book book) {
 		return null;
+	}
+
+	public List<Author> toAuthors(List<AuthorDBTO> authors) {
+		return toAuthors(authors,false);
+	}
+	
+	public List<Author> toAuthors(List<AuthorDBTO> authorDBTOs, boolean adaptBooks) {
+		if (authorDBTOs == null) {
+			return null;
+		}
+		List<Author> authors = new ArrayList<>();
+		for (AuthorDBTO authorDBTO : authorDBTOs) {
+			authors.add(toAuthor(authorDBTO, adaptBooks));
+		}
+		return authors;
 	}
 }
