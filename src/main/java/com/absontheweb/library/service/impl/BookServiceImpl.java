@@ -27,23 +27,34 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public Book getBookById(Long id) throws BookServiceException {
 		try {
+			logger.info("Loading book with id {}", id);
 			return bookAdapter.toBook(bookRepository.getOne(id));
 		} catch (Exception e) {
-			logger.error("Unable to find the Book with id {}", id);
+			logger.error("Unable to find the Book with id {}", id, e);
 			throw new BookServiceException(String.format("Unable to find the Book with id %d",id), e);
 		}
 	}
 
 	@Override
 	public Book getBookByTitle(String title) throws BookServiceException {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			logger.info("Loading book with title {}", title);
+			return bookAdapter.toBook(bookRepository.findByTitle(title));
+		} catch (Exception e) {
+			logger.error("Unable to find the Book with title {}", title, e);
+			throw new BookServiceException(String.format("Unable to find the Book with title %s",title), e);
+		}
 	}
 
 	@Override
 	public List<Book> getAllBooks() throws BookServiceException {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			logger.info("Load all books");
+			return bookAdapter.toBooks(bookRepository.findAll(), true);
+		} catch (Exception e) {
+			logger.error("Unable to load all books", e);
+			throw new BookServiceException("Unable to load all books", e);
+		}
 	}
 
 }
