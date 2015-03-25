@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.absontheweb.library.model.Author;
-import com.absontheweb.library.model.Book;
 import com.absontheweb.library.persistence.model.AuthorDBTO;
 
 @Component
@@ -33,13 +32,10 @@ public class AuthorAdapter {
 		return author;
 	}
 	
-	public Book toDBTO(Book book) {
-		return null;
-	}
-
 	public List<Author> toAuthors(List<AuthorDBTO> authors) {
 		return toAuthors(authors,false);
 	}
+	
 	
 	public List<Author> toAuthors(List<AuthorDBTO> authorDBTOs, boolean adaptBooks) {
 		if (authorDBTOs == null) {
@@ -50,5 +46,32 @@ public class AuthorAdapter {
 			authors.add(toAuthor(authorDBTO, adaptBooks));
 		}
 		return authors;
+	}
+	
+	public List<AuthorDBTO> toDBTO(List<Author> authors) {
+		return toDBTO(authors, false);
+	}
+
+	public List<AuthorDBTO> toDBTO(List<Author> authors, boolean adaptBooks) {
+		if (authors == null) {
+			return null;
+		}
+		List<AuthorDBTO> authorDBTOs = new ArrayList<>();
+		for (Author author : authors) {
+			authorDBTOs.add(toDBTO(author, adaptBooks));
+		}
+		return authorDBTOs;
+	}
+
+	private AuthorDBTO toDBTO(Author author, boolean adaptBooks) {
+		if (author == null) {
+			return null;
+		}
+		AuthorDBTO authorDBTO = new AuthorDBTO();
+		BeanUtils.copyProperties(author, authorDBTO, "books");
+		if (adaptBooks) {
+			authorDBTO.setBooks(bookAdapter.toDBTO(author.getBooks(), adaptBooks));
+		}
+		return authorDBTO;
 	}
 }

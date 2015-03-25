@@ -13,6 +13,11 @@ import com.absontheweb.library.persistence.model.BookDBTO;
 @Component
 public class BookAdapter {
 	
+	public static final boolean ADAPT_AUTHORS = true;
+	public static final boolean DO_NOT_ADAPT_AUTHORS = false;
+	public static final boolean ADAPT_BOOKS = true;
+	public static final boolean DO_NOT_ADAPT_BOOKS = false;
+	
 	@Autowired
 	private AuthorAdapter authorAdapter;
 	
@@ -39,12 +44,31 @@ public class BookAdapter {
 		Book book = new Book();
 		BeanUtils.copyProperties(bookDBTO, book, "authors");
 		if (adaptAuthors) {
-			book.authors(authorAdapter.toAuthors(bookDBTO.getAuthors(), false));
+			book.authors(authorAdapter.toAuthors(bookDBTO.getAuthors()));
 		}
 		return book;
 	}
 	
-	public Book toDBTO(Book book) {
-		return null;
+	public List<BookDBTO> toDBTO(List<Book> books, boolean adaptAuthors) {
+		if (books == null) {
+			return null;
+		}
+		List<BookDBTO> bookDBTOs = new ArrayList<>();
+		for (Book book : books) {
+			bookDBTOs.add(toDBTO(book, adaptAuthors));
+		}
+		return bookDBTOs;
+	} 
+	
+	public BookDBTO toDBTO(Book book, boolean adaptAuthors) {
+		if (book == null) {
+			return null;
+		}
+		BookDBTO bookDBTO = new BookDBTO();
+		BeanUtils.copyProperties(book, bookDBTO, "authors");
+		if (adaptAuthors) {
+			bookDBTO.setAuthors(authorAdapter.toDBTO(book.getAuthors()));
+		}
+		return bookDBTO;
 	}
 }

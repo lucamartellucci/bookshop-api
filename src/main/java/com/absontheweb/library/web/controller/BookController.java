@@ -2,9 +2,13 @@ package com.absontheweb.library.web.controller;
 
 import java.util.List;
 
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +34,36 @@ public class BookController {
 			return response;
 		} catch (Exception e) {
 			throw new InternalServerErrorException("Unable to load all books", e);
+		}
+	}
+	
+	@RequestMapping(value = "/books/{id}", 
+			method = RequestMethod.GET, 
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Book> getBook(@PathParam("id") Long id) throws InternalServerErrorException {
+		try {
+			ResponseEntity<Book> response = null;
+			Book book = bookService.getBookById(id);
+			if (book != null) {
+				response = ResponseEntity.ok(book);
+			} else {
+				response = new ResponseEntity<Book>(HttpStatus.NOT_FOUND);
+			}
+			return response;
+		} catch (Exception e) {
+			throw new InternalServerErrorException(String.format("Unable retrieve book with id [%d]", id), e);
+		}
+	}
+	
+	@RequestMapping(value = "/books", 
+			method = RequestMethod.POST, 
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Book> createBook(@RequestBody Book book) throws InternalServerErrorException {
+		try {
+			Book savedBook = bookService.createBook(book);
+			return ResponseEntity.created(null).body(savedBook);
+		} catch (Exception e) {
+			throw new InternalServerErrorException(String.format("Unable create book with title [%s]", book.getTitle()), e);
 		}
 	}
 

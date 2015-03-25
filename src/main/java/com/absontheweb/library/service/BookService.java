@@ -13,4 +13,6 @@ public interface BookService {
 	
 	public List<Book> getAllBooks() throws BookServiceException;
 	
+	public Book createBook(final Book book) throws BookServiceException;
+	
 }

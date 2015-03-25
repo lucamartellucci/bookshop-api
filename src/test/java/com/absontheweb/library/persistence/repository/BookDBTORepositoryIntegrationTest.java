@@ -3,8 +3,10 @@ package com.absontheweb.library.persistence.repository;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
@@ -30,6 +32,9 @@ public class BookDBTORepositoryIntegrationTest extends AbstractTransactionalJUni
     @Autowired
     private BookDBTORepository repo;
     
+    @Autowired
+    private AuthorDBTORepository repoAuthor;
+    
     @Test
     public final void testFindOne() throws Exception {
     	BookDBTO bookDBTO = repo.findOne(1L);
@@ -48,6 +53,12 @@ public class BookDBTORepositoryIntegrationTest extends AbstractTransactionalJUni
     }
     
     @Test
+    public final void testFindOne_notExisting() throws Exception {
+    	BookDBTO bookDBTO = repo.findOne(1000L);
+    	assertThat(bookDBTO,is(nullValue()));
+    }
+    
+    @Test
     public final void testFindByTitle() throws Exception {
     	BookDBTO bookDBTO = repo.findByTitle("Gomorra");
     	assertThat(bookDBTO,is(notNullValue()));
@@ -62,6 +73,31 @@ public class BookDBTORepositoryIntegrationTest extends AbstractTransactionalJUni
 		AuthorDBTO authorDBTO = authors.get(0);
 		assertThat(authorDBTO.getName(), is("Roberto"));
 		assertThat(authorDBTO.getSurname(), is("Saviano"));
+    }
+    
+    @Test
+    public final void testCreateBook() throws Exception {
+    	AuthorDBTO authorDBTO = repoAuthor.findOne(1L);
+    	
+    	BookDBTO bookDBTO = new BookDBTO();
+    	bookDBTO.setTitle("title01");
+    	bookDBTO.setDescription("desc01");
+    	bookDBTO.setCurrency(Currency.EUR);
+    	bookDBTO.setIsbn("11111111");
+    	bookDBTO.setPrice(11.0);
+    	bookDBTO.setYear(2011);
+    	bookDBTO.setAuthors(Arrays.asList(authorDBTO));
+    	
+    	BookDBTO savedBookDBTO = repo.save(bookDBTO);
+    	
+    	assertThat(savedBookDBTO,is(notNullValue()));
+    	assertThat(savedBookDBTO.getTitle(), is(equalTo("title01")));
+    	assertThat(savedBookDBTO.getDescription(), is(equalTo("desc01")));
+    	assertThat(savedBookDBTO.getCurrency(), is(equalTo(Currency.EUR)));
+    	assertThat(savedBookDBTO.getPrice(), is(equalTo(11.00)));
+    	assertThat(savedBookDBTO.getYear(), is(equalTo(2011)));
+    	assertThat(savedBookDBTO.getIsbn(), is(equalTo("11111111")));
+		assertThat(bookDBTO.getAuthors().size(), is(1));
     }
 	
 }

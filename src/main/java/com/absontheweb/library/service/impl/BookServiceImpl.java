@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 
 import com.absontheweb.library.model.Book;
 import com.absontheweb.library.model.adapter.BookAdapter;
+import com.absontheweb.library.persistence.model.BookDBTO;
 import com.absontheweb.library.persistence.repository.BookDBTORepository;
 import com.absontheweb.library.service.BookService;
 import com.absontheweb.library.service.exception.BookServiceException;
+import static com.absontheweb.library.model.adapter.BookAdapter.ADAPT_AUTHORS;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -50,10 +52,24 @@ public class BookServiceImpl implements BookService {
 	public List<Book> getAllBooks() throws BookServiceException {
 		try {
 			logger.info("Load all books");
-			return bookAdapter.toBooks(bookRepository.findAll(), true);
+			return bookAdapter.toBooks(bookRepository.findAll(), ADAPT_AUTHORS);
 		} catch (Exception e) {
 			logger.error("Unable to load all books", e);
 			throw new BookServiceException("Unable to load all books", e);
+		}
+	}
+
+	@Override
+	public Book createBook(Book book) throws BookServiceException {
+		try {
+			logger.info("Create new book with title [{}]", book.getTitle());
+			logger.trace("Create book {}", book);
+			
+			BookDBTO bookDBTO = bookRepository.save(bookAdapter.toDBTO(book, ADAPT_AUTHORS));
+			return bookAdapter.toBook(bookDBTO, ADAPT_AUTHORS);
+		} catch (Exception e) {
+			logger.error("Unable to create the book with title [{}]", book.getTitle(), e);
+			throw new BookServiceException(String.format("Unable to create the book with title [{%s}]", book.getTitle()), e);
 		}
 	}
 

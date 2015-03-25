@@ -35,6 +35,7 @@ import com.absontheweb.library.model.Book;
 import com.absontheweb.library.model.BookBuilder;
 import com.absontheweb.library.model.Currency;
 import com.absontheweb.library.service.BookService;
+import com.absontheweb.library.service.exception.BookServiceException;
 
 @RunWith ( SpringJUnit4ClassRunner.class )
 @ContextConfiguration ( classes = { ControllerTestConfig.class } )
@@ -59,7 +60,7 @@ public class BookControllerTest {
     }
 
 	@Test
-	public void testGetAllBooks() throws Exception {
+	public void testGetAllBooks_OK() throws Exception {
 		
 		// prepare objects returned by the bookservice
 		List<Author> authors = Arrays.asList(buildAuthor(1L, new SimpleDateFormat("dd/MM/yyyy").parse("25/09/1978"), null));
@@ -90,6 +91,26 @@ public class BookControllerTest {
         verify(bookService).getAllBooks();
 	}
 	
+	@Test
+	public void testGetAllBooks_InternalServerError() throws Exception {
+		
+		// program bookService mock to throw an exception
+		when(bookService.getAllBooks()).thenThrow(new BookServiceException());
+    	
+        this.mockMvc.perform( get( "/api/books" ).accept( MediaType.parseMediaType( "application/json;charset=UTF-8" ) ) )
+	        .andExpect( status().isInternalServerError() )
+	        .andExpect( content().contentType( "application/json;charset=UTF-8" ) )
+	        .andDo( print() )
+	        .andExpect( jsonPath("$.code").value("GENERIC_ERROR")) ;
+
+        verify(bookService).getAllBooks();
+	}
+	
+	@Test
+	public void testGetBook() throws Exception {
+		throw new RuntimeException("not yet implemented");
+	}
+	
 	
 	/*
 	 * UTILITY METHODS
@@ -118,5 +139,6 @@ public class BookControllerTest {
 				.build();
 		return book;
 	}
+
 
 }
