@@ -27,7 +27,7 @@ public class AuthorDBTO {
 	private String surname;
 	
 	@Column(name="birth_place", nullable=false, length=50)
-	private String birthPlace;
+	private String birthplace;
 	
 	@Column(name="born", nullable=false)
 	private Date born;
@@ -62,12 +62,12 @@ public class AuthorDBTO {
 		this.surname = surname;
 	}
 
-	public String getBirthPlace() {
-		return birthPlace;
+	public String getBirthplace() {
+		return birthplace;
 	}
 
-	public void setBirthPlace(String birthPlace) {
-		this.birthPlace = birthPlace;
+	public void setBirthplace(String birthPlace) {
+		this.birthplace = birthPlace;
 	}
 
 	public Date getBorn() {
@@ -98,7 +98,7 @@ public class AuthorDBTO {
 		StringBuilder builder = new StringBuilder();
 		builder.append("AuthorDBTO [id=").append(id).append(", name=")
 				.append(name).append(", surname=").append(surname)
-				.append(", birthPlace=").append(birthPlace).append(", born=")
+				.append(", birthplace=").append(birthplace).append(", born=")
 				.append(born).append(", died=").append(died);
 		return builder.toString();
 	}

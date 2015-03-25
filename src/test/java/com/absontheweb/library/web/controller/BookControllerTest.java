@@ -108,9 +108,49 @@ public class BookControllerTest {
 	
 	@Test
 	public void testGetBook() throws Exception {
-		throw new RuntimeException("not yet implemented");
+		// prepare objects returned by the bookservice
+		List<Author> authors = Arrays.asList(buildAuthor(1L, new SimpleDateFormat("dd/MM/yyyy").parse("25/09/1978"), null));
+		Long bookId = 2L;
+		Book book = buildBook(bookId, Currency.EUR, 10.0, authors);
+		
+		// program bookService mock to return the book with id bookId
+		when(bookService.getBookById(bookId)).thenReturn(book);
+    	
+        this.mockMvc.perform( get( "/api/books/" + bookId ).accept( MediaType.parseMediaType( "application/json;charset=UTF-8" ) ) )
+	        .andExpect( status().isOk() )
+	        .andExpect( content().contentType( "application/json;charset=UTF-8" ) )
+	        .andDo( print() )
+	        .andExpect( jsonPath( "$.id" ).value( book.getId().intValue() ) )
+	        .andExpect( jsonPath( "$.title" ).value( book.getTitle() ) )
+	        .andExpect( jsonPath( "$.description" ).value( book.getDescription() ) )
+	        .andExpect( jsonPath( "$.currency" ).value( book.getCurrency().toString() ) )
+	        .andExpect( jsonPath( "$.isbn" ).value( book.getIsbn() ) )
+	        .andExpect( jsonPath( "$.price" ).value( book.getPrice() ) )
+	        .andExpect( jsonPath( "$.authors", hasSize(1) ))
+	        .andExpect( jsonPath( "$.authors[0].name" ).value( book.getAuthors().get(0).getName() ))
+	        .andExpect( jsonPath( "$.authors[0].surname" ).value( book.getAuthors().get(0).getSurname() ))
+	        .andExpect( jsonPath( "$.authors[0].born" ).value( book.getAuthors().get(0).getBorn().getTime() ))
+	        .andExpect( jsonPath( "$.authors[0].birthplace" ).value( book.getAuthors().get(0).getBirthplace() ));
+	        
+        verify(bookService).getBookById(bookId);
 	}
 	
+	
+	@Test
+	public void testGetBook_notExisting() throws Exception {
+		Long bookId = 2L;
+		
+		// program bookService mock to return null
+		when(bookService.getBookById(bookId)).thenReturn(null);
+    	
+        this.mockMvc.perform( get( "/api/books/" + bookId ).accept( MediaType.parseMediaType( "application/json;charset=UTF-8" ) ) )
+	    	.andDo( print() )    
+	    	.andExpect( status().isNotFound() );
+//        	??? expected or not?
+//	        .andExpect( content().contentType( "application/json;charset=UTF-8" ) );
+	        
+        verify(bookService).getBookById(bookId);
+	}
 	
 	/*
 	 * UTILITY METHODS
