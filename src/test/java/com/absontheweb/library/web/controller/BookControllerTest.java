@@ -5,11 +5,13 @@ import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -22,6 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -63,7 +66,7 @@ public class BookControllerTest {
 	public void testGetAllBooks_OK() throws Exception {
 		
 		// prepare objects returned by the bookservice
-		List<Author> authors = Arrays.asList(buildAuthor(1L, new SimpleDateFormat("dd/MM/yyyy").parse("25/09/1978"), null));
+		List<Author> authors = Arrays.asList(buildAuthor(1L, toDate("25/09/1978"), null));
 		Book book1 = buildBook(1L, Currency.EUR, 10.0, authors);
 		Book book2 = buildBook(2L, Currency.USD, 12.0, authors);
 		List<Book> books = Arrays.asList(book1, book2);
@@ -90,6 +93,8 @@ public class BookControllerTest {
 	        
         verify(bookService).getAllBooks();
 	}
+
+	
 	
 	@Test
 	public void testGetAllBooks_InternalServerError() throws Exception {
@@ -109,7 +114,7 @@ public class BookControllerTest {
 	@Test
 	public void testGetBook() throws Exception {
 		// prepare objects returned by the bookservice
-		List<Author> authors = Arrays.asList(buildAuthor(1L, new SimpleDateFormat("dd/MM/yyyy").parse("25/09/1978"), null));
+		List<Author> authors = Arrays.asList(buildAuthor(1L, toDate("25/09/1978"), null));
 		Long bookId = 2L;
 		Book book = buildBook(bookId, Currency.EUR, 10.0, authors);
 		
@@ -152,6 +157,27 @@ public class BookControllerTest {
         verify(bookService).getBookById(bookId);
 	}
 	
+	@Test
+	public void testCreateBook() throws Exception {
+		
+		Book book = buildBook(3L, null, 20.50, Arrays.asList(buildAuthor(1L, toDate("25/09/1978"), null)));
+		book.setId(null);
+		Book savedBook = buildBook(3L, Currency.EUR, 20.50, Arrays.asList(buildAuthor(1L, toDate("25/09/1978"), null)));
+		when(bookService.createBook(book)).thenReturn(savedBook);
+		
+		this.mockMvc.perform( post( "/api/books" ).accept( MediaType.parseMediaType( "application/json;charset=UTF-8" ) )
+        		.content(Jackson2ObjectMapperBuilder.json().build().writeValueAsString(book))
+        		.contentType(MediaType.APPLICATION_JSON))
+        	.andDo( print() )
+	        .andExpect( status().isCreated() )
+	        .andExpect( content().contentType( "application/json;charset=UTF-8" ) )
+	        .andExpect( jsonPath( "$.id" ).value( savedBook.getId().intValue() ) )
+	        .andExpect( jsonPath( "$.title" ).value( savedBook.getTitle() ) )
+	        .andExpect( jsonPath( "$.description" ).value( savedBook.getDescription() ) );
+		
+		verify(bookService).createBook(book);
+	}
+	
 	/*
 	 * UTILITY METHODS
 	 */
@@ -173,12 +199,15 @@ public class BookControllerTest {
 				.withTitle("title"+id)
 				.withDescription("desc"+id)
 				.withCurrency(currency)
-				.withIsbn("isbn1")
+				.withIsbn("isbn"+id)
 				.withPrice(price)
 				.withAuthors(authors)
 				.build();
 		return book;
 	}
-
+	
+	private Date toDate(String date) throws ParseException {
+		return new SimpleDateFormat("dd/MM/yyyy").parse(date);
+	}
 
 }

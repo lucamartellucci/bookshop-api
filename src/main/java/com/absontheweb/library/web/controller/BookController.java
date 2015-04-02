@@ -1,5 +1,6 @@
 package com.absontheweb.library.web.controller;
 
+import java.net.URI;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -65,7 +66,7 @@ public class BookController {
 	public ResponseEntity<Book> createBook(@RequestBody Book book) throws InternalServerErrorException {
 		try {
 			Book savedBook = bookService.createBook(book);
-			return ResponseEntity.created(null).body(savedBook);
+			return ResponseEntity.created(new URI(String.format("/api/book/%d", savedBook.getId()))).body(savedBook);
 		} catch (Exception e) {
 			throw new InternalServerErrorException(String.format("Unable create book with title [%s]", book.getTitle()), e);
 		}
