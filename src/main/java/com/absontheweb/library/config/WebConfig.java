@@ -9,9 +9,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import com.absontheweb.library.web.controller.resolver.PaginatorArgumentResolver;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -24,13 +26,13 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         super();
     }
     
-//    @Override
-//    public void addArgumentResolvers(List< HandlerMethodArgumentResolver > argumentResolvers) {
+    @Override
+    public void addArgumentResolvers(List< HandlerMethodArgumentResolver > argumentResolvers) {
 //    	UserArgumentResolver personResolver = new UserArgumentResolver();
 //    	argumentResolvers.add(personResolver);
-//    	PaginatorArgumentResolver pageableResolver = new PaginatorArgumentResolver();
-//    	argumentResolvers.add(pageableResolver);
-//    }
+    	PaginatorArgumentResolver pageableResolver = new PaginatorArgumentResolver();
+    	argumentResolvers.add(pageableResolver);
+    }
 
     @Override
     public void configureMessageConverters( final List<HttpMessageConverter<?>> converters ) {

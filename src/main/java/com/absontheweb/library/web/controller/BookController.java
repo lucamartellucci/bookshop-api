@@ -1,7 +1,6 @@
 package com.absontheweb.library.web.controller;
 
 import java.net.URI;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.absontheweb.library.model.Book;
+import com.absontheweb.library.model.PaginatorResult;
+import com.absontheweb.library.model.SimplePaginator;
 import com.absontheweb.library.service.BookService;
 import com.absontheweb.library.web.controller.exception.InternalServerErrorException;
+import com.absontheweb.library.web.controller.resolver.Paginator;
 
 @RestController
 @RequestMapping("/api")
@@ -32,10 +34,11 @@ public class BookController {
 	@RequestMapping(value = "/books", 
 			method = RequestMethod.GET, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Book>> getAllBooks() throws InternalServerErrorException {
+	public ResponseEntity<PaginatorResult<Book>> getAllBooks(@Paginator SimplePaginator paginator) throws InternalServerErrorException {
 		try {
-			List<Book> books = bookService.getAllBooks();
-			ResponseEntity<List<Book>> response = ResponseEntity.ok(books);
+			logger.debug("Paginator is: {}", paginator);
+			PaginatorResult<Book> paginatedBooks = bookService.getBooks(paginator);
+			ResponseEntity<PaginatorResult<Book>> response = ResponseEntity.ok(paginatedBooks);
 			return response;
 		} catch (Exception e) {
 			throw new InternalServerErrorException("Unable to load all books", e);
