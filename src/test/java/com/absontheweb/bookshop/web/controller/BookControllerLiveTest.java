@@ -12,22 +12,30 @@ import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
+import com.absontheweb.bookshop.Application;
 import com.absontheweb.bookshop.model.Author;
 import com.absontheweb.bookshop.model.AuthorBuilder;
 import com.absontheweb.bookshop.model.Book;
 import com.absontheweb.bookshop.model.BookBuilder;
 import com.absontheweb.bookshop.model.Currency;
 
+@RunWith(value=SpringJUnit4ClassRunner.class)
+@WebIntegrationTest("server.port:18080")
+@SpringApplicationConfiguration(classes={Application.class})
 public class BookControllerLiveTest {
 
 	private static Logger logger = LoggerFactory.getLogger(BookControllerLiveTest.class);
 	
 	private RestTemplate restClient;
-	private String baseURL = "http://localhost:8080/api/";
+	private String baseURL = "http://localhost:18080/api/";
 
     @Before
     public void setup() {
