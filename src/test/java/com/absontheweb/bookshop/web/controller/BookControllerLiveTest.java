@@ -23,7 +23,6 @@ import com.absontheweb.bookshop.model.BookBuilder;
 import com.absontheweb.bookshop.model.Currency;
 
 public class BookControllerLiveTest {
-	
 
 	private static Logger logger = LoggerFactory.getLogger(BookControllerLiveTest.class);
 	

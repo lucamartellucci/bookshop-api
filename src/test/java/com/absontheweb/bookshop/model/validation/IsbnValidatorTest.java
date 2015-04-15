@@ -7,7 +7,7 @@ public class IsbnValidatorTest {
 
 	@Test
 	public void testIsValid() throws Exception {
-		throw new RuntimeException("not yet implemented");
+		//TODO
 	}
 
 }

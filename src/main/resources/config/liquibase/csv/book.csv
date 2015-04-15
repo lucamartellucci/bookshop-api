@@ -1,3 +1,12 @@
 id;title;isbn;description;price;year;currency
 1;Gomorra;1234567890;Gomorra desc;12.0;2008;EUR
 2;Il Grande Gatsby;0987654321;Il Grande Gatsby desc;13.22;1988;EUR
+3;Oceano Mare;7766553332;Oceano Mare desc;10.5;1999;EUR
+4;Lo Hobbit;874342233;Lo Hobbit desc;10.5;1975;EUR
+5;Il Signore degli Anelli;11111;Il Signore degli Anelli desc;10.5;1975;EUR
+6;Q;679954222;Q desc;10.5;2001;EUR
+7;Il mio nome è rosso;32323423;Il mio nome è rosso desc;10.5;2001;EUR
+8;1Q84;564553;1Q84 desc;10.5;2001;EUR
+9;Alice nel paese delle meraviglie;6756744;Alice nel paese delle meraviglie desc;10.5;2001;EUR
+10;Viaggio al centro della terra;78622;Viaggio al centro della terra desc;10.5;2001;EUR
+11;Diario di Scuola;675543;Diario di Scuola desc;10.5;2001;EUR

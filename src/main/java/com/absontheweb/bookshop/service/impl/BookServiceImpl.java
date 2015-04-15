@@ -102,6 +102,7 @@ public class BookServiceImpl implements BookService {
 				paginatedBook.setPageSize(books.getSize());
 				paginatedBook.setResult(bookAdapter.toBooks(books.getContent(), ADAPT_AUTHORS));
 				paginatedBook.setTotalItems(books.getTotalElements());
+				paginatedBook.setTotalPages(books.getTotalPages());
 				return paginatedBook;
 			}
 			
