@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.absontheweb.bookshop.model.Book;
 import com.absontheweb.bookshop.model.PaginatorResult;
@@ -21,6 +23,7 @@ import com.absontheweb.bookshop.service.exception.BookServiceException;
 import static com.absontheweb.bookshop.model.adapter.BookAdapter.ADAPT_AUTHORS;
 
 @Service
+@Transactional(readOnly=true, propagation=Propagation.REQUIRED)
 public class BookServiceImpl implements BookService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
@@ -67,6 +70,7 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
+	@Transactional(readOnly=false)
 	public Book createBook(Book book) throws BookServiceException {
 		try {
 			logger.info("Create new book with title [{}]", book.getTitle());
