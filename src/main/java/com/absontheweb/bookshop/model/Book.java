@@ -12,7 +12,7 @@ public class Book {
 	
 	private Long id;
 	
-	@NotNull
+	@NotNull(message="error.validation.title.notnull")
 	@Length(max=150)
 	private String title;
 	

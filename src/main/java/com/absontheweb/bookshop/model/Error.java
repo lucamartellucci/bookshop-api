@@ -1,6 +1,7 @@
 package com.absontheweb.bookshop.model;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -8,6 +9,7 @@ public class Error {
     private String code;
     private String message;
     private Map<String, String> additionalParams;
+    private List<Violation> violations;
 
     public Error() {
     }
@@ -29,8 +31,17 @@ public class Error {
         this.message = message;
         this.additionalParams = additionalParams;
     }
+    
 
-    public String getCode() {
+    public List<Violation> getViolations() {
+		return violations;
+	}
+
+	public void setViolations(List<Violation> violations) {
+		this.violations = violations;
+	}
+
+	public String getCode() {
         return code;
     }
     public void setCode( final String code ) {

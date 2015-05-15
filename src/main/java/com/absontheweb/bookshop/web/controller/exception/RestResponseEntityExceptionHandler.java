@@ -2,10 +2,11 @@ package com.absontheweb.bookshop.web.controller.exception;
 
 import java.io.IOException;
 import java.lang.reflect.UndeclaredThrowableException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -16,6 +17,7 @@ import org.springframework.web.context.request.WebRequest;
 
 import com.absontheweb.bookshop.model.Error;
 import com.absontheweb.bookshop.model.ErrorBuilder;
+import com.absontheweb.bookshop.model.Violation;
 
 
 @ControllerAdvice
@@ -44,22 +46,24 @@ public class RestResponseEntityExceptionHandler {
     
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public @ResponseBody Map<String, Object> handleValidationException(MethodArgumentNotValidException ex) throws IOException {
-        Map<String, Object>  map = new HashMap<>();
-        map.put("error", "Validation Failure");
-        map.put("violations", convertConstraintViolation(ex));
-        return map;
+    public @ResponseBody Error handleValidationException(MethodArgumentNotValidException ex) throws IOException {
+    	Error error = new Error();
+    	error.setCode(ErrorCode.VALIDATION_ERROR);
+    	error.setMessage("Validation Failure");
+    	error.setViolations(convertConstraintViolation(ex));
+        return error;
     }
     
  
-    private Map<String, Map<String, Object> > convertConstraintViolation(MethodArgumentNotValidException ex) {
-        Map<String, Map<String, Object> > result = new HashMap<>();
+    private List<Violation> convertConstraintViolation(MethodArgumentNotValidException ex) {
+    	List<Violation> result = new ArrayList<>();
         for (ObjectError error : ex.getBindingResult().getAllErrors()) {
-            Map<String, Object>  violationMap = new HashMap<>();
-            violationMap.put("target", ex.getBindingResult().getTarget());
-            violationMap.put("type", ex.getBindingResult().getTarget().getClass());
-            violationMap.put("message", error.getDefaultMessage());
-            result.put(error.getObjectName(), violationMap);
+        	FieldError fieldError = (FieldError) error;
+            Violation  violation = new Violation();
+            violation.setField(fieldError.getField());
+            violation.setRejectedValue(fieldError.getRejectedValue());
+            violation.setMessage(fieldError.getDefaultMessage());
+            result.add(violation);
         }
         return result;
     }

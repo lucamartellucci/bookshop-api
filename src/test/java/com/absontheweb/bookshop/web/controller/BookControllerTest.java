@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,8 +40,10 @@ import com.absontheweb.bookshop.model.BookBuilder;
 import com.absontheweb.bookshop.model.Currency;
 import com.absontheweb.bookshop.model.PaginatorResult;
 import com.absontheweb.bookshop.model.SimplePaginator;
+import com.absontheweb.bookshop.model.Violation;
 import com.absontheweb.bookshop.service.BookService;
 import com.absontheweb.bookshop.service.exception.BookServiceException;
+import com.absontheweb.bookshop.web.controller.exception.ErrorCode;
 
 @RunWith ( SpringJUnit4ClassRunner.class )
 @ContextConfiguration ( classes = { ControllerTestConfig.class } )
@@ -240,14 +243,23 @@ public class BookControllerTest {
 		Book book = buildBook(3L, null, 20.50, Arrays.asList(buildAuthor(1L, toDate("25/09/1978"), null)));
 		book.setId(null);
 		// set mandatory field to null
-//		book.setTitle(null);
+		book.setTitle(null);
 		book.setIsbn("ssss");
+		
+		/*
+		 * {"code":"VALIDATION_ERROR","message":"Validation Failure",
+		 * "violations":[{"field":"isbn","rejectedValue":"ssss","message":"ISBN not valid"},
+		 * {"field":"title","message":"javax.validation.constraints.NotNull.message"}]}
+		 */
+		
 		this.mockMvc.perform( post( "/api/books" ).accept( MediaType.parseMediaType( "application/json;charset=UTF-8" ) )
         		.content(Jackson2ObjectMapperBuilder.json().build().writeValueAsString(book))
         		.contentType(MediaType.APPLICATION_JSON))
         	.andDo( print() )
-	        .andExpect( status().isBadRequest() );
-		
+	        .andExpect( status().isBadRequest() )
+	        .andExpect( content().contentType( "application/json;charset=UTF-8" ) )
+	        .andExpect( jsonPath( "$.code" ).value( ErrorCode.VALIDATION_ERROR ) )
+	        .andExpect( jsonPath( "$.message" ).value( "Validation Failure" ) );
 	}
 	
 	/*
