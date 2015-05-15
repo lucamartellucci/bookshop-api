@@ -2,9 +2,11 @@ package com.absontheweb.bookshop.web.controller;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import org.mockito.Mockito;
 import org.springframework.context.MessageSource;
+import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -67,7 +69,7 @@ public class ControllerTestConfig extends WebMvcConfigurerAdapter {
         messageSource.setUseCodeAsDefaultMessage(true);
         messageSource.setDefaultEncoding("UTF-8");
         // # -1 : never reload, 0 always reload
-        messageSource.setCacheSeconds(0);
+        messageSource.setCacheSeconds(-1);
         return messageSource;
     }
 	
