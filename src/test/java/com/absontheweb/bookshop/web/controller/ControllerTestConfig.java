@@ -4,13 +4,17 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.mockito.Mockito;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -53,6 +57,32 @@ public class ControllerTestConfig extends WebMvcConfigurerAdapter {
 
         super.configureMessageConverters( converters );
     }
+	
+	@Bean
+    public MessageSource messageSource() {
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        messageSource.setBasenames("classpath:i18n/messages");
+        // if true, the key of the message will be displayed if the key is not
+        // found, instead of throwing a NoSuchMessageException
+        messageSource.setUseCodeAsDefaultMessage(true);
+        messageSource.setDefaultEncoding("UTF-8");
+        // # -1 : never reload, 0 always reload
+        messageSource.setCacheSeconds(0);
+        return messageSource;
+    }
+	
+	@Bean
+    public LocalValidatorFactoryBean validator() {
+        LocalValidatorFactoryBean validatorFactoryBean = new LocalValidatorFactoryBean();
+        validatorFactoryBean.setValidationMessageSource(messageSource());
+        return validatorFactoryBean;
+    }
+ 
+    @Override
+    public Validator getValidator() {
+        return validator();
+    }
+	
 	
 
 }

@@ -240,8 +240,8 @@ public class BookControllerTest {
 		Book book = buildBook(3L, null, 20.50, Arrays.asList(buildAuthor(1L, toDate("25/09/1978"), null)));
 		book.setId(null);
 		// set mandatory field to null
-		book.setTitle(null);
-		book.setIsbn("88-04-50279-7");
+//		book.setTitle(null);
+		book.setIsbn("ssss");
 		this.mockMvc.perform( post( "/api/books" ).accept( MediaType.parseMediaType( "application/json;charset=UTF-8" ) )
         		.content(Jackson2ObjectMapperBuilder.json().build().writeValueAsString(book))
         		.contentType(MediaType.APPLICATION_JSON))
