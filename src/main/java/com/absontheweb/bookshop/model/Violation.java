@@ -11,8 +11,8 @@ public class Violation implements Serializable {
 	
 	public Violation() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
+	
 	public Violation(String field, Object rejectedValue, String message) {
 		super();
 		this.field = field;
