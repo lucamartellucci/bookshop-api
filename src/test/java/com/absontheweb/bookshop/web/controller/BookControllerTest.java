@@ -17,7 +17,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,7 +39,6 @@ import com.absontheweb.bookshop.model.BookBuilder;
 import com.absontheweb.bookshop.model.Currency;
 import com.absontheweb.bookshop.model.PaginatorResult;
 import com.absontheweb.bookshop.model.SimplePaginator;
-import com.absontheweb.bookshop.model.Violation;
 import com.absontheweb.bookshop.service.BookService;
 import com.absontheweb.bookshop.service.exception.BookServiceException;
 import com.absontheweb.bookshop.web.controller.exception.ErrorCode;
@@ -246,12 +244,6 @@ public class BookControllerTest {
 		book.setTitle(null);
 		book.setIsbn("ssss");
 		
-		/*
-		 * {"code":"VALIDATION_ERROR","message":"Validation Failure",
-		 * "violations":[{"field":"isbn","rejectedValue":"ssss","message":"ISBN not valid"},
-		 * {"field":"title","message":"javax.validation.constraints.NotNull.message"}]}
-		 */
-		
 		this.mockMvc.perform( post( "/api/books" ).accept( MediaType.parseMediaType( "application/json;charset=UTF-8" ) )
         		.content(Jackson2ObjectMapperBuilder.json().build().writeValueAsString(book))
         		.contentType(MediaType.APPLICATION_JSON))
@@ -259,7 +251,14 @@ public class BookControllerTest {
 	        .andExpect( status().isBadRequest() )
 	        .andExpect( content().contentType( "application/json;charset=UTF-8" ) )
 	        .andExpect( jsonPath( "$.code" ).value( ErrorCode.VALIDATION_ERROR ) )
-	        .andExpect( jsonPath( "$.message" ).value( "Validation Failure" ) );
+	        .andExpect( jsonPath( "$.message" ).value( "Validation Failure" ) )
+			.andExpect( jsonPath( "$.violations", hasSize(2)) );
+//			.andExpect( jsonPath( "$.violations[0].field").value("isbn"))
+//			.andExpect( jsonPath( "$.violations[0].rejectedValue").value("ssss"))
+//			.andExpect( jsonPath( "$.violations[0].message").value("ISBN not valid"))
+//			.andExpect( jsonPath( "$.violations[1].field").value("title"))
+//			.andExpect( jsonPath( "$.violations[1].message").value("Title cannot be empty"))
+		
 	}
 	
 	/*

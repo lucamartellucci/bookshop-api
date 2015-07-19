@@ -1,0 +1,51 @@
+<configuration scan="true" scanPeriod="10 seconds">
+
+
+	<!-- This writes everything on the standard output. -->
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} | %X{request} | %X{organization} | %X{userId} | %X{client} | %X{session} | %p | %c | %M%X{methodName} | %m%n</Pattern>
+		</layout>
+	</appender>
+	
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>./target/logs/bookshop_trace</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>./target/logs/archive/bookshop_trace.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+        </rollingPolicy>
+        <Append>true</Append>
+        <BufferedIO>false</BufferedIO>
+        <BufferSize>16384</BufferSize>
+        <ImmediateFlush>true</ImmediateFlush>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} | %X{request} | %X{organization} | %X{userId} | %X{client} | %X{session} | %p | %c | %M%X{methodName} | %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>./target/logs/bookshop_error</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>./target/logs/archive/bookshop_error.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} | %X{request} | %X{organization} | %X{userId} | %X{client} | %X{session} | %p | %c | %M%X{methodName} | %m%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    
+    <logger name="com.absontheweb" level="DEBUG"/>
+
+    <logger name="org.liquibase" level="INFO"/>
+
+    <logger name="org.springframework" level="INFO"/>
+
+    <root level="ERROR">
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="FILE_ERROR"/>
+    </root>
+    
+</configuration>
