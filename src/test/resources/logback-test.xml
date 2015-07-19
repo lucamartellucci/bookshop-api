@@ -1,0 +1,21 @@
+<configuration scan="true" scanPeriod="10 seconds">
+
+
+	<!-- This writes everything on the standard output. -->
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} | %X{request} | %X{organization} | %X{userId} | %X{client} | %X{session} | %p | %c | %M%X{methodName} | %m%n</Pattern>
+		</layout>
+	</appender>
+   
+    <logger name="com.absontheweb" level="DEBUG"/>
+
+    <logger name="org.liquibase" level="INFO"/>
+
+    <logger name="org.springframework" level="INFO"/>
+
+    <root level="ERROR">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+    
+</configuration>

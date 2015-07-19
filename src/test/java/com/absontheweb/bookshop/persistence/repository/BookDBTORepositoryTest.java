@@ -25,9 +25,9 @@ import com.absontheweb.bookshop.persistence.model.BookDBTO;
 
 @ActiveProfiles(profiles = { "dbtest" })
 @ContextConfiguration(classes = { PersistenceConfig.class }, loader = AnnotationConfigContextLoader.class)
-public class BookDBTORepositoryIntegrationTest extends AbstractTransactionalJUnit4SpringContextTests {
+public class BookDBTORepositoryTest extends AbstractTransactionalJUnit4SpringContextTests {
 	
-	final static Logger logger = LoggerFactory.getLogger(BookDBTORepositoryIntegrationTest.class);
+	final static Logger logger = LoggerFactory.getLogger(BookDBTORepositoryTest.class);
 
     @Autowired
     private BookDBTORepository repo;
@@ -36,7 +36,7 @@ public class BookDBTORepositoryIntegrationTest extends AbstractTransactionalJUni
     private AuthorDBTORepository repoAuthor;
     
     @Test
-    public final void testFindOne() throws Exception {
+    public void testFindOne() throws Exception {
     	BookDBTO bookDBTO = repo.findOne(1L);
     	assertThat(bookDBTO,is(notNullValue()));
     	assertThat(bookDBTO.getTitle(), is(equalTo("Gomorra")));
@@ -53,13 +53,13 @@ public class BookDBTORepositoryIntegrationTest extends AbstractTransactionalJUni
     }
     
     @Test
-    public final void testFindOne_notExisting() throws Exception {
+    public void testFindOne_notExisting() throws Exception {
     	BookDBTO bookDBTO = repo.findOne(1000L);
     	assertThat(bookDBTO,is(nullValue()));
     }
     
     @Test
-    public final void testFindByTitle() throws Exception {
+    public void testFindByTitle() throws Exception {
     	BookDBTO bookDBTO = repo.findByTitle("Gomorra");
     	assertThat(bookDBTO,is(notNullValue()));
     	assertThat(bookDBTO.getTitle(), is(equalTo("Gomorra")));
@@ -76,7 +76,7 @@ public class BookDBTORepositoryIntegrationTest extends AbstractTransactionalJUni
     }
     
     @Test
-    public final void testCreateBook() throws Exception {
+    public void testCreateBook() throws Exception {
     	AuthorDBTO authorDBTO = repoAuthor.findOne(1L);
     	
     	BookDBTO bookDBTO = new BookDBTO();

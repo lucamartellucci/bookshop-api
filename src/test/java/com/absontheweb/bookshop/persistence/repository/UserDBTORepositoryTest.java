@@ -19,9 +19,9 @@ import com.absontheweb.bookshop.persistence.model.UserDBTO;
 
 @ActiveProfiles(profiles = { "dbtest" })
 @ContextConfiguration(classes = { PersistenceConfig.class }, loader = AnnotationConfigContextLoader.class)
-public class UserDBTORepositoryIntegrationTest extends AbstractTransactionalJUnit4SpringContextTests {
+public class UserDBTORepositoryTest extends AbstractTransactionalJUnit4SpringContextTests {
 	
-	final static Logger logger = LoggerFactory.getLogger(UserDBTORepositoryIntegrationTest.class);
+	final static Logger logger = LoggerFactory.getLogger(UserDBTORepositoryTest.class);
 
     @Autowired
     private UserDBTORepository repo;
@@ -29,7 +29,7 @@ public class UserDBTORepositoryIntegrationTest extends AbstractTransactionalJUni
     //id;login;password;first_name;last_name;email;activated;lang_key
     //4;luca;$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K;luca;martellucci;luca.martellucci@absontheweb.com;true;en
     @Test
-    public final void testFindOne() throws Exception {
+    public void testFindOne() throws Exception {
     	UserDBTO userDBTO = repo.findOne(4L);
     	assertThat(userDBTO,is(notNullValue()));
     	assertThat(userDBTO.getId(), is(4L));
