@@ -43,6 +43,8 @@ import com.absontheweb.bookshop.service.BookService;
 import com.absontheweb.bookshop.service.exception.BookServiceException;
 import com.absontheweb.bookshop.web.controller.exception.ErrorCode;
 
+import config.ControllerTestConfig;
+
 @RunWith ( SpringJUnit4ClassRunner.class )
 @ContextConfiguration ( classes = { ControllerTestConfig.class } )
 @WebAppConfiguration
@@ -149,23 +151,20 @@ public class BookControllerTest {
 	}
 	
 	
-
-	
-	
 	@Test
-		public void testGetBooks_InternalServerError() throws Exception {
-			
-			// program bookService mock to throw an exception
-			when(bookService.getBooks(ALL)).thenThrow(new BookServiceException());
-	    	
-	        this.mockMvc.perform( get( "/api/books" ).accept( MediaType.parseMediaType( "application/json;charset=UTF-8" ) ) )
-		        .andExpect( status().isInternalServerError() )
-		        .andExpect( content().contentType( "application/json;charset=UTF-8" ) )
-		        .andDo( print() )
-		        .andExpect( jsonPath("$.code").value("GENERIC_ERROR")) ;
-	
-	        verify(bookService).getBooks(ALL);
-		}
+	public void testGetBooks_InternalServerError() throws Exception {
+		
+		// program bookService mock to throw an exception
+		when(bookService.getBooks(ALL)).thenThrow(new BookServiceException());
+    	
+        this.mockMvc.perform( get( "/api/books" ).accept( MediaType.parseMediaType( "application/json;charset=UTF-8" ) ) )
+	        .andExpect( status().isInternalServerError() )
+	        .andExpect( content().contentType( "application/json;charset=UTF-8" ) )
+	        .andDo( print() )
+	        .andExpect( jsonPath("$.code").value("GENERIC_ERROR")) ;
+
+        verify(bookService).getBooks(ALL);
+	}
 	
 	@Test
 	public void testGetBook() throws Exception {

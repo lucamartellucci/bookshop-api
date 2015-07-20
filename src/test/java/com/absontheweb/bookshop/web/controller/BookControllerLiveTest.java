@@ -4,8 +4,8 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,19 +17,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.http.HttpStatus;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import com.absontheweb.bookshop.Application;
+import com.absontheweb.bookshop.config.MessageSourceConfig;
+import com.absontheweb.bookshop.config.PersistenceConfig;
+import com.absontheweb.bookshop.config.WebConfig;
 import com.absontheweb.bookshop.model.Author;
-import com.absontheweb.bookshop.model.AuthorBuilder;
 import com.absontheweb.bookshop.model.Book;
-import com.absontheweb.bookshop.model.BookBuilder;
 import com.absontheweb.bookshop.model.Currency;
 
 @RunWith(value=SpringJUnit4ClassRunner.class)
 @WebIntegrationTest("server.port:18080")
-@SpringApplicationConfiguration(classes={Application.class})
+@SpringApplicationConfiguration(classes={Application.class, MessageSourceConfig.class, PersistenceConfig.class, WebConfig.class})
+@ActiveProfiles(profiles = { "dbtest" })
 public class BookControllerLiveTest {
 
 	private static Logger logger = LoggerFactory.getLogger(BookControllerLiveTest.class);
@@ -43,20 +48,11 @@ public class BookControllerLiveTest {
     }
 
 	@Test
-	public void testGetAllBooks_OK() throws Exception {
-	}
-	
-	@Test
-	public void testGetAllBooks_InternalServerError() throws Exception {
-		
-	}
-	
-	@Test
 	public void testGetBook() throws Exception {
 		
 		Map<String, String> urlVariables = new HashMap<String, String>();
-		urlVariables.put("BOOK_ID", "1");
-		Book book = restClient.getForObject(baseURL.concat("/books/{BOOK_ID}"), Book.class, urlVariables);
+		urlVariables.put("id", "1");
+		Book book = restClient.getForObject(baseURL.concat("/books/{id}"), Book.class, urlVariables);
 		logger.debug("Retrieved book is [{}]", book);
 		
 		assertThat(book,is(notNullValue()));
@@ -73,39 +69,19 @@ public class BookControllerLiveTest {
 		assertThat(author.getSurname(), is("Saviano"));
 	}
 	
-	
 	@Test
 	public void testGetBook_notExisting() throws Exception {
-	
+		Map<String, String> urlVariables = new HashMap<String, String>();
+		urlVariables.put("id", "1001");
+		try {
+			restClient.getForObject(baseURL.concat("/books/{id}"), Book.class, urlVariables);
+			fail();
+		} catch (HttpClientErrorException e) {
+			assertThat(e.getStatusCode(), is(HttpStatus.NOT_FOUND));
+		}
 	}
 	
-	/*
-	 * UTILITY METHODS
-	 */
-	private Author buildAuthor(Long id, Date born, Date died) {
-		Author author = AuthorBuilder.author()
-				.withId(id)
-				.withBirthplace("bithplace"+id)
-				.withName("name"+id)
-				.withSurname("surname"+id)
-				.withBorn(born)
-				.withDied(died)
-				.build();
-		return author;
-	}
-	
-	private Book buildBook(Long id, Currency currency, Double price, List<Author> authors) {
-		Book book = BookBuilder.book()
-				.withId(id)
-				.withTitle("title"+id)
-				.withDescription("desc"+id)
-				.withCurrency(currency)
-				.withIsbn("isbn1")
-				.withPrice(price)
-				.withAuthors(authors)
-				.build();
-		return book;
-	}
+
 
 
 }

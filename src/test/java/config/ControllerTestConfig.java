@@ -1,4 +1,4 @@
-package com.absontheweb.bookshop.web.controller;
+package config;
 
 import java.util.Arrays;
 import java.util.List;

@@ -38,7 +38,7 @@ public class BookServiceImpl implements BookService {
 	public Book getBookById(Long id) throws BookServiceException {
 		try {
 			logger.info("Loading book with id {}", id);
-			Book book = bookAdapter.toBook(bookRepository.getOne(id), ADAPT_AUTHORS);
+			Book book = bookAdapter.toBook(bookRepository.findOne(id), ADAPT_AUTHORS);
 			logger.info(book != null ? "Book found" : "Book not found");
 			return book;
 		} catch (Exception e) {
