@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -45,55 +46,28 @@ public class AuthorAdapterTest {
 		Author author = authorAdapter.toAuthor(null);
 		assertThat(author, is (nullValue()));
 		
-		author = authorAdapter.toAuthor(buildAuthorDBTO());
+		author = authorAdapter.toAuthor(buildAuthorDBTO(1));
 		
-		assertThat(author.getName(), is("name"));
-		assertThat(author.getSurname(), is("surname"));
+		assertThat(author.getName(), is("name1"));
+		assertThat(author.getSurname(), is("surname1"));
 		assertThat(author.getBirthplace(), is("city"));
 		assertThat(sdf.format(author.getBorn()), is("01-01-1980"));
 		assertThat(author.getBooks(), is(nullValue()));
 	}
 
-	private AuthorDBTO buildAuthorDBTO() throws ParseException {
-		AuthorDBTO authorDBTO;
-		authorDBTO = new AuthorDBTO();
-		authorDBTO.setId(1L);
-		authorDBTO.setName("name");
-		authorDBTO.setSurname("surname");
-		authorDBTO.setBorn(sdf.parse("01-01-1980"));
-		authorDBTO.setBirthplace("city");
-		authorDBTO.setBooks(new ArrayList<BookDBTO>());
-		for (int i = 0; i < 2; i++) {
-			authorDBTO.getBooks().add(buildBookDBTO(i));
-		}
-		return authorDBTO;
-	}
-	
-	private BookDBTO buildBookDBTO(int id) {
-		BookDBTO bookDBTO = new BookDBTO();
-		bookDBTO.setId(new Long(id));
-		bookDBTO.setCurrency(Currency.EUR);
-		bookDBTO.setDescription("description"+id);
-		bookDBTO.setIsbn("isbn"+id);
-		bookDBTO.setPrice(3.5);
-		bookDBTO.setTitle("title"+id);
-		bookDBTO.setYear(id + 2000);
-		return bookDBTO;
-	}
-
 	@Test
 	public void testToAuthorAuthorDBTOBoolean() throws Exception {
-		Author author = authorAdapter.toAuthor(buildAuthorDBTO(), false);
+		Author author = authorAdapter.toAuthor(buildAuthorDBTO(1), false);
 
-		assertThat(author.getName(), is("name"));
-		assertThat(author.getSurname(), is("surname"));
+		assertThat(author.getName(), is("name1"));
+		assertThat(author.getSurname(), is("surname1"));
 		assertThat(author.getBirthplace(), is("city"));
 		assertThat(sdf.format(author.getBorn()), is("01-01-1980"));
 		assertThat(author.getBooks(), is(nullValue()));
 		
 		Book book1 = BookBuilder.book().withId(1L).withCurrency(Currency.EUR).withDescription("description1").withIsbn("isbn1").withPrice(3.5).withTitle("title1").withYear(2001).build();	
 		Book book2 = BookBuilder.book().withId(2L).withCurrency(Currency.EUR).withDescription("description2").withIsbn("isbn2").withPrice(3.5).withTitle("title2").withYear(2002).build();	
-		AuthorDBTO authorDBTO = buildAuthorDBTO();
+		AuthorDBTO authorDBTO = buildAuthorDBTO(1);
 		when(bookAdapter.toBooks(authorDBTO.getBooks())).thenReturn(Arrays.asList(book1,book2));
 		
 		author = authorAdapter.toAuthor(authorDBTO, true);
@@ -118,6 +92,86 @@ public class AuthorAdapterTest {
 		assertThat(author.getBooks().get(1).getYear(),is(2002));
 		
 		verify(bookAdapter).toBooks(authorDBTO.getBooks());
+	}
+	
+	@Test
+	public void testToAuthorsListAuthorDBTO() throws Exception {
+		
+		List<Author> authors = authorAdapter.toAuthors(null,true);
+		assertThat(authors, is(nullValue()));
+		
+		authors = authorAdapter.toAuthors(Arrays.asList(buildAuthorDBTO(1), buildAuthorDBTO(2)));
+		assertThat(authors.size(),is(2));
+		
+		assertThat(authors.get(0).getName(), is("name1"));
+		assertThat(authors.get(0).getSurname(), is("surname1"));
+		assertThat(authors.get(0).getBirthplace(), is("city"));
+		assertThat(authors.get(0).getBooks(), is(nullValue()));
+
+		assertThat(authors.get(1).getName(), is("name2"));
+		assertThat(authors.get(1).getSurname(), is("surname2"));
+		assertThat(authors.get(1).getBirthplace(), is("city"));
+		assertThat(authors.get(1).getBooks(), is(nullValue()));
+	}
+	
+	@Test
+	public void testToAuthorsListAuthorDBTOBoolean() throws Exception {
+		
+		Book book1 = BookBuilder.book().withId(1L).withCurrency(Currency.EUR).withDescription("description1").withIsbn("isbn1").withPrice(3.5).withTitle("title1").withYear(2001).build();	
+		Book book2 = BookBuilder.book().withId(2L).withCurrency(Currency.EUR).withDescription("description2").withIsbn("isbn2").withPrice(3.5).withTitle("title2").withYear(2002).build();	
+		
+		AuthorDBTO authorDBTO1 = buildAuthorDBTO(1);
+		AuthorDBTO authorDBTO2 = buildAuthorDBTO(2);
+		
+		when(bookAdapter.toBooks(authorDBTO1.getBooks()))
+			.thenReturn(Arrays.asList(book1,book2));
+		when(bookAdapter.toBooks(authorDBTO2.getBooks()))
+			.thenReturn(Arrays.asList(book1,book2));
+		
+		
+		List<Author> authors = authorAdapter.toAuthors(Arrays.asList(authorDBTO1, authorDBTO2), true);
+		assertThat(authors.size(),is(2));
+		
+		assertThat(authors.get(0).getName(), is("name1"));
+		assertThat(authors.get(0).getSurname(), is("surname1"));
+		assertThat(authors.get(0).getBirthplace(), is("city"));
+		assertThat(authors.get(0).getBooks().size(), is(2));
+
+		assertThat(authors.get(1).getName(), is("name2"));
+		assertThat(authors.get(1).getSurname(), is("surname2"));
+		assertThat(authors.get(1).getBirthplace(), is("city"));
+		assertThat(authors.get(1).getBooks().size(), is(2));
+		
+		verify(bookAdapter).toBooks(authorDBTO1.getBooks());
+		verify(bookAdapter).toBooks(authorDBTO2.getBooks());
+	}
+	
+	
+	private AuthorDBTO buildAuthorDBTO(int id) throws ParseException {
+		AuthorDBTO authorDBTO;
+		authorDBTO = new AuthorDBTO();
+		authorDBTO.setId(new Long(id));
+		authorDBTO.setName("name"+id);
+		authorDBTO.setSurname("surname"+id);
+		authorDBTO.setBorn(sdf.parse("01-01-1980"));
+		authorDBTO.setBirthplace("city");
+		authorDBTO.setBooks(new ArrayList<BookDBTO>());
+		for (int i = 0; i < 2; i++) {
+			authorDBTO.getBooks().add(buildBookDBTO(i));
+		}
+		return authorDBTO;
+	}
+	
+	private BookDBTO buildBookDBTO(int id) {
+		BookDBTO bookDBTO = new BookDBTO();
+		bookDBTO.setId(new Long(id));
+		bookDBTO.setCurrency(Currency.EUR);
+		bookDBTO.setDescription("description"+id);
+		bookDBTO.setIsbn("isbn"+id);
+		bookDBTO.setPrice(3.5);
+		bookDBTO.setTitle("title"+id);
+		bookDBTO.setYear(id + 2000);
+		return bookDBTO;
 	}
 
 }
