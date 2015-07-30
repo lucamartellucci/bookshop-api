@@ -6,3 +6,5 @@ A simple rest api for a book shop
 ### Status
 [![Build Status](https://travis-ci.org/lucamartellucci/bookshop-backend.svg?branch=master)](https://travis-ci.org/lucamartellucci/bookshop-backend)
 
+### Coverage
+[![Coverage Status](https://coveralls.io/repos/lucamartellucci/bookshop-backend/badge.svg?branch=master&service=github)](https://coveralls.io/github/lucamartellucci/bookshop-backend?branch=master)
