@@ -20,7 +20,9 @@ import com.absontheweb.bookshop.model.Book;
 import com.absontheweb.bookshop.model.PaginatorResult;
 import com.absontheweb.bookshop.model.SimplePaginator;
 import com.absontheweb.bookshop.service.BookService;
+import com.absontheweb.bookshop.service.exception.BookServiceException;
 import com.absontheweb.bookshop.web.controller.exception.InternalServerErrorException;
+import com.absontheweb.bookshop.web.controller.exception.ResourceNotFoundException;
 import com.absontheweb.bookshop.web.controller.resolver.Paginator;
 
 @RestController
@@ -50,19 +52,17 @@ public class BookController {
 	@RequestMapping(value = "/books/{id}", 
 			method = RequestMethod.GET, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Book> getBook(@PathVariable("id") Long id) throws InternalServerErrorException {
+	public ResponseEntity<Book> getBook(@PathVariable("id") Long id) throws InternalServerErrorException, ResourceNotFoundException {
 		try {
-			ResponseEntity<Book> response = null;
 			Book book = bookService.getBookById(id);
 			if (book != null) {
-				response = ResponseEntity.ok(book);
-			} else {
-				response = new ResponseEntity<Book>(HttpStatus.NOT_FOUND);
-			}
-			return response;
-		} catch (Exception e) {
+				return ResponseEntity.ok(book);
+			} 
+		} catch (BookServiceException e) {
 			throw new InternalServerErrorException(String.format("Unable retrieve book with id [%d]", id), e);
 		}
+		
+		throw new ResourceNotFoundException(String.format("Book with id [%d] does not exist", id));
 	}
 	
 	@RequestMapping(value = "/books", 

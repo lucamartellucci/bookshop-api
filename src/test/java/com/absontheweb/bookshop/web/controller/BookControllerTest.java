@@ -108,9 +108,6 @@ public class BookControllerTest {
         verify(bookService).getBooks(ALL);
 	}
 	
-	
-	
-
 	@Test
 	public void testGetBooks_paged_OK() throws Exception {
 		
@@ -195,6 +192,23 @@ public class BookControllerTest {
         verify(bookService).getBookById(bookId);
 	}
 	
+	@Test
+	public void testGetBook_InternalServerError() throws Exception {
+		// prepare objects returned by the bookservice
+		Long bookId = 2L;
+		
+		// program bookService mock to return the book with id bookId
+		when(bookService.getBookById(bookId)).thenThrow(new BookServiceException());
+    	
+        this.mockMvc.perform( get( "/api/books/" + bookId ).accept( MediaType.parseMediaType( "application/json;charset=UTF-8" ) ) )
+	        .andExpect( status().isInternalServerError() )
+	        .andExpect( content().contentType( "application/json;charset=UTF-8" ) )
+	        .andDo( print() )
+	        .andExpect( jsonPath("$.code").value("GENERIC_ERROR")) ;
+	        
+        verify(bookService).getBookById(bookId);
+	}
+	
 	
 	@Test
 	public void testGetBook_notExisting() throws Exception {
@@ -206,10 +220,9 @@ public class BookControllerTest {
         this.mockMvc.perform( get( "/api/books/" + bookId ).accept( MediaType.parseMediaType( "application/json;charset=UTF-8" ) ) )
 	    	.andDo( print() )    
 	    	.andExpect( status().isNotFound() );
-//        	??? expected or not?
-//	        .andExpect( content().contentType( "application/json;charset=UTF-8" ) );
 	        
         verify(bookService).getBookById(bookId);
+        
 	}
 	
 	@Test
@@ -258,6 +271,23 @@ public class BookControllerTest {
 //			.andExpect( jsonPath( "$.violations[1].field").value("title"))
 //			.andExpect( jsonPath( "$.violations[1].message").value("Title cannot be empty"))
 		
+	}
+	
+	@Test
+	public void testCreateBook_InternalServerError() throws Exception {
+		
+		Book book = buildBook(3L, null, 20.50, Arrays.asList(buildAuthor(1L, toDate("25/09/1978"), null)));
+		book.setId(null);
+
+		when(bookService.createBook(book)).thenThrow(new BookServiceException());
+		
+		this.mockMvc.perform( post( "/api/books" ).accept( MediaType.parseMediaType( "application/json;charset=UTF-8" ) )
+    		.content(Jackson2ObjectMapperBuilder.json().build().writeValueAsString(book))
+    		.contentType(MediaType.APPLICATION_JSON))
+            .andDo( print() )
+	        .andExpect( jsonPath("$.code").value("GENERIC_ERROR")) ;
+
+        verify(bookService).createBook(book);
 	}
 	
 	/*

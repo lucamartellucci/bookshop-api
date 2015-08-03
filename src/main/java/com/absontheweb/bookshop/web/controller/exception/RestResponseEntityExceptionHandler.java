@@ -31,14 +31,14 @@ public class RestResponseEntityExceptionHandler {
         		.withMessage(ex.getMessage()).build();
     }
 
-
-    @ExceptionHandler (value = { Exception.class, UndeclaredThrowableException.class })
-    @ResponseStatus (HttpStatus.INTERNAL_SERVER_ERROR)
-    protected @ResponseBody Error handleGenericExceptions( Exception ex, WebRequest request ) {
-        return new Error( ErrorCode.GENERIC_ERROR, ex.getMessage() );
-    }
+//
+//    @ExceptionHandler (value = { Exception.class, UndeclaredThrowableException.class })
+//    @ResponseStatus (HttpStatus.INTERNAL_SERVER_ERROR)
+//    protected @ResponseBody Error handleGenericExceptions( Exception ex, WebRequest request ) {
+//        return new Error( ErrorCode.GENERIC_ERROR, ex.getMessage() );
+//    }
     
-    @ExceptionHandler (value = { InternalServerErrorException.class })
+    @ExceptionHandler (value = { InternalServerErrorException.class, Exception.class, UndeclaredThrowableException.class })
     @ResponseStatus (HttpStatus.INTERNAL_SERVER_ERROR)
     protected @ResponseBody Error handleInternalServerErrorExceptions( Exception ex, WebRequest request ) {
     	return new Error( ErrorCode.GENERIC_ERROR, ex.getCause().getMessage() );

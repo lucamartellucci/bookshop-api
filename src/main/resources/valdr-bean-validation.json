@@ -1,0 +1,7 @@
+{
+  "modelPackages": ["com.absontheweb.bookshop.model"],
+  "customAnnotationClasses": ["com.absontheweb.bookshop.model.validation.Isbn"],
+  "corsAllowOriginPattern": "*",
+  "outputFullTypeName": false,
+  "outputFile": "${project.build.directory}/${project.build.finalName}/constraints.json"
+}
