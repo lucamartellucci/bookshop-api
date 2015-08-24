@@ -17,7 +17,11 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.absontheweb.bookshop.model.Author;
+import com.absontheweb.bookshop.model.AuthorBuilder;
 import com.absontheweb.bookshop.model.Book;
+import com.absontheweb.bookshop.model.BookBuilder;
+import com.absontheweb.bookshop.model.Currency;
 
 
 public class IsbnValidatorTest {
@@ -39,8 +43,14 @@ public class IsbnValidatorTest {
 	
 	@Before
     public void before() {
-		book = new Book();
-		book.setTitle("Title");
+		Author author = AuthorBuilder.author().build();
+		book=BookBuilder.book()
+			.withTitle("title")
+			.withCurrency(Currency.EUR)
+			.withDescription("description")
+			.withPrice(12.0)
+			.withAddedAuthor(author)
+			.build();
     }
  
     @Test

@@ -20,8 +20,6 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
@@ -53,8 +51,6 @@ public class BookControllerTest {
 	private static final SimplePaginator ALL = null;
 	private static final SimplePaginator PAGE_1 = new SimplePaginator(0, 10);
 	
-	private static Logger logger = LoggerFactory.getLogger(BookControllerTest.class);
-
     @Autowired
     private WebApplicationContext wac;
     
@@ -78,7 +74,7 @@ public class BookControllerTest {
 		Book book2 = buildBook(2L, Currency.USD, 12.0, authors);
 		List<Book> books = Arrays.asList(book1, book2);
 		
-		PaginatorResult<Book> paginatedBooks = new PaginatorResult<>();
+		PaginatorResult<Book> paginatedBooks = new PaginatorResult<Book>();
 		paginatedBooks.setCurrentPage(0);
 		paginatedBooks.setPageSize(books.size());
 		paginatedBooks.setResult(books);
@@ -117,7 +113,7 @@ public class BookControllerTest {
 		Book book2 = buildBook(2L, Currency.USD, 12.0, authors);
 		List<Book> books = Arrays.asList(book1, book2);
 		
-		PaginatorResult<Book> paginatedBooks = new PaginatorResult<>();
+		PaginatorResult<Book> paginatedBooks = new PaginatorResult<Book>();
 		paginatedBooks.setCurrentPage(0);
 		paginatedBooks.setPageSize(books.size());
 		paginatedBooks.setResult(books);
@@ -228,7 +224,7 @@ public class BookControllerTest {
 	@Test
 	public void testCreateBook() throws Exception {
 		
-		Book book = buildBook(3L, null, 20.50, Arrays.asList(buildAuthor(1L, toDate("25/09/1978"), null)));
+		Book book = buildBook(3L, Currency.EUR, 20.50, Arrays.asList(buildAuthor(1L, toDate("25/09/1978"), null)));
 		book.setId(null);
 		Book savedBook = buildBook(3L, Currency.EUR, 20.50, Arrays.asList(buildAuthor(1L, toDate("25/09/1978"), null)));
 		when(bookService.createBook(book)).thenReturn(savedBook);
@@ -264,7 +260,7 @@ public class BookControllerTest {
 	        .andExpect( content().contentType( "application/json;charset=UTF-8" ) )
 	        .andExpect( jsonPath( "$.code" ).value( ErrorCode.VALIDATION_ERROR ) )
 	        .andExpect( jsonPath( "$.message" ).value( "Validation Failure" ) )
-			.andExpect( jsonPath( "$.violations", hasSize(2)) );
+			.andExpect( jsonPath( "$.violations", hasSize(3)) );
 //			.andExpect( jsonPath( "$.violations[0].field").value("isbn"))
 //			.andExpect( jsonPath( "$.violations[0].rejectedValue").value("ssss"))
 //			.andExpect( jsonPath( "$.violations[0].message").value("ISBN not valid"))
@@ -276,7 +272,7 @@ public class BookControllerTest {
 	@Test
 	public void testCreateBook_InternalServerError() throws Exception {
 		
-		Book book = buildBook(3L, null, 20.50, Arrays.asList(buildAuthor(1L, toDate("25/09/1978"), null)));
+		Book book = buildBook(3L, Currency.EUR, 20.50, Arrays.asList(buildAuthor(1L, toDate("25/09/1978"), null)));
 		book.setId(null);
 
 		when(bookService.createBook(book)).thenThrow(new BookServiceException());

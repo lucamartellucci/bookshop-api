@@ -53,7 +53,7 @@ public class UserDBTO {
             name = "user_authority",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
-    private Set<AuthorityDBTO> authorities = new HashSet<>();
+    private Set<AuthorityDBTO> authorities = new HashSet<AuthorityDBTO>();
 
     
     public Long getId() {

@@ -1,5 +1,14 @@
 {
   "modelPackages": ["com.absontheweb.bookshop.model"],
+  "excludedClasses": [
+  	"com.absontheweb.bookshop.model.AuthorBuilder",
+  	"com.absontheweb.bookshop.model.BookBuilder",
+  	"com.absontheweb.bookshop.model.ErrorBuilder",
+  	"com.absontheweb.bookshop.model.PaginatorResult",
+  	"com.absontheweb.bookshop.model.SimplePaginator",
+  	"com.absontheweb.bookshop.model.UserBuilder",
+  	"com.absontheweb.bookshop.model.ViolationBuilder"
+  ],
   "customAnnotationClasses": ["com.absontheweb.bookshop.model.validation.Isbn"],
   "corsAllowOriginPattern": "*",
   "outputFullTypeName": false,

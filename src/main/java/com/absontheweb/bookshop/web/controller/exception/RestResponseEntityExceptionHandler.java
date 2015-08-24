@@ -31,13 +31,6 @@ public class RestResponseEntityExceptionHandler {
         		.withMessage(ex.getMessage()).build();
     }
 
-//
-//    @ExceptionHandler (value = { Exception.class, UndeclaredThrowableException.class })
-//    @ResponseStatus (HttpStatus.INTERNAL_SERVER_ERROR)
-//    protected @ResponseBody Error handleGenericExceptions( Exception ex, WebRequest request ) {
-//        return new Error( ErrorCode.GENERIC_ERROR, ex.getMessage() );
-//    }
-    
     @ExceptionHandler (value = { InternalServerErrorException.class, Exception.class, UndeclaredThrowableException.class })
     @ResponseStatus (HttpStatus.INTERNAL_SERVER_ERROR)
     protected @ResponseBody Error handleInternalServerErrorExceptions( Exception ex, WebRequest request ) {
@@ -56,7 +49,7 @@ public class RestResponseEntityExceptionHandler {
     
  
     private List<Violation> convertConstraintViolation(MethodArgumentNotValidException ex) {
-    	List<Violation> result = new ArrayList<>();
+    	List<Violation> result = new ArrayList<Violation>();
         for (ObjectError error : ex.getBindingResult().getAllErrors()) {
         	FieldError fieldError = (FieldError) error;
             Violation  violation = new Violation();

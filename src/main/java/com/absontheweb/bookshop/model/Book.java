@@ -2,8 +2,8 @@ package com.absontheweb.bookshop.model;
 
 import java.util.List;
 
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.absontheweb.bookshop.model.validation.Isbn;
 
@@ -11,20 +11,26 @@ public class Book {
 	
 	private Long id;
 	
-	@NotEmpty(message="{error.validation.title.notnull}")
-	@Length(max=150, message="{error.validation.title.maxlength}")
+	@NotNull(message="{error.validation.title.notnull}")
+	@Size(max=150, message="{error.validation.title.maxlength}")
 	private String title;
 	
 	@Isbn
 	private String isbn;
 	
-	@Length(max=3000, message="{error.validation.description.maxlength}")
+	@Size(max=3000, message="{error.validation.description.maxlength}")
 	private String description;
-
+	
+	@NotNull(message="{error.validation.author.notnull}")
+	@Size(min=1, message="{error.validation.author.atleastone.required}")
 	private List<Author> authors;
 	
+	@NotNull(message="{error.validation.price.notnull}")
 	private Double price;
+	
 	private Integer year;
+	
+	@NotNull(message="{error.validation.currency.notnull}")
 	private Currency currency;
 	
 	public Long getId() {

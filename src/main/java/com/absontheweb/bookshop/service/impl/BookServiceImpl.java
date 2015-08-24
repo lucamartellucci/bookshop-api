@@ -92,7 +92,7 @@ public class BookServiceImpl implements BookService {
 			if (paginator == null) {
 				logger.info("Load all books");
 				List<Book> books = bookAdapter.toBooks(bookRepository.findAll(), ADAPT_AUTHORS);
-				PaginatorResult<Book> paginatedBook = new PaginatorResult<>();
+				PaginatorResult<Book> paginatedBook = new PaginatorResult<Book>();
 				paginatedBook.setCurrentPage(0);
 				paginatedBook.setPageSize(books.size());
 				paginatedBook.setResult(books);
@@ -101,7 +101,7 @@ public class BookServiceImpl implements BookService {
 				return paginatedBook;
 			} else {
 				Page<BookDBTO> books = bookRepository.findAll(new PageRequest(paginator.getPage(), paginator.getSize()));
-				PaginatorResult<Book> paginatedBook = new PaginatorResult<>();
+				PaginatorResult<Book> paginatedBook = new PaginatorResult<Book>();
 				paginatedBook.setCurrentPage(paginator.getPage());
 				paginatedBook.setPageSize(books.getSize());
 				paginatedBook.setResult(bookAdapter.toBooks(books.getContent(), ADAPT_AUTHORS));

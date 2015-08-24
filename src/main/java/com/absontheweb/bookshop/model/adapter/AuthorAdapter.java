@@ -41,7 +41,7 @@ public class AuthorAdapter {
 		if (authorDBTOs == null) {
 			return null;
 		}
-		List<Author> authors = new ArrayList<>();
+		List<Author> authors = new ArrayList<Author>();
 		for (AuthorDBTO authorDBTO : authorDBTOs) {
 			authors.add(toAuthor(authorDBTO, adaptBooks));
 		}
@@ -56,7 +56,7 @@ public class AuthorAdapter {
 		if (authors == null) {
 			return null;
 		}
-		List<AuthorDBTO> authorDBTOs = new ArrayList<>();
+		List<AuthorDBTO> authorDBTOs = new ArrayList<AuthorDBTO>();
 		for (Author author : authors) {
 			authorDBTOs.add(toDBTO(author, adaptBooks));
 		}

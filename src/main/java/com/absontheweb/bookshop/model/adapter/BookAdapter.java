@@ -26,7 +26,7 @@ public class BookAdapter {
 	}
 	
 	public List<Book> toBooks(List<BookDBTO> bookDBTOs, boolean adaptAuthors) {
-		List<Book> books = new ArrayList<>();
+		List<Book> books = new ArrayList<Book>();
 		for (BookDBTO bookDBTO : bookDBTOs) {
 			books.add(toBook(bookDBTO,adaptAuthors));
 		}
@@ -53,7 +53,7 @@ public class BookAdapter {
 		if (books == null) {
 			return null;
 		}
-		List<BookDBTO> bookDBTOs = new ArrayList<>();
+		List<BookDBTO> bookDBTOs = new ArrayList<BookDBTO>();
 		for (Book book : books) {
 			bookDBTOs.add(toDBTO(book, adaptAuthors));
 		}
