@@ -21,6 +21,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import com.absontheweb.bookshop.web.controller.resolver.PaginatorArgumentResolver;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 
 @Configuration
 @ComponentScan("com.absontheweb.bookshop.web.controller")
@@ -63,7 +64,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
         final ObjectMapper mapper = new ObjectMapper();
         mapper.setSerializationInclusion( JsonInclude.Include.NON_NULL );
-
+        mapper.registerModule(new  JSR310Module());
+        
         final MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
         converter.setSupportedMediaTypes( Arrays.asList( MediaType.APPLICATION_JSON ) );
         converter.setObjectMapper( mapper );
