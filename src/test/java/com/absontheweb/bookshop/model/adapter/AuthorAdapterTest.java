@@ -8,7 +8,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,11 +35,8 @@ public class AuthorAdapterTest {
 	@InjectMocks
 	AuthorAdapter authorAdapter;
 
-	private SimpleDateFormat sdf;
-	
 	@Before public void initMocks() {
         MockitoAnnotations.initMocks(this);
-        sdf = new SimpleDateFormat("dd-MM-yyyy");
     }
 	
 	@Test
@@ -51,7 +49,7 @@ public class AuthorAdapterTest {
 		assertThat(author.getName(), is("name1"));
 		assertThat(author.getSurname(), is("surname1"));
 		assertThat(author.getBirthplace(), is("city"));
-		assertThat(sdf.format(author.getBorn()), is("01-01-1980"));
+		assertThat(author.getBorn().format(DateTimeFormatter.ISO_DATE), is("1980-01-01"));
 		assertThat(author.getBooks(), is(nullValue()));
 	}
 
@@ -62,7 +60,7 @@ public class AuthorAdapterTest {
 		assertThat(author.getName(), is("name1"));
 		assertThat(author.getSurname(), is("surname1"));
 		assertThat(author.getBirthplace(), is("city"));
-		assertThat(sdf.format(author.getBorn()), is("01-01-1980"));
+		assertThat(author.getBorn().format(DateTimeFormatter.ISO_DATE), is("1980-01-01"));
 		assertThat(author.getBooks(), is(nullValue()));
 		
 		Book book1 = BookBuilder.book().withId(1L).withCurrency(Currency.EUR).withDescription("description1").withIsbn("isbn1").withPrice(3.5).withTitle("title1").withYear(2001).build();	
@@ -153,7 +151,7 @@ public class AuthorAdapterTest {
 		authorDBTO.setId(new Long(id));
 		authorDBTO.setName("name"+id);
 		authorDBTO.setSurname("surname"+id);
-		authorDBTO.setBorn(sdf.parse("01-01-1980"));
+		authorDBTO.setBorn( LocalDate.parse("1980-01-01", DateTimeFormatter.ISO_DATE));
 		authorDBTO.setBirthplace("city");
 		authorDBTO.setBooks(new ArrayList<BookDBTO>());
 		for (int i = 0; i < 2; i++) {

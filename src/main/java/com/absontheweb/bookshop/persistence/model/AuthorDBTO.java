@@ -1,6 +1,6 @@
 package com.absontheweb.bookshop.persistence.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -30,10 +30,10 @@ public class AuthorDBTO {
 	private String birthplace;
 	
 	@Column(name="born", nullable=false)
-	private Date born;
+	private LocalDate born;
 	
 	@Column(name="died", nullable=true)
-	private Date died;
+	private LocalDate died;
 	
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy="authors")
 	private List<BookDBTO> books;
@@ -70,19 +70,19 @@ public class AuthorDBTO {
 		this.birthplace = birthPlace;
 	}
 
-	public Date getBorn() {
+	public LocalDate getBorn() {
 		return born;
 	}
 
-	public void setBorn(Date born) {
+	public void setBorn(LocalDate born) {
 		this.born = born;
 	}
 
-	public Date getDied() {
+	public LocalDate getDied() {
 		return died;
 	}
 
-	public void setDied(Date died) {
+	public void setDied(LocalDate died) {
 		this.died = died;
 	}
 	public List<BookDBTO> getBooks() {
