@@ -12,6 +12,7 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -23,6 +24,8 @@ import com.absontheweb.bookshop.service.BookService;
 import com.absontheweb.bookshop.web.controller.resolver.PaginatorArgumentResolver;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 
 @Configuration
 @EnableWebMvc
@@ -43,19 +46,20 @@ public class ControllerTestConfig extends WebMvcConfigurerAdapter {
 	@Override
     public void configureMessageConverters( final List<HttpMessageConverter<?>> converters ) {
 
-        final ByteArrayHttpMessageConverter byteArrayHttpMessageConverter = new ByteArrayHttpMessageConverter();
+		final ByteArrayHttpMessageConverter byteArrayHttpMessageConverter = new ByteArrayHttpMessageConverter();
         byteArrayHttpMessageConverter.setSupportedMediaTypes( Arrays.asList( MediaType.APPLICATION_OCTET_STREAM ) );
         converters.add( byteArrayHttpMessageConverter );
 
-        final ObjectMapper mapper = new ObjectMapper();
-        mapper.setSerializationInclusion( JsonInclude.Include.NON_NULL );
-
-        final MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-        converter.setSupportedMediaTypes( Arrays.asList( MediaType.APPLICATION_JSON ) );
-        converter.setObjectMapper( mapper );
-        converters.add( converter );
-
-        super.configureMessageConverters( converters );
+        final ObjectMapper mapper = Jackson2ObjectMapperBuilder.json()
+	        .serializationInclusion(JsonInclude.Include.NON_NULL) // Don’t include null values
+	        .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS) //ISODate
+	        .modules(new JSR310Module())
+	        .build();
+        
+        final MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
+        jsonConverter.setSupportedMediaTypes( Arrays.asList( MediaType.APPLICATION_JSON ) );
+        jsonConverter.setObjectMapper( mapper );
+        converters.add( jsonConverter );
     }
 	
 	@Bean

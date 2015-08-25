@@ -1,7 +1,7 @@
 package com.absontheweb.bookshop.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public class Author implements Serializable {
@@ -12,8 +12,8 @@ public class Author implements Serializable {
 	private String name;
 	private String surname;
 	private String birthplace;
-	private Date born;
-	private Date died;
+	private LocalDate born;
+	private LocalDate died;
 	private List<Book> books;
 	
 	public Long getId() {
@@ -40,16 +40,16 @@ public class Author implements Serializable {
 	public void setBirthplace(String birthplace) {
 		this.birthplace = birthplace;
 	}
-	public Date getBorn() {
+	public LocalDate getBorn() {
 		return born;
 	}
-	public void setBorn(Date born) {
+	public void setBorn(LocalDate born) {
 		this.born = born;
 	}
-	public Date getDied() {
+	public LocalDate getDied() {
 		return died;
 	}
-	public void setDied(Date died) {
+	public void setDied(LocalDate died) {
 		this.died = died;
 	}
 	public List<Book> getBooks() {

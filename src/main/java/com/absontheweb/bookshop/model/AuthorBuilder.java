@@ -7,8 +7,8 @@
 
 package com.absontheweb.bookshop.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class AuthorBuilder extends AuthorBuilderBase<AuthorBuilder> {
@@ -65,14 +65,14 @@ class AuthorBuilderBase<GeneratorT extends AuthorBuilderBase<GeneratorT>> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withBorn(Date aValue) {
+	public GeneratorT withBorn(LocalDate aValue) {
 		instance.setBorn(aValue);
 
 		return (GeneratorT) this;
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withDied(Date aValue) {
+	public GeneratorT withDied(LocalDate aValue) {
 		instance.setDied(aValue);
 
 		return (GeneratorT) this;

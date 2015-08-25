@@ -12,9 +12,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
@@ -69,7 +69,7 @@ public class BookControllerTest {
 	public void testGetBooks_OK() throws Exception {
 		
 		// prepare objects returned by the bookservice
-		List<Author> authors = Arrays.asList(buildAuthor(1L, toDate("25/09/1978"), null));
+		List<Author> authors = Arrays.asList(buildAuthor(1L, toDate("1978-09-25"), null));
 		Book book1 = buildBook(1L, Currency.EUR, 10.0, authors);
 		Book book2 = buildBook(2L, Currency.USD, 12.0, authors);
 		List<Book> books = Arrays.asList(book1, book2);
@@ -98,7 +98,7 @@ public class BookControllerTest {
 	        .andExpect( jsonPath( "$.result[0].authors", hasSize(1) ))
 	        .andExpect( jsonPath( "$.result[0].authors[0].name" ).value( book1.getAuthors().get(0).getName() ))
 	        .andExpect( jsonPath( "$.result[0].authors[0].surname" ).value( book1.getAuthors().get(0).getSurname() ))
-	        .andExpect( jsonPath( "$.result[0].authors[0].born" ).value( book1.getAuthors().get(0).getBorn().getTime() ))
+	        .andExpect( jsonPath( "$.result[0].authors[0].born" ).value( book1.getAuthors().get(0).getBorn().format(DateTimeFormatter.ISO_DATE) ))
 	        .andExpect( jsonPath( "$.result[0].authors[0].birthplace" ).value( book1.getAuthors().get(0).getBirthplace() ));
 	        
         verify(bookService).getBooks(ALL);
@@ -108,7 +108,7 @@ public class BookControllerTest {
 	public void testGetBooks_paged_OK() throws Exception {
 		
 		// prepare objects returned by the bookservice
-		List<Author> authors = Arrays.asList(buildAuthor(1L, toDate("25/09/1978"), null));
+		List<Author> authors = Arrays.asList(buildAuthor(1L, toDate("1978-09-25"), null));
 		Book book1 = buildBook(1L, Currency.EUR, 10.0, authors);
 		Book book2 = buildBook(2L, Currency.USD, 12.0, authors);
 		List<Book> books = Arrays.asList(book1, book2);
@@ -137,7 +137,7 @@ public class BookControllerTest {
 	        .andExpect( jsonPath( "$.result[0].authors", hasSize(1) ))
 	        .andExpect( jsonPath( "$.result[0].authors[0].name" ).value( book1.getAuthors().get(0).getName() ))
 	        .andExpect( jsonPath( "$.result[0].authors[0].surname" ).value( book1.getAuthors().get(0).getSurname() ))
-	        .andExpect( jsonPath( "$.result[0].authors[0].born" ).value( book1.getAuthors().get(0).getBorn().getTime() ))
+	        .andExpect( jsonPath( "$.result[0].authors[0].born" ).value( book1.getAuthors().get(0).getBorn().format(DateTimeFormatter.ISO_DATE)))
 	        .andExpect( jsonPath( "$.result[0].authors[0].birthplace" ).value( book1.getAuthors().get(0).getBirthplace() ));
 	        
         verify(bookService).getBooks(PAGE_1);
@@ -162,7 +162,7 @@ public class BookControllerTest {
 	@Test
 	public void testGetBook() throws Exception {
 		// prepare objects returned by the bookservice
-		List<Author> authors = Arrays.asList(buildAuthor(1L, toDate("25/09/1978"), null));
+		List<Author> authors = Arrays.asList(buildAuthor(1L, toDate("1978-09-25"), null));
 		Long bookId = 2L;
 		Book book = buildBook(bookId, Currency.EUR, 10.0, authors);
 		
@@ -182,7 +182,7 @@ public class BookControllerTest {
 	        .andExpect( jsonPath( "$.authors", hasSize(1) ))
 	        .andExpect( jsonPath( "$.authors[0].name" ).value( book.getAuthors().get(0).getName() ))
 	        .andExpect( jsonPath( "$.authors[0].surname" ).value( book.getAuthors().get(0).getSurname() ))
-	        .andExpect( jsonPath( "$.authors[0].born" ).value( book.getAuthors().get(0).getBorn().getTime() ))
+	        .andExpect( jsonPath( "$.authors[0].born" ).value( book.getAuthors().get(0).getBorn().format(DateTimeFormatter.ISO_DATE)))
 	        .andExpect( jsonPath( "$.authors[0].birthplace" ).value( book.getAuthors().get(0).getBirthplace() ));
 	        
         verify(bookService).getBookById(bookId);
@@ -224,9 +224,9 @@ public class BookControllerTest {
 	@Test
 	public void testCreateBook() throws Exception {
 		
-		Book book = buildBook(3L, Currency.EUR, 20.50, Arrays.asList(buildAuthor(1L, toDate("25/09/1978"), null)));
+		Book book = buildBook(3L, Currency.EUR, 20.50, Arrays.asList(buildAuthor(1L, toDate("1978-09-25"), null)));
 		book.setId(null);
-		Book savedBook = buildBook(3L, Currency.EUR, 20.50, Arrays.asList(buildAuthor(1L, toDate("25/09/1978"), null)));
+		Book savedBook = buildBook(3L, Currency.EUR, 20.50, Arrays.asList(buildAuthor(1L, toDate("1978-09-25"), null)));
 		when(bookService.createBook(book)).thenReturn(savedBook);
 		
 		this.mockMvc.perform( post( "/api/books" ).accept( MediaType.parseMediaType( "application/json;charset=UTF-8" ) )
@@ -246,7 +246,7 @@ public class BookControllerTest {
 	@Test
 	public void testCreateBook_notValid() throws Exception {
 		
-		Book book = buildBook(3L, null, 20.50, Arrays.asList(buildAuthor(1L, toDate("25/09/1978"), null)));
+		Book book = buildBook(3L, null, 20.50, Arrays.asList(buildAuthor(1L, toDate("1978-09-25"), null)));
 		book.setId(null);
 		// set mandatory field to null
 		book.setTitle(null);
@@ -272,7 +272,7 @@ public class BookControllerTest {
 	@Test
 	public void testCreateBook_InternalServerError() throws Exception {
 		
-		Book book = buildBook(3L, Currency.EUR, 20.50, Arrays.asList(buildAuthor(1L, toDate("25/09/1978"), null)));
+		Book book = buildBook(3L, Currency.EUR, 20.50, Arrays.asList(buildAuthor(1L, toDate("1978-09-25"), null)));
 		book.setId(null);
 
 		when(bookService.createBook(book)).thenThrow(new BookServiceException());
@@ -289,7 +289,7 @@ public class BookControllerTest {
 	/*
 	 * UTILITY METHODS
 	 */
-	private Author buildAuthor(Long id, Date born, Date died) {
+	private Author buildAuthor(Long id, LocalDate born, LocalDate died) {
 		Author author = AuthorBuilder.author()
 				.withId(id)
 				.withBirthplace("bithplace"+id)
@@ -314,8 +314,8 @@ public class BookControllerTest {
 		return book;
 	}
 	
-	private Date toDate(String date) throws ParseException {
-		return new SimpleDateFormat("dd/MM/yyyy").parse(date);
+	private LocalDate toDate(String date) throws ParseException {
+		return LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
 	}
 
 }
