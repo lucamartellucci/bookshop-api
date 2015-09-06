@@ -40,6 +40,7 @@ import com.absontheweb.bookshop.model.SimplePaginator;
 import com.absontheweb.bookshop.service.BookService;
 import com.absontheweb.bookshop.service.exception.BookServiceException;
 import com.absontheweb.bookshop.web.controller.exception.ErrorCode;
+import com.google.common.collect.ImmutableMap;
 
 import config.ControllerTestConfig;
 
@@ -252,6 +253,7 @@ public class BookControllerTest {
 		book.setTitle(null);
 		book.setIsbn("ssss");
 		
+		ImmutableMap.of("field","isbn","rejectedValue","ssss","message","ISBN not valid");
 		this.mockMvc.perform( post( "/api/books" ).accept( MediaType.parseMediaType( "application/json;charset=UTF-8" ) )
         		.content(Jackson2ObjectMapperBuilder.json().build().writeValueAsString(book))
         		.contentType(MediaType.APPLICATION_JSON))
@@ -260,13 +262,10 @@ public class BookControllerTest {
 	        .andExpect( content().contentType( "application/json;charset=UTF-8" ) )
 	        .andExpect( jsonPath( "$.code" ).value( ErrorCode.VALIDATION_ERROR ) )
 	        .andExpect( jsonPath( "$.message" ).value( "Validation Failure" ) )
-			.andExpect( jsonPath( "$.violations", hasSize(3)) );
-//			.andExpect( jsonPath( "$.violations[0].field").value("isbn"))
-//			.andExpect( jsonPath( "$.violations[0].rejectedValue").value("ssss"))
-//			.andExpect( jsonPath( "$.violations[0].message").value("ISBN not valid"))
-//			.andExpect( jsonPath( "$.violations[1].field").value("title"))
-//			.andExpect( jsonPath( "$.violations[1].message").value("Title cannot be empty"))
-		
+			.andExpect( jsonPath( "$.violations", hasSize(3)) )
+			.andExpect( jsonPath( "$.violations[?(@.field == 'isbn' && @.message == 'ISBN not valid' && @.rejectedValue == 'ssss')]").exists())
+			.andExpect( jsonPath( "$.violations[?(@.field == 'title' && @.message == 'Title cannot be empty')]").exists())
+			.andExpect( jsonPath( "$.violations[?(@.field == 'currency' && @.message == 'Currency cannot be empty')]").exists());
 	}
 	
 	@Test

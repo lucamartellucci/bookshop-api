@@ -21,6 +21,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.absontheweb.bookshop.service.BookService;
+import com.absontheweb.bookshop.service.I18nService;
 import com.absontheweb.bookshop.web.controller.resolver.PaginatorArgumentResolver;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,6 +36,11 @@ public class ControllerTestConfig extends WebMvcConfigurerAdapter {
 	@Bean
     public BookService bookService() {
         return Mockito.mock( BookService.class );
+    }
+	
+	@Bean
+    public I18nService i18nService() {
+        return Mockito.mock( I18nService.class );
     }
 	
 	@Override
