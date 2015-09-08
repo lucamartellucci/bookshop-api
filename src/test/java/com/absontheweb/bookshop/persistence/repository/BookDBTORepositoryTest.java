@@ -18,8 +18,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import com.absontheweb.bookshop.config.PersistenceConfig;
-import com.absontheweb.bookshop.model.Currency;
+import com.absontheweb.bookshop.application.PersistenceConfig;
+import com.absontheweb.bookshop.book.model.Currency;
 import com.absontheweb.bookshop.persistence.model.AuthorDBTO;
 import com.absontheweb.bookshop.persistence.model.BookDBTO;
 

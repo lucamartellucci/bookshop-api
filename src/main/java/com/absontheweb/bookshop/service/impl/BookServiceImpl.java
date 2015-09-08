@@ -11,16 +11,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.absontheweb.bookshop.model.Book;
+import com.absontheweb.bookshop.book.model.Book;
+import com.absontheweb.bookshop.book.model.adapter.BookAdapter;
 import com.absontheweb.bookshop.model.PaginatorResult;
 import com.absontheweb.bookshop.model.SimplePaginator;
-import com.absontheweb.bookshop.model.adapter.BookAdapter;
 import com.absontheweb.bookshop.persistence.model.BookDBTO;
 import com.absontheweb.bookshop.persistence.repository.BookDBTORepository;
 import com.absontheweb.bookshop.service.BookService;
 import com.absontheweb.bookshop.service.exception.BookServiceException;
 
-import static com.absontheweb.bookshop.model.adapter.BookAdapter.ADAPT_AUTHORS;
+import static com.absontheweb.bookshop.book.model.adapter.BookAdapter.ADAPT_AUTHORS;
 
 @Service
 @Transactional(readOnly=true, propagation=Propagation.REQUIRED)

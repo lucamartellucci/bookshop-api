@@ -47,8 +47,15 @@ class ViolationBuilderBase<GeneratorT extends ViolationBuilderBase<GeneratorT>> 
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withMessage(String aValue) {
-		instance.setMessage(aValue);
+	public GeneratorT withObjectName(String aValue) {
+		instance.setObjectName(aValue);
+
+		return (GeneratorT) this;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public GeneratorT withCode(String aValue) {
+		instance.setCode(aValue);
 
 		return (GeneratorT) this;
 	}

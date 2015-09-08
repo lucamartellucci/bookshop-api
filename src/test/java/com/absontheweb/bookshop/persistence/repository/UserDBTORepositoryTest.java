@@ -14,7 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import com.absontheweb.bookshop.config.PersistenceConfig;
+import com.absontheweb.bookshop.application.PersistenceConfig;
 import com.absontheweb.bookshop.persistence.model.UserDBTO;
 
 @ActiveProfiles(profiles = { "dbtest" })

@@ -14,7 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.absontheweb.bookshop.model.Currency;
+import com.absontheweb.bookshop.book.model.Currency;
 
 @Entity
 @Table(name="book")

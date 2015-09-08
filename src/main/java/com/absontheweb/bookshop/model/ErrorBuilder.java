@@ -122,7 +122,7 @@ class ErrorBuilderBase<GeneratorT extends ErrorBuilderBase<GeneratorT>> {
 
 		@SuppressWarnings("unchecked")
 		public GeneratorT withMessage(String aValue) {
-			instance.setMessage(aValue);
+			instance.setObjectName(aValue);
 
 			return (GeneratorT) this;
 		}
