@@ -1,5 +1,5 @@
 {
-  "modelPackages": ["com.absontheweb.bookshop.model"],
+  "modelPackages": ["com.absontheweb.bookshop.book.model"],
   "excludedClasses": [
   	"com.absontheweb.bookshop.model.AuthorBuilder",
   	"com.absontheweb.bookshop.model.BookBuilder",
@@ -9,7 +9,7 @@
   	"com.absontheweb.bookshop.model.UserBuilder",
   	"com.absontheweb.bookshop.model.ViolationBuilder"
   ],
-  "customAnnotationClasses": ["com.absontheweb.bookshop.model.validation.Isbn"],
+  "customAnnotationClasses": ["com.absontheweb.bookshop.book.model.validation.Isbn"],
   "corsAllowOriginPattern": "*",
   "outputFullTypeName": false,
   "outputFile": "${project.build.directory}/${project.build.finalName}/constraints.json"
