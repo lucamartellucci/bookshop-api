@@ -1,4 +1,4 @@
-package com.absontheweb.bookshop.book.controller;
+package config;
 
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +12,7 @@ import com.absontheweb.bookshop.service.BookService;
 @Configuration
 @EnableWebMvc
 @ComponentScan (basePackages={
-		"com.absontheweb.bookshop.book.controller",
+		"com.absontheweb.bookshop.book",
 		"com.absontheweb.bookshop.controller"
 })
 public class BookControllerTestConfig extends AbstractWebConfig {

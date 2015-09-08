@@ -43,6 +43,8 @@ import com.absontheweb.bookshop.service.BookService;
 import com.absontheweb.bookshop.service.exception.BookServiceException;
 import com.google.common.collect.ImmutableMap;
 
+import config.BookControllerTestConfig;
+
 @RunWith ( SpringJUnit4ClassRunner.class )
 @ContextConfiguration ( classes = { BookControllerTestConfig.class, MessageSourceConfig.class } )
 @WebAppConfiguration
