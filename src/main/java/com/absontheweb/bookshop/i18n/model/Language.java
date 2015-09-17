@@ -1,23 +1,17 @@
 package com.absontheweb.bookshop.i18n.model;
 
-/**
- * <p>Description:  TODO Insert description here</p>
- * <p>Copyright:    Copyright (c) 2014</p>
- * <p>Company:      B Human</p>
- *
- * @author damy
- * @version $Revision: $ ($Date: $)
- */
 public class Language {
 
     private String name;
     private String locale;
+    private String flagUrl;
 
     public Language() {
     }
-    public Language( final String name, final String locale ) {
+    public Language( final String name, final String locale, final String flagUrl ) {
         this.name = name;
         this.locale = locale;
+        this.flagUrl = flagUrl;
     }
 
     public String getName() {
@@ -32,34 +26,58 @@ public class Language {
     public void setLocale( final String locale ) {
         this.locale = locale;
     }
-
-    @Override
-    public boolean equals( final Object o ) {
-        if ( this == o ) return true;
-        if ( !( o instanceof Language ) ) return false;
-
-        final Language language = ( Language ) o;
-
-        if ( locale != null ? !locale.equals( language.locale ) : language.locale != null ) return false;
-        if ( name != null ? !name.equals( language.name ) : language.name != null ) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + ( locale != null ? locale.hashCode() : 0 );
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder( "Language{" );
-        sb.append( "name='" ).append( name ).append( '\'' );
-        sb.append( ", locale='" ).append( locale ).append( '\'' );
-        sb.append( '}' );
-        return sb.toString();
-    }
+	public String getFlagUrl() {
+		return flagUrl;
+	}
+	public void setFlagUrl(String flagUrl) {
+		this.flagUrl = flagUrl;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((flagUrl == null) ? 0 : flagUrl.hashCode());
+		result = prime * result + ((locale == null) ? 0 : locale.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Language other = (Language) obj;
+		if (flagUrl == null) {
+			if (other.flagUrl != null)
+				return false;
+		} else if (!flagUrl.equals(other.flagUrl))
+			return false;
+		if (locale == null) {
+			if (other.locale != null)
+				return false;
+		} else if (!locale.equals(other.locale))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Language [name=");
+		builder.append(name);
+		builder.append(", locale=");
+		builder.append(locale);
+		builder.append(", flagUrl=");
+		builder.append(flagUrl);
+		builder.append("]");
+		return builder.toString();
+	}
 
 }

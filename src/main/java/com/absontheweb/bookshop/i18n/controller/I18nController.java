@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.absontheweb.bookshop.controller.exception.InternalServerErrorException;
 import com.absontheweb.bookshop.controller.exception.ResourceNotFoundException;
 import com.absontheweb.bookshop.i18n.model.Language;
-import com.absontheweb.bookshop.i18n.model.MessageResource;
 import com.absontheweb.bookshop.i18n.model.MessageResourceLocale;
 import com.absontheweb.bookshop.service.I18nService;
 import com.absontheweb.bookshop.service.exception.I18nServiceException;
@@ -47,32 +46,26 @@ public class I18nController {
     public @ResponseBody Map<String,String> getMessages( @PathVariable String language ) throws InternalServerErrorException, ResourceNotFoundException {
 
         logger.info( "Get messages for language [{}]", language );
-        MessageResource messageResource;
+        MessageResourceLocale messageResourceLocale;
         try {
-            messageResource = i18nService.retrieveMessageResource();
+            messageResourceLocale = i18nService.retrieveMessageResourceLocale();
         } catch ( I18nServiceException e ) {
-            throw new InternalServerErrorException();
+        	logger.error("Unable to retrieve the message resource for language {}", language, e);
+            throw new InternalServerErrorException("Unable to retrieve the message resource for language ".concat(language), e);
         }
-
-        final Map<String, String> result = new LinkedHashMap<String, String>();
-        buildMessages( language, messageResource, result );
-        return result;
+        return buildMessages( language, messageResourceLocale );
     }
 
 
-    protected void buildMessages( final String language, final MessageResource messageResource, final Map<String, String> result ) {
-        final Map<String,MessageResourceLocale> nameSpaceMap = messageResource.getNameSpaceMap();
-        for ( Map.Entry<String, MessageResourceLocale> entry : nameSpaceMap.entrySet() ) {
-            final String prefix = entry.getKey();
-
-            final MessageResourceLocale messageResourceLocale = entry.getValue();
-            Properties properties = messageResourceLocale.getPropertiesMap().get( language.toUpperCase() );
-            if ( properties != null ) {
-                for ( Map.Entry<Object, Object> objectEntry : properties.entrySet() ) {
-                    result.put( String.format( "%s.%s", prefix, objectEntry.getKey() ), "" + objectEntry.getValue() );
-                }
+    protected Map<String, String> buildMessages( final String language, final MessageResourceLocale messageResourceLocale  ) {
+    	Map<String, String> result = new LinkedHashMap<String, String>();
+        Properties properties = messageResourceLocale.getPropertiesMap().get( language.toUpperCase() );
+        if ( properties != null ) {
+            for ( Map.Entry<Object, Object> objectEntry : properties.entrySet() ) {
+                result.put( "" + objectEntry.getKey(), "" + objectEntry.getValue() );
             }
         }
+        return result;
     }
 
 	
