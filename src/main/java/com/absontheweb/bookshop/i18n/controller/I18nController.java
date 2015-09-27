@@ -41,7 +41,6 @@ public class I18nController {
         }
     }
 	
-	
 	@RequestMapping ( method = RequestMethod.GET, value = "/messages/{language}" )
     public @ResponseBody Map<String,String> getMessages( @PathVariable String language ) throws InternalServerErrorException, ResourceNotFoundException {
 
@@ -67,7 +66,6 @@ public class I18nController {
         }
         return result;
     }
-
 	
 	
 }

@@ -21,6 +21,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.ConfigFileApplicationContextInitializer;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.test.context.ContextConfiguration;
@@ -46,7 +47,8 @@ import com.google.common.collect.ImmutableMap;
 import config.BookControllerTestConfig;
 
 @RunWith ( SpringJUnit4ClassRunner.class )
-@ContextConfiguration ( classes = { BookControllerTestConfig.class, MessageSourceConfig.class } )
+@ContextConfiguration ( classes = { BookControllerTestConfig.class, MessageSourceConfig.class }, 
+	initializers = ConfigFileApplicationContextInitializer.class )
 @WebAppConfiguration
 public class BookControllerTest {
 	
