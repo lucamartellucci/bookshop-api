@@ -1,7 +1,12 @@
 package com.absontheweb.bookshop.service.impl;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
+
+import com.absontheweb.bookshop.i18n.model.Language;
+import com.absontheweb.bookshop.i18n.model.MessageResourceLocale;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -16,7 +21,7 @@ public class I18nServiceImplTest {
 	public void setup() throws Exception {
 		this.i18nServiceImpl = new I18nServiceImpl();
 		this.i18nServiceImpl.setFlagTemplateUrl("http://localhost:8080/assets/{locale}_flag.png");
-		this.i18nServiceImpl.setResourcePath("src/main/resources/i18n/");
+		this.i18nServiceImpl.setResourcePath("/i18n");
 		this.i18nServiceImpl.afterPropertiesSet();
 	}
 
@@ -35,5 +40,32 @@ public class I18nServiceImplTest {
 		assertThat(this.i18nServiceImpl.buildFlagUrl("IT"),is("http://localhost:8080/assets/IT_flag.png"));
 		assertThat(this.i18nServiceImpl.buildFlagUrl("FR"),is("http://localhost:8080/assets/FR_flag.png"));
 	}
+
+	@Test
+	public void testRetrieveSupportedLanguages() throws Exception {
+		List<Language> supportedLanguages = this.i18nServiceImpl.retrieveSupportedLanguages();
+		assertThat(supportedLanguages.size(),is(2));
+
+		Language language = supportedLanguages.get(0);
+		assertThat(language.getName(),is("English"));
+		assertThat(language.getLocale(),is("EN"));
+		assertThat(language.getFlagUrl(),is("http://localhost:8080/assets/EN_flag.png"));
+		
+		language = supportedLanguages.get(1);
+		assertThat(language.getName(),is("Italiano"));
+		assertThat(language.getLocale(),is("IT"));
+		assertThat(language.getFlagUrl(),is("http://localhost:8080/assets/IT_flag.png"));
+	}
+
+	@Test
+	public void testRetrieveMessageResourceLocale() throws Exception {
+		MessageResourceLocale messageResourceLocale = i18nServiceImpl.retrieveMessageResourceLocale();
+		assertThat(messageResourceLocale.getPropertiesMap().size(), is(2));
+		assertThat(messageResourceLocale.getSupportedLanguages().size(), is(2));
+		assertThat(messageResourceLocale.getPropertiesMap().get("IT").get("error.validation.title.maxlength"), is("Lunghezza massima di 150 caratteri"));
+		assertThat(messageResourceLocale.getPropertiesMap().get("EN").get("error.validation.title.maxlength"), is("Title is too long"));
+	}
+
+	
 
 }

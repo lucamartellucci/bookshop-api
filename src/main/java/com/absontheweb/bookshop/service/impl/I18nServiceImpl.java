@@ -1,22 +1,15 @@
 package com.absontheweb.bookshop.service.impl;
 
-import java.io.File;
-import java.io.FileReader;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 import java.util.Properties;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.DirectoryFileFilter;
-import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -41,7 +34,6 @@ public class I18nServiceImpl implements I18nService, InitializingBean {
 	private UriComponentsBuilder uriBuilder;
 
 	private MessageResourceLocale messageResourceLocale;
-	private List<Language> supportedLanguages;
 
 	@Override
 	public MessageResourceLocale retrieveMessageResourceLocale() throws I18nServiceException {
@@ -50,26 +42,25 @@ public class I18nServiceImpl implements I18nService, InitializingBean {
 	
 	@Override
 	public List<Language> retrieveSupportedLanguages() {
-		return supportedLanguages;
+		return messageResourceLocale.getSupportedLanguages();
 	}
-
-	protected MessageResourceLocale buildMessageResourceLocale() throws I18nServiceException {
+	
+	protected MessageResourceLocale buildMessageResourceLocale(String resourcePath) throws I18nServiceException {
 		MessageResourceLocale mrl = new MessageResourceLocale();
 		try {
-			File directory = new File(resourcePath);
-			if (!directory.isDirectory()) {
-				throw new I18nServiceException(resourcePath + " is not directory");
-			}
-			if (!directory.exists()) {
-				throw new I18nServiceException(resourcePath + " not found");
-			}
 			
-			Collection<File> propertyFiles = FileUtils.listFiles(directory, new RegexFileFilter("^.+\\.properties"), DirectoryFileFilter.DIRECTORY);
-			for (File propertyFile : propertyFiles) {
-				Properties props = new Properties();
-				props.load(new FileReader(propertyFile));
-				mrl.getPropertiesMap().put(getLocale(propertyFile.getName()), props);
-			}
+			PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+			Resource[] resources = resolver.getResources(resourcePath.concat("/*.properties"));
+
+	        for (Resource resource : resources) {
+	            Properties props = new Properties();
+				props.load(resource.getInputStream());
+				String languageCode = getLocale(resource.getFilename());
+				mrl.getPropertiesMap().put(languageCode, props);
+				mrl.getSupportedLanguages()
+					.add(new Language(props.getProperty("languageName"), languageCode, buildFlagUrl(languageCode)));
+	        }
+	        
 			return mrl;
 		} catch (Exception e) {
 			logger.error("Unable to build message resource locale: ", e);
@@ -84,37 +75,14 @@ public class I18nServiceImpl implements I18nService, InitializingBean {
 		return StringUtils.stripFilenameExtension(fileName).substring(fileName.length()-13).toUpperCase();
 	}
 
-	protected List<Language> buildSupportedLanguages() throws I18nServiceException {
-		try {
-			List<Language> newSupportedLanguages = new ArrayList<Language>();
-			if (messageResourceLocale != null && messageResourceLocale.getPropertiesMap() != null) {
-				Map<String, Properties> propertiesMap = messageResourceLocale.getPropertiesMap();
-				for (String languageCode : propertiesMap.keySet()) {
-					if (!"DEFAULT".equalsIgnoreCase(languageCode)) {
-							Properties properties = messageResourceLocale.getPropertiesMap().get(languageCode);
-							String languageName = properties.getProperty("languageName");
-							Locale languageLocale = new Locale(languageCode);
-							Language toAdd = new Language(languageName, languageLocale.getLanguage(), buildFlagUrl(languageCode));
-							newSupportedLanguages.add(toAdd);
-					}
-				}
-			}
-			return newSupportedLanguages;
-		} catch (Exception e) {
-			logger.error("Unable to build message resource locale: ", e);
-			throw new I18nServiceException(e);
-		}
-	}
-
 	protected String buildFlagUrl(String languageCode) throws MalformedURLException {
 		return this.uriBuilder.buildAndExpand(ImmutableMap.of("locale",languageCode)).toString();
 	}
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		this.uriBuilder = UriComponentsBuilder.fromUriString(this.flagTemplateUrl);
-		this.messageResourceLocale = buildMessageResourceLocale();
-		this.supportedLanguages = buildSupportedLanguages();
+		uriBuilder = UriComponentsBuilder.fromUriString(flagTemplateUrl);
+		messageResourceLocale = buildMessageResourceLocale(resourcePath);
 	}
 
 	public void setFlagTemplateUrl(String flagTemplateUrl) {
