@@ -29,6 +29,7 @@ import org.springframework.web.context.WebApplicationContext;
 import com.absontheweb.bookshop.i18n.model.Language;
 import com.absontheweb.bookshop.i18n.model.MessageResourceLocale;
 import com.absontheweb.bookshop.service.I18nService;
+import com.absontheweb.bookshop.service.exception.I18nServiceException;
 
 import config.I18nControllerTestConfig;
 
@@ -76,6 +77,18 @@ public class I18nControllerTest {
 			        
         verify(i18nService).retrieveSupportedLanguages();
 	}
+	
+	@Test
+	public void testGetLanguages_internalError() throws Exception {
+		final String message = "Internal error";
+		when(i18nService.retrieveSupportedLanguages()).thenThrow(new I18nServiceException(message));
+		this.mockMvc.perform( get( "/api/i18n/languages" ).accept( MediaType.parseMediaType( "application/json;charset=UTF-8" ) ) )
+			.andExpect( status().is5xxServerError() )
+	        .andExpect( content().contentType( "application/json;charset=UTF-8" ) )
+	        .andDo( print() )
+	        .andExpect( jsonPath( "$.code" ).value( "GENERIC_ERROR" ) )
+	        .andExpect( jsonPath( "$.message" ).value( message ) );
+	}
 
 
 	@Test
@@ -97,6 +110,18 @@ public class I18nControllerTest {
 	        .andExpect( jsonPath( "$.key2" ).value( "value2" ) );
 		
 		verify(i18nService).retrieveMessageResourceLocale();
+	}
+	
+	@Test
+	public void testGetMessages_internalError() throws Exception {
+		final String message = "Internal error";
+		when(i18nService.retrieveMessageResourceLocale()).thenThrow(new I18nServiceException(message));
+		this.mockMvc.perform( get( "/api/i18n/messages/EN" ).accept( MediaType.parseMediaType( "application/json;charset=UTF-8" ) ) )
+			.andExpect( status().is5xxServerError() )
+	        .andExpect( content().contentType( "application/json;charset=UTF-8" ) )
+	        .andDo( print() )
+	        .andExpect( jsonPath( "$.code" ).value( "GENERIC_ERROR" ) )
+	        .andExpect( jsonPath( "$.message" ).value( message ) );
 	}
 
 }

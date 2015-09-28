@@ -12,7 +12,8 @@ import com.absontheweb.bookshop.service.I18nService;
 @Configuration
 @EnableWebMvc
 @ComponentScan (basePackages={
-		"com.absontheweb.bookshop.i18n"
+		"com.absontheweb.bookshop.i18n",
+		"com.absontheweb.bookshop.controller" // for exception handling
 })
 public class I18nControllerTestConfig extends AbstractWebConfig {
 	
