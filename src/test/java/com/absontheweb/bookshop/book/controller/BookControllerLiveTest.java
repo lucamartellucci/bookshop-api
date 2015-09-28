@@ -80,8 +80,5 @@ public class BookControllerLiveTest {
 			assertThat(e.getStatusCode(), is(HttpStatus.NOT_FOUND));
 		}
 	}
-	
-
-
 
 }

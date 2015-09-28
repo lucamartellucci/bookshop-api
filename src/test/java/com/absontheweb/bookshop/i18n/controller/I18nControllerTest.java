@@ -12,6 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,6 +27,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.absontheweb.bookshop.i18n.model.Language;
+import com.absontheweb.bookshop.i18n.model.MessageResourceLocale;
 import com.absontheweb.bookshop.service.I18nService;
 
 import config.I18nControllerTestConfig;
@@ -73,6 +75,28 @@ public class I18nControllerTest {
 	        .andExpect( jsonPath( "$[1].flagUrl" ).value( "en_flag" ) );
 			        
         verify(i18nService).retrieveSupportedLanguages();
+	}
+
+
+	@Test
+	public void testGetMessages() throws Exception {
+		
+		MessageResourceLocale mrl = new MessageResourceLocale();
+		Properties messages = new Properties();
+		messages.setProperty("key1", "value1");
+		messages.setProperty("key2", "value2");
+		mrl.getPropertiesMap().put("IT", messages);
+		
+		when(i18nService.retrieveMessageResourceLocale()).thenReturn(mrl);
+
+		this.mockMvc.perform( get( "/api/i18n/messages/IT" ).accept( MediaType.parseMediaType( "application/json;charset=UTF-8" ) ) )
+	        .andExpect( status().isOk() )
+	        .andExpect( content().contentType( "application/json;charset=UTF-8" ) )
+	        .andDo( print() )
+	        .andExpect( jsonPath( "$.key1" ).value( "value1" ) )
+	        .andExpect( jsonPath( "$.key2" ).value( "value2" ) );
+		
+		verify(i18nService).retrieveMessageResourceLocale();
 	}
 
 }
