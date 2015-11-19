@@ -1,21 +1,26 @@
 package com.absontheweb.bookshop.service.impl;
 
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.absontheweb.bookshop.i18n.model.Language;
 import com.absontheweb.bookshop.i18n.model.MessageResourceLocale;
-
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
 
 
 public class I18nServiceImplTest {
 	
 	private I18nServiceImpl i18nServiceImpl;
+	private static Logger logger = LoggerFactory.getLogger(I18nServiceImplTest.class);
 	
 	@Before
 	public void setup() throws Exception {
@@ -64,6 +69,13 @@ public class I18nServiceImplTest {
 		assertThat(messageResourceLocale.getSupportedLanguages().size(), is(2));
 		assertThat(messageResourceLocale.getPropertiesMap().get("IT").get("error.validation.title.maxlength"), is("Lunghezza massima di 150 caratteri"));
 		assertThat(messageResourceLocale.getPropertiesMap().get("EN").get("error.validation.title.maxlength"), is("Title is too long"));
+	}
+	
+	@Test
+	public void testDate() throws Exception {
+		LocalDate date = LocalDate.of(2015, Month.JANUARY, 29);
+		date = date.plusWeeks(40);
+		logger.info("Delivery date is: {}",date);
 	}
 
 	

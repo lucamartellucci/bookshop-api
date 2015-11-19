@@ -15,13 +15,14 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.absontheweb.bookshop.controller.resolver.PaginatorArgumentResolver;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 public class AbstractWebConfig extends WebMvcConfigurerAdapter {
 
@@ -31,7 +32,6 @@ public class AbstractWebConfig extends WebMvcConfigurerAdapter {
 	
 	@Autowired
     Environment env;
-	
 	
     @Autowired
     private MessageSource messageSource;
@@ -68,7 +68,7 @@ public class AbstractWebConfig extends WebMvcConfigurerAdapter {
         final ObjectMapper mapper = Jackson2ObjectMapperBuilder.json()
 	        .serializationInclusion(JsonInclude.Include.NON_NULL) // Don’t include null values
 	        .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS) //ISODate
-	        .modules(new JSR310Module())
+	        .modules(new JavaTimeModule())
 	        .build();
         
         final MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
@@ -77,6 +77,11 @@ public class AbstractWebConfig extends WebMvcConfigurerAdapter {
         converters.add( jsonConverter );
 
         super.configureMessageConverters( converters );
+    }
+    
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/api/**");
     }
     
    

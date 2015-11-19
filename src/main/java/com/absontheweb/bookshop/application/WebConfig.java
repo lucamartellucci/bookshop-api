@@ -9,8 +9,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 		"com.absontheweb.bookshop.book",
 		"com.absontheweb.bookshop.i18n",
 		"com.absontheweb.bookshop.controller",
-		"com.absontheweb.bookshop.service",
-		"com.absontheweb.bookshop.filter"
+		"com.absontheweb.bookshop.service"
 })
 @EnableWebMvc
 public class WebConfig extends AbstractWebConfig {
