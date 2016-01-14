@@ -7,6 +7,7 @@
 
 package com.absontheweb.bookshop.book.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,8 +90,8 @@ class BookBuilderBase<GeneratorT extends BookBuilderBase<GeneratorT>> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withYear(Integer aValue) {
-		instance.setYear(aValue);
+	public GeneratorT withReleaseDate(LocalDate aValue) {
+		instance.setReleaseDate(aValue);
 
 		return (GeneratorT) this;
 	}

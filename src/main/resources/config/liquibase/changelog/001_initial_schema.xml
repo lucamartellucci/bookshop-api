@@ -75,18 +75,18 @@
                                  referencedTableName="user"/>
 
 
-        <loadData encoding="UTF-8" file="config/liquibase/csv/users.csv"
+        <loadData encoding="UTF-8" file="config/liquibase/csv/001/users.csv"
                   separator=";" tableName="user">
             <column name="activated" type="boolean"/>
         </loadData>
         
         <loadData encoding="UTF-8"
-                  file="config/liquibase/csv/authorities.csv"
+                  file="config/liquibase/csv/001/authorities.csv"
                   separator=";"
                   tableName="authority"/>
 
         <loadData encoding="UTF-8"
-                  file="config/liquibase/csv/users_authorities.csv"
+                  file="config/liquibase/csv/001/users_authorities.csv"
                   separator=";"
                   tableName="user_authority"/>
                   
@@ -155,17 +155,17 @@
                                  referencedTableName="book"/>
                                  
 		<loadData encoding="UTF-8"
-                  file="config/liquibase/csv/book.csv"
+                  file="config/liquibase/csv/001/book.csv"
                   separator=";"
                   tableName="book"/>
 
         <loadData encoding="UTF-8"
-                  file="config/liquibase/csv/author.csv"
+                  file="config/liquibase/csv/001/author.csv"
                   separator=";"
                   tableName="author"/>
                   
         <loadData encoding="UTF-8"
-                  file="config/liquibase/csv/book_author.csv"
+                  file="config/liquibase/csv/001/book_author.csv"
                   separator=";"
                   tableName="book_author"/>
         

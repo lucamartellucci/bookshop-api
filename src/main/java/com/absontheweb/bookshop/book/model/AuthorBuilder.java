@@ -181,8 +181,8 @@ class AuthorBuilderBase<GeneratorT extends AuthorBuilderBase<GeneratorT>> {
 		}
 
 		@SuppressWarnings("unchecked")
-		public GeneratorT withYear(Integer aValue) {
-			instance.setYear(aValue);
+		public GeneratorT withReleaseDate(LocalDate aValue) {
+			instance.setReleaseDate(aValue);
 
 			return (GeneratorT) this;
 		}

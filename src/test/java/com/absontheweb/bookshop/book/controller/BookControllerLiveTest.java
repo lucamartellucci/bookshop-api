@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,7 +61,7 @@ public class BookControllerLiveTest {
     	assertThat(book.getDescription(), is(equalTo("Gomorra desc")));
     	assertThat(book.getCurrency(), is(equalTo(Currency.EUR)));
     	assertThat(book.getPrice(), is(equalTo(12.00)));
-    	assertThat(book.getYear(), is(equalTo(2008)));
+    	assertThat(book.getReleaseDate(), is(equalTo(LocalDate.of(2008,11,02))));
     	assertThat(book.getIsbn(), is(equalTo("1234567890")));
     	List<Author> authors = book.getAuthors();
 		assertThat(authors.size(), is(1));

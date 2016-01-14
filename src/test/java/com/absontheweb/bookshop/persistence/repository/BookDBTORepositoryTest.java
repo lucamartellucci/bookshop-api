@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,6 +21,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import com.absontheweb.bookshop.application.PersistenceConfig;
 import com.absontheweb.bookshop.book.model.Currency;
+import com.absontheweb.bookshop.model.StorageProvider;
 import com.absontheweb.bookshop.persistence.model.AuthorDBTO;
 import com.absontheweb.bookshop.persistence.model.BookDBTO;
 
@@ -43,7 +45,7 @@ public class BookDBTORepositoryTest extends AbstractTransactionalJUnit4SpringCon
     	assertThat(bookDBTO.getDescription(), is(equalTo("Gomorra desc")));
     	assertThat(bookDBTO.getCurrency(), is(equalTo(Currency.EUR)));
     	assertThat(bookDBTO.getPrice(), is(equalTo(12.00)));
-    	assertThat(bookDBTO.getYear(), is(equalTo(2008)));
+    	assertThat(bookDBTO.getReleaseDate(), is(equalTo(LocalDate.of(2008,11,02))));
     	assertThat(bookDBTO.getIsbn(), is(equalTo("1234567890")));
     	List<AuthorDBTO> authors = bookDBTO.getAuthors();
 		assertThat(authors.size(), is(1));
@@ -66,7 +68,7 @@ public class BookDBTORepositoryTest extends AbstractTransactionalJUnit4SpringCon
     	assertThat(bookDBTO.getDescription(), is(equalTo("Gomorra desc")));
     	assertThat(bookDBTO.getCurrency(), is(equalTo(Currency.EUR)));
     	assertThat(bookDBTO.getPrice(), is(equalTo(12.00)));
-    	assertThat(bookDBTO.getYear(), is(equalTo(2008)));
+    	assertThat(bookDBTO.getReleaseDate(), is(equalTo(LocalDate.of(2008, 11, 02))));
     	assertThat(bookDBTO.getIsbn(), is(equalTo("1234567890")));
     	List<AuthorDBTO> authors = bookDBTO.getAuthors();
 		assertThat(authors.size(), is(1));
@@ -79,24 +81,37 @@ public class BookDBTORepositoryTest extends AbstractTransactionalJUnit4SpringCon
     public void testCreateBook() throws Exception {
     	AuthorDBTO authorDBTO = repoAuthor.findOne(1L);
     	
+    	final String title = "title01";
+    	final String description = "desc01";
+    	final String isbn = "11111111";
+    	final String name = "name001";
+    	final LocalDate releasedOn = LocalDate.of(2011, 01, 01);
+    	final StorageProvider local = StorageProvider.LOCAL;
+    	final Currency euro = Currency.EUR;
+    	final double price = 11.0;
+    	
     	BookDBTO bookDBTO = new BookDBTO();
-    	bookDBTO.setTitle("title01");
-    	bookDBTO.setDescription("desc01");
-    	bookDBTO.setCurrency(Currency.EUR);
-    	bookDBTO.setIsbn("11111111");
-    	bookDBTO.setPrice(11.0);
-    	bookDBTO.setYear(2011);
+		bookDBTO.setTitle(title);
+		bookDBTO.setDescription(description);
+		bookDBTO.setCurrency(euro);
+		bookDBTO.setIsbn(isbn);
+		bookDBTO.setPrice(price);
+		bookDBTO.setReleaseDate(releasedOn);
     	bookDBTO.setAuthors(Arrays.asList(authorDBTO));
+		bookDBTO.setCoverName(name);
+		bookDBTO.setCoverLocation(local);
     	
     	BookDBTO savedBookDBTO = repo.save(bookDBTO);
     	
     	assertThat(savedBookDBTO,is(notNullValue()));
-    	assertThat(savedBookDBTO.getTitle(), is(equalTo("title01")));
-    	assertThat(savedBookDBTO.getDescription(), is(equalTo("desc01")));
-    	assertThat(savedBookDBTO.getCurrency(), is(equalTo(Currency.EUR)));
-    	assertThat(savedBookDBTO.getPrice(), is(equalTo(11.00)));
-    	assertThat(savedBookDBTO.getYear(), is(equalTo(2011)));
-    	assertThat(savedBookDBTO.getIsbn(), is(equalTo("11111111")));
+    	assertThat(savedBookDBTO.getTitle(), is(equalTo(title)));
+    	assertThat(savedBookDBTO.getDescription(), is(equalTo(description)));
+    	assertThat(savedBookDBTO.getCurrency(), is(equalTo(euro)));
+    	assertThat(savedBookDBTO.getPrice(), is(equalTo(price)));
+    	assertThat(savedBookDBTO.getReleaseDate(), is(equalTo(releasedOn)));
+    	assertThat(savedBookDBTO.getIsbn(), is(equalTo(isbn)));
+    	assertThat(savedBookDBTO.getCoverLocation(),is(local));
+    	assertThat(savedBookDBTO.getCoverName(),is(name));
 		assertThat(bookDBTO.getAuthors().size(), is(1));
     }
 	

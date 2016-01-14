@@ -1,7 +1,9 @@
 package com.absontheweb.bookshop.persistence.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -15,6 +17,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.absontheweb.bookshop.book.model.Currency;
+import com.absontheweb.bookshop.model.StorageProvider;
 
 @Entity
 @Table(name="book")
@@ -40,11 +43,18 @@ public class BookDBTO {
 	
 	private Double price;
 	
-	private Integer year;
+	@Column(name="release_date")
+	private LocalDate releaseDate;
 	
 	@Enumerated(EnumType.STRING)
 	private Currency currency;
 	
+	@Column(name="cover_name")
+	private String coverName;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name="cover_location")
+	private StorageProvider coverLocation;
 
 	public Long getId() {
 		return id;
@@ -94,12 +104,12 @@ public class BookDBTO {
 		this.price = price;
 	}
 
-	public Integer getYear() {
-		return year;
+	public LocalDate getReleaseDate() {
+		return releaseDate;
 	}
 
-	public void setYear(Integer year) {
-		this.year = year;
+	public void setReleaseDate(LocalDate releaseDate) {
+		this.releaseDate = releaseDate;
 	}
 	
 	
@@ -110,18 +120,48 @@ public class BookDBTO {
 	public void setCurrency(Currency currency) {
 		this.currency = currency;
 	}
+	
+	public String getCoverName() {
+		return coverName;
+	}
+
+	public void setCoverName(String coverName) {
+		this.coverName = coverName;
+	}
+
+	public StorageProvider getCoverLocation() {
+		return coverLocation;
+	}
+
+	public void setCoverLocation(StorageProvider coverLocation) {
+		this.coverLocation = coverLocation;
+	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("BookDBTO [id=").append(id).append(", title=")
-				.append(title).append(", isbn=").append(isbn)
-				.append(", description=").append(description)
-				.append(", authors=").append(authors).append(", price=")
-				.append(price).append(", year=").append(year)
-				.append(", currency=").append(currency).append("]");
+		builder.append("BookDBTO [id=");
+		builder.append(id);
+		builder.append(", title=");
+		builder.append(title);
+		builder.append(", isbn=");
+		builder.append(isbn);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", authors=");
+		builder.append(authors);
+		builder.append(", price=");
+		builder.append(price);
+		builder.append(", releaseDate=");
+		builder.append(releaseDate);
+		builder.append(", currency=");
+		builder.append(currency);
+		builder.append(", coverName=");
+		builder.append(coverName);
+		builder.append(", coverLocation=");
+		builder.append(coverLocation);
+		builder.append("]");
 		return builder.toString();
 	}
-	
 
 }

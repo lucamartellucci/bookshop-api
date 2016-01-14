@@ -1,5 +1,6 @@
 package com.absontheweb.bookshop.book.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
@@ -28,7 +29,7 @@ public class Book {
 	@NotNull(message="{error.validation.price.notnull}")
 	private Double price;
 	
-	private Integer year;
+	private LocalDate releaseDate;
 	
 	@NotNull(message="{error.validation.currency.notnull}")
 	private Currency currency;
@@ -94,8 +95,8 @@ public class Book {
 		this.price = value;
 		return this;
 	}
-	public Book year(Integer value) {
-		this.year = value;
+	public Book releaseDate(LocalDate value) {
+		this.releaseDate = value;
 		return this;
 	}
 	
@@ -104,12 +105,11 @@ public class Book {
 		return this;
 	}
 	
-	
-	public Integer getYear() {
-		return year;
+	public LocalDate getReleaseDate() {
+		return releaseDate;
 	}
-	public void setYear(Integer year) {
-		this.year = year;
+	public void setReleaseDate(LocalDate value) {
+		this.releaseDate = value;
 	}
 	public Currency getCurrency() {
 		return currency;
@@ -131,7 +131,7 @@ public class Book {
 		result = prime * result + ((isbn == null) ? 0 : isbn.hashCode());
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
-		result = prime * result + ((year == null) ? 0 : year.hashCode());
+		result = prime * result + ((releaseDate == null) ? 0 : releaseDate.hashCode());
 		return result;
 	}
 	@Override
@@ -175,23 +175,34 @@ public class Book {
 				return false;
 		} else if (!title.equals(other.title))
 			return false;
-		if (year == null) {
-			if (other.year != null)
+		if (releaseDate == null) {
+			if (other.releaseDate != null)
 				return false;
-		} else if (!year.equals(other.year))
+		} else if (!releaseDate.equals(other.releaseDate))
 			return false;
 		return true;
 	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Book [id=").append(id).append(", title=").append(title)
-				.append(", isbn=").append(isbn).append(", description=")
-				.append(description).append(", authors=").append(authors)
-				.append(", price=").append(price).append("]");
+		builder.append("Book [id=");
+		builder.append(id);
+		builder.append(", title=");
+		builder.append(title);
+		builder.append(", isbn=");
+		builder.append(isbn);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", authors=");
+		builder.append(authors);
+		builder.append(", price=");
+		builder.append(price);
+		builder.append(", releaseDate=");
+		builder.append(releaseDate);
+		builder.append(", currency=");
+		builder.append(currency);
+		builder.append("]");
 		return builder.toString();
 	}
-	
-	
 
 }

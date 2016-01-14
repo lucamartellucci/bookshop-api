@@ -1,0 +1,12 @@
+id;title;isbn;description;price;currency;cover_name;cover_location;release_date
+1;Gomorra;1234567890;Gomorra desc;12.0;EUR;NULL;NULL;2008-11-02
+2;Il Grande Gatsby;0987654321;Il Grande Gatsby desc;13.22;EUR;NULL;NULL;1970-12-02
+3;Oceano Mare;7766553332;Oceano Mare desc;10.5;EUR;NULL;NULL;2005-11-02
+4;Lo Hobbit;874342233;Lo Hobbit desc;10.5;EUR;NULL;NULL;1966-03-02
+5;Il Signore degli Anelli;11111;Il Signore degli Anelli desc;10.5;EUR;NULL;NULL;1969-05-21
+6;Q;679954222;Q desc;10.5;EUR;NULL;NULL;2008-07-10
+7;Il mio nome è rosso;32323423;Il mio nome è rosso desc;10.5;EUR;NULL;NULL;2003-11-02
+8;1Q84;564553;1Q84 desc;10.5;EUR;NULL;NULL;2008-11-02
+9;Alice nel paese delle meraviglie;6756744;Alice nel paese delle meraviglie desc;10.5;EUR;NULL;NULL;2008-11-02
+10;Viaggio al centro della terra;78622;Viaggio al centro della terra desc;10.5;EUR;NULL;NULL;2008-11-02
+11;Diario di Scuola;675543;Diario di Scuola desc;10.5;EUR;NULL;NULL;2008-11-02

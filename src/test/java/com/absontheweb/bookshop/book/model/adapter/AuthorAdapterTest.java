@@ -63,8 +63,8 @@ public class AuthorAdapterTest {
 		assertThat(author.getBorn().format(DateTimeFormatter.ISO_DATE), is("1980-01-01"));
 		assertThat(author.getBooks(), is(nullValue()));
 		
-		Book book1 = BookBuilder.book().withId(1L).withCurrency(Currency.EUR).withDescription("description1").withIsbn("isbn1").withPrice(3.5).withTitle("title1").withYear(2001).build();	
-		Book book2 = BookBuilder.book().withId(2L).withCurrency(Currency.EUR).withDescription("description2").withIsbn("isbn2").withPrice(3.5).withTitle("title2").withYear(2002).build();	
+		Book book1 = BookBuilder.book().withId(1L).withCurrency(Currency.EUR).withDescription("description1").withIsbn("isbn1").withPrice(3.5).withTitle("title1").withReleaseDate(LocalDate.of(2001, 01, 01)).build();	
+		Book book2 = BookBuilder.book().withId(2L).withCurrency(Currency.EUR).withDescription("description2").withIsbn("isbn2").withPrice(3.5).withTitle("title2").withReleaseDate(LocalDate.of(2002, 01, 01)).build();	
 		AuthorDBTO authorDBTO = buildAuthorDBTO(1);
 		when(bookAdapter.toBooks(authorDBTO.getBooks())).thenReturn(Arrays.asList(book1,book2));
 		
@@ -79,7 +79,7 @@ public class AuthorAdapterTest {
 		assertThat(author.getBooks().get(0).getIsbn(),is("isbn1"));
 		assertThat(author.getBooks().get(0).getPrice(),is(3.5));
 		assertThat(author.getBooks().get(0).getTitle(),is("title1"));
-		assertThat(author.getBooks().get(0).getYear(),is(2001));
+		assertThat(author.getBooks().get(0).getReleaseDate(),is(LocalDate.of(2001, 01, 01)));
 
 		assertThat(author.getBooks().get(1).getId(),is(2L));
 		assertThat(author.getBooks().get(1).getCurrency(),is(Currency.EUR));
@@ -87,7 +87,7 @@ public class AuthorAdapterTest {
 		assertThat(author.getBooks().get(1).getIsbn(),is("isbn2"));
 		assertThat(author.getBooks().get(1).getPrice(),is(3.5));
 		assertThat(author.getBooks().get(1).getTitle(),is("title2"));
-		assertThat(author.getBooks().get(1).getYear(),is(2002));
+		assertThat(author.getBooks().get(1).getReleaseDate(),is(LocalDate.of(2002, 01, 01)));
 		
 		verify(bookAdapter).toBooks(authorDBTO.getBooks());
 	}
@@ -115,8 +115,8 @@ public class AuthorAdapterTest {
 	@Test
 	public void testToAuthorsListAuthorDBTOBoolean() throws Exception {
 		
-		Book book1 = BookBuilder.book().withId(1L).withCurrency(Currency.EUR).withDescription("description1").withIsbn("isbn1").withPrice(3.5).withTitle("title1").withYear(2001).build();	
-		Book book2 = BookBuilder.book().withId(2L).withCurrency(Currency.EUR).withDescription("description2").withIsbn("isbn2").withPrice(3.5).withTitle("title2").withYear(2002).build();	
+		Book book1 = BookBuilder.book().withId(1L).withCurrency(Currency.EUR).withDescription("description1").withIsbn("isbn1").withPrice(3.5).withTitle("title1").withReleaseDate(LocalDate.of(2001, 01, 01)).build();	
+		Book book2 = BookBuilder.book().withId(2L).withCurrency(Currency.EUR).withDescription("description2").withIsbn("isbn2").withPrice(3.5).withTitle("title2").withReleaseDate(LocalDate.of(2002, 01, 01)).build();	
 		
 		AuthorDBTO authorDBTO1 = buildAuthorDBTO(1);
 		AuthorDBTO authorDBTO2 = buildAuthorDBTO(2);
@@ -168,7 +168,7 @@ public class AuthorAdapterTest {
 		bookDBTO.setIsbn("isbn"+id);
 		bookDBTO.setPrice(3.5);
 		bookDBTO.setTitle("title"+id);
-		bookDBTO.setYear(id + 2000);
+		bookDBTO.setReleaseDate(LocalDate.of(id + 2000, 01, 01));
 		return bookDBTO;
 	}
 
