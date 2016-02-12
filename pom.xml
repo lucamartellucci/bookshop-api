@@ -20,6 +20,8 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<jacoco.plugin.version>0.7.5.201505241946</jacoco.plugin.version>
+		<coveralls.plugin.version>4.1.0</coveralls.plugin.version>
 	</properties>
 
 	<dependencies>
@@ -139,6 +141,28 @@
 <!-- 					</arguments> -->
 				</configuration>
 			</plugin>
+			
+			<plugin>
+					    <groupId>org.jacoco</groupId>
+					    <artifactId>jacoco-maven-plugin</artifactId>
+					    <version>${jacoco.plugin.version}</version>
+					    <executions>
+					        <execution>
+					            <id>prepare-agent</id>
+					            <goals>
+					                <goal>prepare-agent</goal>
+					            </goals>
+					        </execution>
+					    </executions>
+					</plugin>
+					<plugin>
+					    <groupId>org.eluder.coveralls</groupId>
+					    <artifactId>coveralls-maven-plugin</artifactId>
+					    <version>${coveralls.plugin.version}</version>
+					    <configuration>
+					        <repoToken></repoToken>
+					    </configuration>
+					</plugin>
 
 		</plugins>
 		<pluginManagement>
@@ -180,7 +204,6 @@
 	</build>
 
 	<profiles>
-
 		<profile>
 			<id>unit-tests</id>
 			<build>
