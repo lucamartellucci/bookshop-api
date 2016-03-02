@@ -1,4 +1,4 @@
-id;title;isbn;description;price;currency;cover_name;cover_location;release_date
+id;title;isbn;description;price;currency;cover_file_name;cover_file_location;release_date
 1;Gomorra;1234567890;Gomorra desc;12.0;EUR;NULL;NULL;2008-11-02
 2;Il Grande Gatsby;0987654321;Il Grande Gatsby desc;13.22;EUR;NULL;NULL;1970-12-02
 3;Oceano Mare;7766553332;Oceano Mare desc;10.5;EUR;NULL;NULL;2005-11-02

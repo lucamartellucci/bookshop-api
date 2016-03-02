@@ -7,22 +7,22 @@
     <changeSet id="00000000000002" author="luca">
     	<preConditions>
 			<not>
-				<columnExists tableName="book" columnName="cover_name" />
+				<columnExists tableName="book" columnName="cover_file_name" />
 			</not>
 		</preConditions>
 	    <addColumn tableName="book">
-	        <column name="cover_name" type="varchar(255)"/>
+	        <column name="cover_file_name" type="varchar(255)"/>
 	    </addColumn>
 	</changeSet>
 	
 	<changeSet id="00000000000003" author="luca">
 		<preConditions>
 			<not>
-				<columnExists tableName="book" columnName="cover_location" />
+				<columnExists tableName="book" columnName="cover_file_location" />
 			</not>
 		</preConditions>
 		<addColumn tableName="book">
-			<column name="cover_location" type="varchar(50)" />
+			<column name="cover_file_location" type="varchar(50)" />
 		</addColumn>
 	</changeSet>
 	

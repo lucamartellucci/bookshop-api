@@ -98,8 +98,8 @@ public class BookDBTORepositoryTest extends AbstractTransactionalJUnit4SpringCon
 		bookDBTO.setPrice(price);
 		bookDBTO.setReleaseDate(releasedOn);
     	bookDBTO.setAuthors(Arrays.asList(authorDBTO));
-		bookDBTO.setCoverName(name);
-		bookDBTO.setCoverLocation(local);
+		bookDBTO.setCoverFileName(name);
+		bookDBTO.setCoverFileLocation(local);
     	
     	BookDBTO savedBookDBTO = repo.save(bookDBTO);
     	
@@ -110,8 +110,8 @@ public class BookDBTORepositoryTest extends AbstractTransactionalJUnit4SpringCon
     	assertThat(savedBookDBTO.getPrice(), is(equalTo(price)));
     	assertThat(savedBookDBTO.getReleaseDate(), is(equalTo(releasedOn)));
     	assertThat(savedBookDBTO.getIsbn(), is(equalTo(isbn)));
-    	assertThat(savedBookDBTO.getCoverLocation(),is(local));
-    	assertThat(savedBookDBTO.getCoverName(),is(name));
+    	assertThat(savedBookDBTO.getCoverFileLocation(),is(local));
+    	assertThat(savedBookDBTO.getCoverFileName(),is(name));
 		assertThat(bookDBTO.getAuthors().size(), is(1));
     }
 	

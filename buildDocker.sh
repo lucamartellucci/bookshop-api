@@ -1,15 +1,16 @@
 #!/bin/sh
 
-. java8.sh
-
 echo "Building application"
-mvn clean package -DskipTest=true
+#mvn clean package -DskipTest=true
 
-cp target/bookshop-0.0.1-SNAPSHOT.jar docker/middleware
+mkdir -p docker/middleware/files
+cp target/bookshop-0.0.1-SNAPSHOT.jar docker/middleware/files
 
 echo "Building a set of docker images in order to run the Bookshop Application"
 
-docker build -t bookshop-middleware docker/middleware/
+docker build -t abs/bookshop-middleware docker/middleware/
+
+rm -rf docker/middleware/files
 
 
 

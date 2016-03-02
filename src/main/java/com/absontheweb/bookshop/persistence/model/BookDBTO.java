@@ -49,12 +49,12 @@ public class BookDBTO {
 	@Enumerated(EnumType.STRING)
 	private Currency currency;
 	
-	@Column(name="cover_name")
-	private String coverName;
+	@Column(name="cover_file_name")
+	private String coverFileName;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name="cover_location")
-	private StorageProvider coverLocation;
+	@Column(name="cover_file_location")
+	private StorageProvider coverFileLocation;
 
 	public Long getId() {
 		return id;
@@ -121,47 +121,23 @@ public class BookDBTO {
 		this.currency = currency;
 	}
 	
-	public String getCoverName() {
-		return coverName;
+	public String getCoverFileName() {
+		return coverFileName;
 	}
 
-	public void setCoverName(String coverName) {
-		this.coverName = coverName;
+	public void setCoverFileName(String coverFileName) {
+		this.coverFileName = coverFileName;
 	}
 
-	public StorageProvider getCoverLocation() {
-		return coverLocation;
+	public StorageProvider getCoverFileLocation() {
+		return coverFileLocation;
 	}
 
-	public void setCoverLocation(StorageProvider coverLocation) {
-		this.coverLocation = coverLocation;
+	public void setCoverFileLocation(StorageProvider coverFileLocation) {
+		this.coverFileLocation = coverFileLocation;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("BookDBTO [id=");
-		builder.append(id);
-		builder.append(", title=");
-		builder.append(title);
-		builder.append(", isbn=");
-		builder.append(isbn);
-		builder.append(", description=");
-		builder.append(description);
-		builder.append(", authors=");
-		builder.append(authors);
-		builder.append(", price=");
-		builder.append(price);
-		builder.append(", releaseDate=");
-		builder.append(releaseDate);
-		builder.append(", currency=");
-		builder.append(currency);
-		builder.append(", coverName=");
-		builder.append(coverName);
-		builder.append(", coverLocation=");
-		builder.append(coverLocation);
-		builder.append("]");
-		return builder.toString();
-	}
+	
+	
 
 }
