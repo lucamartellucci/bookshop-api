@@ -19,6 +19,9 @@ import javax.persistence.Table;
 import com.absontheweb.bookshop.book.model.Currency;
 import com.absontheweb.bookshop.model.StorageProvider;
 
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name="book")
 public class BookDBTO {
@@ -55,89 +58,5 @@ public class BookDBTO {
 	@Enumerated(EnumType.STRING)
 	@Column(name="cover_file_location")
 	private StorageProvider coverFileLocation;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getIsbn() {
-		return isbn;
-	}
-
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public List<AuthorDBTO> getAuthors() {
-		return authors;
-	}
-
-	public void setAuthors(List<AuthorDBTO> authors) {
-		this.authors = authors;
-	}
-
-	public Double getPrice() {
-		return price;
-	}
-
-	public void setPrice(Double price) {
-		this.price = price;
-	}
-
-	public LocalDate getReleaseDate() {
-		return releaseDate;
-	}
-
-	public void setReleaseDate(LocalDate releaseDate) {
-		this.releaseDate = releaseDate;
-	}
-	
-	
-	public Currency getCurrency() {
-		return currency;
-	}
-
-	public void setCurrency(Currency currency) {
-		this.currency = currency;
-	}
-	
-	public String getCoverFileName() {
-		return coverFileName;
-	}
-
-	public void setCoverFileName(String coverFileName) {
-		this.coverFileName = coverFileName;
-	}
-
-	public StorageProvider getCoverFileLocation() {
-		return coverFileLocation;
-	}
-
-	public void setCoverFileLocation(StorageProvider coverFileLocation) {
-		this.coverFileLocation = coverFileLocation;
-	}
-
-	
-	
 
 }

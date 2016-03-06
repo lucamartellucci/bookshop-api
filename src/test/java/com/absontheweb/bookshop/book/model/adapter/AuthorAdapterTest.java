@@ -113,7 +113,7 @@ public class AuthorAdapterTest {
 	}
 	
 	@Test
-	public void testToAuthorsListAuthorDBTOBoolean() throws Exception {
+	public void testToAuthorsListAuthorDBTOAdaptBooks() throws Exception {
 		
 		Book book1 = BookBuilder.book().withId(1L).withCurrency(Currency.EUR).withDescription("description1").withIsbn("isbn1").withPrice(3.5).withTitle("title1").withReleaseDate(LocalDate.of(2001, 01, 01)).build();	
 		Book book2 = BookBuilder.book().withId(2L).withCurrency(Currency.EUR).withDescription("description2").withIsbn("isbn2").withPrice(3.5).withTitle("title2").withReleaseDate(LocalDate.of(2002, 01, 01)).build();	
@@ -140,8 +140,8 @@ public class AuthorAdapterTest {
 		assertThat(authors.get(1).getBirthplace(), is("city"));
 		assertThat(authors.get(1).getBooks().size(), is(2));
 		
-		verify(bookAdapter).toBooks(authorDBTO1.getBooks());
 		verify(bookAdapter).toBooks(authorDBTO2.getBooks());
+		verify(bookAdapter).toBooks(authorDBTO1.getBooks());
 	}
 	
 	
@@ -155,7 +155,7 @@ public class AuthorAdapterTest {
 		authorDBTO.setBirthplace("city");
 		authorDBTO.setBooks(new ArrayList<BookDBTO>());
 		for (int i = 0; i < 2; i++) {
-			authorDBTO.getBooks().add(buildBookDBTO(i));
+			authorDBTO.getBooks().add(buildBookDBTO(id+i));
 		}
 		return authorDBTO;
 	}

@@ -7,53 +7,39 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
 
-import com.absontheweb.bookshop.application.Application;
-import com.absontheweb.bookshop.application.MessageSourceConfig;
-import com.absontheweb.bookshop.application.PersistenceConfig;
-import com.absontheweb.bookshop.application.WebConfig;
 import com.absontheweb.bookshop.book.model.Author;
 import com.absontheweb.bookshop.book.model.Book;
 import com.absontheweb.bookshop.book.model.Currency;
+import com.absontheweb.bookshop.test.AbstractLiveTest;
 
-@RunWith(value=SpringJUnit4ClassRunner.class)
-@WebIntegrationTest("server.port:18080")
-@SpringApplicationConfiguration(classes={Application.class, MessageSourceConfig.class, PersistenceConfig.class, WebConfig.class})
-@ActiveProfiles(profiles = { "dbtest" })
-public class BookControllerLiveTest {
+public class BookControllerLiveTest extends AbstractLiveTest {
 
 	private static Logger logger = LoggerFactory.getLogger(BookControllerLiveTest.class);
 	
-	private RestTemplate restClient;
-	private String baseURL = "http://localhost:18080/api/";
-
-    @Before
-    public void setup() {
-    	restClient = new RestTemplate();
-    }
-
 	@Test
 	public void testGetBook() throws Exception {
 		
-		Map<String, String> urlVariables = new HashMap<String, String>();
-		urlVariables.put("id", "1");
-		Book book = restClient.getForObject(baseURL.concat("/books/{id}"), Book.class, urlVariables);
+		addVar("id", "1");
+		
+		ResponseEntity<Book> responseEntity = restClient.exchange(
+				BASE_API_URL.concat("/books/{id}"), 
+				HttpMethod.GET, 
+				new HttpEntity<Book>(securityHeaders), 
+				Book.class, urlVars() );
+		
+		Book book = responseEntity.getBody();
+		
 		logger.debug("Retrieved book is [{}]", book);
 		
 		assertThat(book,is(notNullValue()));
@@ -72,10 +58,13 @@ public class BookControllerLiveTest {
 	
 	@Test
 	public void testGetBook_notExisting() throws Exception {
-		Map<String, String> urlVariables = new HashMap<String, String>();
-		urlVariables.put("id", "1001");
+		addVar("id", "1001");
 		try {
-			restClient.getForObject(baseURL.concat("/books/{id}"), Book.class, urlVariables);
+			restClient.exchange(
+					BASE_API_URL.concat("/books/{id}"), 
+					HttpMethod.GET, 
+					new HttpEntity<Book>(securityHeaders), 
+					Book.class, urlVars() );
 			fail();
 		} catch (HttpClientErrorException e) {
 			assertThat(e.getStatusCode(), is(HttpStatus.NOT_FOUND));

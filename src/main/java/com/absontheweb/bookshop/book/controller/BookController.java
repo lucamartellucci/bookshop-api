@@ -1,6 +1,7 @@
 package com.absontheweb.bookshop.book.controller;
 
 import java.net.URI;
+import java.security.Principal;
 
 import javax.validation.Valid;
 
@@ -51,8 +52,10 @@ public class BookController {
 	@RequestMapping(value = "/books/{id}", 
 			method = RequestMethod.GET, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Book> getBook(@PathVariable("id") Long id) throws InternalServerErrorException, ResourceNotFoundException {
+	public ResponseEntity<Book> getBook(@PathVariable("id") Long id, Principal user) 
+			throws InternalServerErrorException, ResourceNotFoundException {
 		try {
+			logger.debug("Principal is: {}", user);
 			Book book = bookService.getBookById(id);
 			if (book != null) {
 				return ResponseEntity.ok(book);

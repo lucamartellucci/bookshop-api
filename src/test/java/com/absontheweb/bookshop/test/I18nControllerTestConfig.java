@@ -1,4 +1,4 @@
-package config;
+package com.absontheweb.bookshop.test;
 
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;

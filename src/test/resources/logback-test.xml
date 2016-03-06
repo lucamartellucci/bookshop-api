@@ -1,21 +1,9 @@
-<configuration scan="true" scanPeriod="10 seconds">
-
-
-	<!-- This writes everything on the standard output. -->
-	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-		<layout class="ch.qos.logback.classic.PatternLayout">
-			<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} | %X{request} | %X{organization} | %X{userId} | %X{client} | %X{session} | %p | %c | %M%X{methodName} | %m%n</Pattern>
-		</layout>
-	</appender>
-   
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <logger name="org.springframework.web" level="DEBUG"/>
     <logger name="com.absontheweb" level="DEBUG"/>
-
-    <logger name="org.liquibase" level="INFO"/>
-
-    <logger name="org.springframework" level="INFO"/>
-
-    <root level="ERROR">
-        <appender-ref ref="CONSOLE"/>
-    </root>
-    
+    <logger name="org.apache.http.wire" level="DEBUG"/>
+    <logger name="org.apache.http" level="DEBUG"/>
+    <logger name="httpclient.wire" level="DEBUG"/>
 </configuration>

@@ -1,64 +1,26 @@
 package com.absontheweb.bookshop.model;
 
+import lombok.Data;
 
+@Data
 public class User {
 
-	private Long id;
-	private String name;
-	private String email;
-	private String password;
-	private String username;
+    private Long id;
 
-	public Long getId() {
-		return id;
-	}
+    private String login;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    private String password;
 
-	public String getName() {
-		return name;
-	}
+    private String firstName;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    private String lastName;
 
-	public String getEmail() {
-		return email;
-	}
+    private String email;
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    private boolean activated;
 
-	public String getPassword() {
-		return password;
-	}
+    private String langKey;
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    private String activationKey;
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("User [id=").append(id).append(", name=").append(name)
-				.append(", email=").append(email).append(", password=")
-				.append(password).append("]");
-		return builder.toString();
-	}
-	
-	
-
-	
 }

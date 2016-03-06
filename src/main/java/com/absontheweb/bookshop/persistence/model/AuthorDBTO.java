@@ -12,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name="author")
 public class AuthorDBTO {
@@ -38,69 +41,5 @@ public class AuthorDBTO {
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy="authors")
 	private List<BookDBTO> books;
 
-	public Long getId() {
-		return id;
-	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getSurname() {
-		return surname;
-	}
-
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
-
-	public String getBirthplace() {
-		return birthplace;
-	}
-
-	public void setBirthplace(String birthPlace) {
-		this.birthplace = birthPlace;
-	}
-
-	public LocalDate getBorn() {
-		return born;
-	}
-
-	public void setBorn(LocalDate born) {
-		this.born = born;
-	}
-
-	public LocalDate getDied() {
-		return died;
-	}
-
-	public void setDied(LocalDate died) {
-		this.died = died;
-	}
-	public List<BookDBTO> getBooks() {
-		return books;
-	}
-
-	public void setBooks(List<BookDBTO> books) {
-		this.books = books;
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("AuthorDBTO [id=").append(id).append(", name=")
-				.append(name).append(", surname=").append(surname)
-				.append(", birthplace=").append(birthplace).append(", born=")
-				.append(born).append(", died=").append(died);
-		return builder.toString();
-	}
-	
 }

@@ -34,11 +34,11 @@ public class UserDBTORepositoryTest extends AbstractTransactionalJUnit4SpringCon
     	assertThat(userDBTO,is(notNullValue()));
     	assertThat(userDBTO.getId(), is(4L));
     	assertThat(userDBTO.getLogin(), is(equalTo("luca")));
-    	assertThat(userDBTO.getPassword(), is(equalTo("$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K")));
+    	assertThat(userDBTO.getPassword(), is(equalTo("password")));
     	assertThat(userDBTO.getFirstName(), is(equalTo("luca")));
     	assertThat(userDBTO.getLastName(), is(equalTo("martellucci")));
     	assertThat(userDBTO.getEmail(), is(equalTo("luca.martellucci@absontheweb.com")));
-    	assertThat(userDBTO.getActivated(), is(true));
+    	assertThat(userDBTO.isActivated(), is(true));
     	assertThat(userDBTO.getLangKey(), is("en"));
     }
     

@@ -8,47 +8,27 @@ import static org.junit.Assert.assertThat;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.web.client.RestTemplate;
 
-import com.absontheweb.bookshop.application.Application;
-import com.absontheweb.bookshop.application.MessageSourceConfig;
-import com.absontheweb.bookshop.application.PersistenceConfig;
-import com.absontheweb.bookshop.application.WebConfig;
 import com.absontheweb.bookshop.i18n.model.Language;
-import com.google.common.collect.ImmutableMap;
+import com.absontheweb.bookshop.test.AbstractLiveTest;
 
-@RunWith(value=SpringJUnit4ClassRunner.class)
-@WebIntegrationTest("server.port:18080")
-@SpringApplicationConfiguration(classes={Application.class, MessageSourceConfig.class, PersistenceConfig.class, WebConfig.class})
-@ActiveProfiles(profiles = { "dbtest" })
-public class I18nControllerLiveTest {
 
-	private RestTemplate restClient;
-	private String baseURL = "http://localhost:18080/api/";
-
-    @Before
-    public void setup() {
-    	restClient = new RestTemplate();
-    }
+public class I18nControllerLiveTest extends AbstractLiveTest {
 
 	@Test
 	public void testGetMessages() throws Exception {
+		addVar("language", "IT");
 		
 		ResponseEntity<Map<String,String>> responseEntity = restClient.exchange(
-				baseURL.concat("/i18n/messages/{language}"),
-				HttpMethod.GET, null, 
+				BASE_API_URL.concat("/i18n/messages/{language}"),
+				HttpMethod.GET, new HttpEntity<Map<String,String>>(securityHeaders), 
 				new ParameterizedTypeReference<Map<String,String>>() {}, 
-				ImmutableMap.of("language", "IT"));
+				urlVars());
 		
 		Map<String,String> messages = responseEntity.getBody();
 
@@ -62,9 +42,9 @@ public class I18nControllerLiveTest {
 	public void testGetLanguages() throws Exception {
 		
 		ResponseEntity<List<Language>> responseEntity = restClient.exchange(
-				baseURL.concat("/i18n/languages"),
-				HttpMethod.GET, null, 
-				new ParameterizedTypeReference<List<Language>>() {});
+				BASE_API_URL.concat("/i18n/languages"),
+				HttpMethod.GET, new HttpEntity<List<Language>>(securityHeaders), 
+				new ParameterizedTypeReference<List<Language>>() {}, urlVars());
 		
 		List<Language> languages = responseEntity.getBody();
 

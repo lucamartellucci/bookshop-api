@@ -44,7 +44,7 @@ public class BookAdapter {
 		Book book = new Book();
 		BeanUtils.copyProperties(bookDBTO, book, "authors");
 		if (adaptAuthors) {
-			book.authors(authorAdapter.toAuthors(bookDBTO.getAuthors()));
+			book.setAuthors(authorAdapter.toAuthors(bookDBTO.getAuthors()));
 		}
 		return book;
 	}

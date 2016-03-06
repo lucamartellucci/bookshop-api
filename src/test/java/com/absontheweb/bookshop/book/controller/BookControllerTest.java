@@ -11,8 +11,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.text.ParseException;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
@@ -33,24 +31,21 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.absontheweb.bookshop.application.MessageSourceConfig;
 import com.absontheweb.bookshop.book.model.Author;
-import com.absontheweb.bookshop.book.model.AuthorBuilder;
 import com.absontheweb.bookshop.book.model.Book;
-import com.absontheweb.bookshop.book.model.BookBuilder;
 import com.absontheweb.bookshop.book.model.Currency;
 import com.absontheweb.bookshop.controller.exception.ErrorCode;
 import com.absontheweb.bookshop.model.PaginatorResult;
 import com.absontheweb.bookshop.model.SimplePaginator;
 import com.absontheweb.bookshop.service.BookService;
 import com.absontheweb.bookshop.service.exception.BookServiceException;
+import com.absontheweb.bookshop.test.BookControllerTestConfig;
 import com.google.common.collect.ImmutableMap;
-
-import config.BookControllerTestConfig;
 
 @RunWith ( SpringJUnit4ClassRunner.class )
 @ContextConfiguration ( classes = { BookControllerTestConfig.class, MessageSourceConfig.class }, 
 	initializers = ConfigFileApplicationContextInitializer.class )
 @WebAppConfiguration
-public class BookControllerTest {
+public class BookControllerTest extends AbstractBookTest {
 	
 	private static final SimplePaginator ALL = null;
 	private static final SimplePaginator PAGE_1 = new SimplePaginator(0, 10);
@@ -288,36 +283,6 @@ public class BookControllerTest {
         verify(bookService).createBook(book);
 	}
 	
-	/*
-	 * UTILITY METHODS
-	 */
-	private Author buildAuthor(Long id, LocalDate born, LocalDate died) {
-		Author author = AuthorBuilder.author()
-				.withId(id)
-				.withBirthplace("bithplace"+id)
-				.withName("name"+id)
-				.withSurname("surname"+id)
-				.withBorn(born)
-				.withDied(died)
-				.build();
-		return author;
-	}
-	
-	private Book buildBook(Long id, Currency currency, Double price, List<Author> authors) {
-		Book book = BookBuilder.book()
-				.withId(id)
-				.withTitle("title"+id)
-				.withDescription("desc"+id)
-				.withCurrency(currency)
-				.withIsbn("88-04-50279-7")
-				.withPrice(price)
-				.withAuthors(authors)
-				.build();
-		return book;
-	}
-	
-	private LocalDate toDate(String date) throws ParseException {
-		return LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
-	}
+
 
 }

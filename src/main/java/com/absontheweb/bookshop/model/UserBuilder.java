@@ -40,8 +40,8 @@ class UserBuilderBase<GeneratorT extends UserBuilderBase<GeneratorT>> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withName(String aValue) {
-		instance.setName(aValue);
+	public GeneratorT withLogin(String aValue) {
+		instance.setLogin(aValue);
 
 		return (GeneratorT) this;
 	}
@@ -61,8 +61,15 @@ class UserBuilderBase<GeneratorT extends UserBuilderBase<GeneratorT>> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withUsername(String aValue) {
-		instance.setUsername(aValue);
+	public GeneratorT withFirstName(String aValue) {
+		instance.setFirstName(aValue);
+
+		return (GeneratorT) this;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public GeneratorT withLastName(String aValue) {
+		instance.setLastName(aValue);
 
 		return (GeneratorT) this;
 	}
