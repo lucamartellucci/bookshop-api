@@ -12,6 +12,7 @@
 hs_err_pid*
 
 target/
+target-docker/
 .settings/
 .project
 .classpath
