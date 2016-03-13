@@ -6,3 +6,17 @@ BookShop
 =============
 
 A simple rest api for a book shop
+
+### Run
+To execute the application launch the build with maven
+```sh
+$ mvn clean package
+```
+and then execute with the command
+
+```sh
+$ java -jar bookshop-0.0.1-SNAPSHOT.jar --logging.file=bookshop.log
+```
+
+### Run with docker
+In progress...
