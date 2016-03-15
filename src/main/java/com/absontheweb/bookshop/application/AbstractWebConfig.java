@@ -19,6 +19,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.absontheweb.bookshop.controller.resolver.PaginatorArgumentResolver;
+import com.absontheweb.bookshop.controller.resolver.UserArgumentResolver;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -51,8 +52,8 @@ public class AbstractWebConfig extends WebMvcConfigurerAdapter {
     
     @Override
     public void addArgumentResolvers(List< HandlerMethodArgumentResolver > argumentResolvers) {
-//    	UserArgumentResolver personResolver = new UserArgumentResolver();
-//    	argumentResolvers.add(personResolver);
+    	UserArgumentResolver personResolver = new UserArgumentResolver();
+    	argumentResolvers.add(personResolver);
     	PaginatorArgumentResolver pageableResolver = new PaginatorArgumentResolver();
     	argumentResolvers.add(pageableResolver);
     }

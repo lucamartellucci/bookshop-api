@@ -28,7 +28,7 @@ import com.absontheweb.bookshop.application.WebConfig;
 @ActiveProfiles(profiles = { "dbtest" })
 public abstract class AbstractLiveTest {
 	
-	protected static final String PASSWORD = "password";
+	protected static final String PASSWORD = "admin";
 	protected static final String LOGIN = "luca";
 	protected static final String BASE_API_URL = "http://localhost:{port}/bookshop/api/";
 	

@@ -26,19 +26,17 @@ public class UserDBTORepositoryTest extends AbstractTransactionalJUnit4SpringCon
     @Autowired
     private UserDBTORepository repo;
     
-    //id;login;password;first_name;last_name;email;activated;lang_key
-    //4;luca;$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K;luca;martellucci;luca.martellucci@absontheweb.com;true;en
     @Test
     public void testFindOne() throws Exception {
     	UserDBTO userDBTO = repo.findOne(4L);
     	assertThat(userDBTO,is(notNullValue()));
     	assertThat(userDBTO.getId(), is(4L));
-    	assertThat(userDBTO.getLogin(), is(equalTo("luca")));
-    	assertThat(userDBTO.getPassword(), is(equalTo("password")));
-    	assertThat(userDBTO.getFirstName(), is(equalTo("luca")));
-    	assertThat(userDBTO.getLastName(), is(equalTo("martellucci")));
+    	assertThat(userDBTO.getUsername(), is(equalTo("luca")));
+    	assertThat(userDBTO.getPassword(), is(equalTo("b8f57d6d6ec0a60dfe2e20182d4615b12e321cad9e2979e0b9f81e0d6eda78ad9b6dcfe53e4e22d1")));
+    	assertThat(userDBTO.getFirstname(), is(equalTo("luca")));
+    	assertThat(userDBTO.getLastname(), is(equalTo("martellucci")));
     	assertThat(userDBTO.getEmail(), is(equalTo("luca.martellucci@absontheweb.com")));
-    	assertThat(userDBTO.isActivated(), is(true));
+    	assertThat(userDBTO.isEnabled(), is(true));
     	assertThat(userDBTO.getLangKey(), is("en"));
     }
     

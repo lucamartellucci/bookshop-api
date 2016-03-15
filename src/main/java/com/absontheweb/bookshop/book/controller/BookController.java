@@ -1,7 +1,6 @@
 package com.absontheweb.bookshop.book.controller;
 
 import java.net.URI;
-import java.security.Principal;
 
 import javax.validation.Valid;
 
@@ -19,9 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.absontheweb.bookshop.book.model.Book;
 import com.absontheweb.bookshop.controller.exception.InternalServerErrorException;
 import com.absontheweb.bookshop.controller.exception.ResourceNotFoundException;
+import com.absontheweb.bookshop.controller.resolver.CurrentUser;
 import com.absontheweb.bookshop.controller.resolver.Paginator;
 import com.absontheweb.bookshop.model.PaginatorResult;
 import com.absontheweb.bookshop.model.SimplePaginator;
+import com.absontheweb.bookshop.model.User;
 import com.absontheweb.bookshop.service.BookService;
 import com.absontheweb.bookshop.service.exception.BookServiceException;
 
@@ -52,10 +53,10 @@ public class BookController {
 	@RequestMapping(value = "/books/{id}", 
 			method = RequestMethod.GET, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Book> getBook(@PathVariable("id") Long id, Principal user) 
+	public ResponseEntity<Book> getBook(@PathVariable("id") Long id, @CurrentUser User user) 
 			throws InternalServerErrorException, ResourceNotFoundException {
 		try {
-			logger.debug("Principal is: {}", user);
+			logger.debug("Logger User is: {}", user);
 			Book book = bookService.getBookById(id);
 			if (book != null) {
 				return ResponseEntity.ok(book);
