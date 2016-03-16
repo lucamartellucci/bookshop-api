@@ -1,0 +1,17 @@
+bookshopApi:
+  image: abs/bookshop-middleware
+  expose:
+    - "8080"
+  links:
+    - mysql:database
+
+mysql:
+  image: mysql
+  expose:
+    - "3306"
+  environment:
+    MYSQL_ROOT_PASSWORD: root
+    MYSQL_DATABASE: bookshop
+    MYSQL_USER: bookshop
+    MYSQL_PASSWORD: bookshop
+
