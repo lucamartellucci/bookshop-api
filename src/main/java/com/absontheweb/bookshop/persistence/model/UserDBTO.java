@@ -28,28 +28,25 @@ public class UserDBTO {
     private Long id;
 
     @Column(length = 50, unique = true, nullable = false)
-    private String login;
+    private String username;
 
     @Column(length = 100)
     private String password;
 
     @Column(name = "first_name", length = 50)
-    private String firstName;
+    private String firstname;
 
     @Column(name = "last_name", length = 50)
-    private String lastName;
+    private String lastname;
 
     @Column(length = 100, unique = true)
     private String email;
 
-    @Column(nullable = false)
-    private boolean activated;
+    @Column(name="user_enabled" ,nullable = false)
+    private boolean enabled;
 
     @Column(name = "lang_key", length = 5)
     private String langKey;
-
-    @Column(name = "activation_key", length = 20)
-    private String activationKey;
 
     @ManyToMany
     @JoinTable(
@@ -58,6 +55,4 @@ public class UserDBTO {
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
     private Set<AuthorityDBTO> authorities = new HashSet<AuthorityDBTO>();
 
-    
-   
 }

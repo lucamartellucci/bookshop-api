@@ -1,26 +1,33 @@
 package com.absontheweb.bookshop.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.Data;
 
 @Data
 public class User {
+	
+	public User(){
+		this.roles = new ArrayList<>();
+	}
 
     private Long id;
 
-    private String login;
+    private String username;
 
     private String password;
 
-    private String firstName;
+    private String firstname;
 
-    private String lastName;
+    private String lastname;
 
     private String email;
 
-    private boolean activated;
+    private boolean enabled;
 
     private String langKey;
 
-    private String activationKey;
+    private List<String> roles;
 
 }

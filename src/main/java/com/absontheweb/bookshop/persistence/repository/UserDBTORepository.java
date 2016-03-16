@@ -8,13 +8,10 @@ import com.absontheweb.bookshop.persistence.model.UserDBTO;
 
 public interface UserDBTORepository extends JpaRepository<UserDBTO, Long> {
 
-	@Query("SELECT u FROM UserDBTO u WHERE LOWER(u.login) = LOWER(:login)")
-	UserDBTO findByLoginCaseInsensitive(@Param("login") String login);
+	@Query("SELECT u FROM UserDBTO u WHERE LOWER(u.username) = LOWER(:username)")
+	UserDBTO findByLoginCaseInsensitive(@Param("username") String username);
 
     @Query
     UserDBTO findByEmail(String email);
-
-    @Query
-    UserDBTO findByEmailAndActivationKey(String email, String activationKey);
-
+    
 }
