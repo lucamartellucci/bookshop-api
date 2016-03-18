@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,6 +37,7 @@ public class BookController {
 	@Autowired
 	private BookService bookService;
 	
+	@PreAuthorize("@authmgr.isAuthorized(principal, 'BOOKS_GET')")
 	@RequestMapping(value = "/books", 
 			method = RequestMethod.GET, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
@@ -53,9 +53,7 @@ public class BookController {
 	}
 	
 
-//	@PreAuthorize("@roleResolver.isAuthorized('GET_BOOK', #user.roles)")
-	@PreAuthorize("@roleResolver.isAuthorityAuthorized('GET_BOOK', principal.getAuthorities())")
-//	@PreAuthorize("hasRole('ROLE_USER')")
+	@PreAuthorize("@authmgr.isAuthorized(principal, 'BOOKS_GET_DETAIL')")
 	@RequestMapping(value = "/books/{id}", 
 			method = RequestMethod.GET, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
@@ -75,7 +73,7 @@ public class BookController {
 	}
 	
 
-	
+	@PreAuthorize("@authmgr.isAuthorized(principal, 'BOOKS_ADD')")
 	@RequestMapping(value = "/books", 
 			method = RequestMethod.POST, 
 			produces = MediaType.APPLICATION_JSON_VALUE)

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -19,7 +20,13 @@ import org.springframework.security.crypto.password.StandardPasswordEncoder;
 @Configuration
 @ComponentScan({ "com.absontheweb.bookshop.security" })
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled=true)
+@PropertySource({"classpath:/config/authorities.properties"})
+
+/* This annotation (@EnableGlobalMethodSecurity) provides AOP security on methods 
+ * some of annotation it will enable are PreAuthorize PostAuthorize also 
+ * it has support for JSR-250 
+ */
+@EnableGlobalMethodSecurity(prePostEnabled=true, jsr250Enabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
@@ -70,10 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        return super.authenticationManagerBean();
 //    }
 //    
-//    /* This annotation (@EnableGlobalMethodSecurity) provides AOP security on methods 
-//     * some of annotation it will enable are PreAuthorize PostAuthorize also 
-//     * it has support for JSR-250 
-//     */
+
 //    @EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true)
 //    private static class GlobalSecurityConfiguration extends GlobalMethodSecurityConfiguration {
 //        @Override
