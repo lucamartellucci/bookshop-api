@@ -1,5 +1,6 @@
 package com.absontheweb.bookshop.i18n.controller;
 
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -50,14 +51,10 @@ public class I18nControllerLiveTest extends AbstractLiveTest {
 
 		assertThat(languages,is(notNullValue()));
 		assertThat(languages.size(),is(2));
-		Language lang = languages.get(0);
-    	assertThat(lang.getName(), is("English"));
-    	assertThat(lang.getLocale(), is("EN"));
-    	assertThat(lang.getFlagUrl(), is("http://localhost:8080/assets/EN_flag.png"));
-		lang = languages.get(1);
-    	assertThat(lang.getName(), is("Italiano"));
-    	assertThat(lang.getLocale(), is("IT"));
-    	assertThat(lang.getFlagUrl(), is("http://localhost:8080/assets/IT_flag.png"));
+		assertThat(languages, containsInAnyOrder(
+				new Language("English","EN","http://localhost:8080/assets/EN_flag.png"),
+				new Language("Italiano","IT","http://localhost:8080/assets/IT_flag.png"))
+		);
 	}
 	
 
