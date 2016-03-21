@@ -37,13 +37,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new StandardPasswordEncoder();
     }
 	
+    /*
+     * configure the authentication mechanism. (db, in-memory, etc)
+     */
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth
 			.userDetailsService(userDetailsService)
 			.passwordEncoder(passwordEncoder());
 	}
-	
+
+	/*
+	 * configure the security at resource level
+	 */
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
 		http.authorizeRequests()
@@ -53,6 +59,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 	
+	/*
+	 * configure the security at application level. Defines the secure and the pulbic urls
+	 */
     @Override
     public void configure(WebSecurity web) throws Exception {
 
@@ -60,8 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/api/register")
 			.antMatchers("/api/activate")
 			.antMatchers("/api/lostpassword")
-			.antMatchers("/api/resetpassword")
-			.antMatchers("/api/hello");
+			.antMatchers("/api/resetpassword");
     }
     
     @Bean

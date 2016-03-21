@@ -7,6 +7,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @Configuration
 @ComponentScan(basePackages={
 		"com.absontheweb.bookshop.book",
+		"com.absontheweb.bookshop.user",
 		"com.absontheweb.bookshop.i18n",
 		"com.absontheweb.bookshop.controller",
 		"com.absontheweb.bookshop.service"
