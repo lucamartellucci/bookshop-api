@@ -4,14 +4,11 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import liquibase.integration.spring.SpringLiquibase;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -22,16 +19,19 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import liquibase.integration.spring.SpringLiquibase;
+
 @Configuration
 @EnableTransactionManagement
 @ComponentScan({ "com.absontheweb.bookshop.persistence" })
 @EnableJpaRepositories(basePackages = "com.absontheweb.bookshop.persistence.repository")
+@EnableConfigurationProperties
 public class PersistenceConfig {
 	
-    @Configuration
-    @Profile("dbtest")
-    @PropertySource({"file:src/test/resources/config/application-dbtest.properties"})
-    static class DbTestProperties{ }
+//    @Configuration
+//    @Profile("dbtest")
+//    @PropertySource("file:src/test/resources/config/application-dbtest.yml")
+//    static class DbTestProperties{ }
 
     @Autowired
     private Environment env;

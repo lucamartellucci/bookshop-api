@@ -30,7 +30,7 @@ import com.absontheweb.bookshop.i18n.model.Language;
 import com.absontheweb.bookshop.i18n.model.MessageResourceLocale;
 import com.absontheweb.bookshop.service.I18nService;
 import com.absontheweb.bookshop.service.exception.I18nServiceException;
-import com.absontheweb.bookshop.test.I18nControllerTestConfig;
+import com.absontheweb.bookshop.test.base.I18nControllerTestConfig;
 
 @RunWith ( SpringJUnit4ClassRunner.class )
 @ContextConfiguration ( classes = { I18nControllerTestConfig.class } )

@@ -1,4 +1,4 @@
-package com.absontheweb.bookshop.test;
+package com.absontheweb.bookshop.test.base;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +19,7 @@ import com.absontheweb.bookshop.application.MessageSourceConfig;
 import com.absontheweb.bookshop.application.PersistenceConfig;
 import com.absontheweb.bookshop.application.SecurityConfig;
 import com.absontheweb.bookshop.application.WebConfig;
+import com.absontheweb.bookshop.security.util.SecurityUtils;
 
 
 @RunWith(value=SpringJUnit4ClassRunner.class)

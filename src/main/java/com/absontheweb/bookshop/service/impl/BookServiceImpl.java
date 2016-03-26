@@ -1,5 +1,7 @@
 package com.absontheweb.bookshop.service.impl;
 
+import static com.absontheweb.bookshop.book.model.adapter.BookAdapter.ADAPT_AUTHORS;
+
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -19,8 +21,6 @@ import com.absontheweb.bookshop.persistence.model.BookDBTO;
 import com.absontheweb.bookshop.persistence.repository.BookDBTORepository;
 import com.absontheweb.bookshop.service.BookService;
 import com.absontheweb.bookshop.service.exception.BookServiceException;
-
-import static com.absontheweb.bookshop.book.model.adapter.BookAdapter.ADAPT_AUTHORS;
 
 @Service
 @Transactional(readOnly=true, propagation=Propagation.REQUIRED)

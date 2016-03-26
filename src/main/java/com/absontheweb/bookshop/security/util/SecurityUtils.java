@@ -1,4 +1,4 @@
-package com.absontheweb.bookshop.test;
+package com.absontheweb.bookshop.security.util;
 
 import java.nio.charset.Charset;
 

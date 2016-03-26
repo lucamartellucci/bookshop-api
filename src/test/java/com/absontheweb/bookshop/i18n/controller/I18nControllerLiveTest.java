@@ -16,7 +16,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 
 import com.absontheweb.bookshop.i18n.model.Language;
-import com.absontheweb.bookshop.test.AbstractLiveTest;
+import com.absontheweb.bookshop.test.base.AbstractLiveTest;
 
 
 public class I18nControllerLiveTest extends AbstractLiveTest {

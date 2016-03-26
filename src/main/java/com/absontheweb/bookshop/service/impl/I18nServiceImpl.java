@@ -25,10 +25,10 @@ public class I18nServiceImpl implements I18nService, InitializingBean {
 
 	private static Logger logger = LoggerFactory.getLogger(I18nServiceImpl.class);
 
-	@Value("${i18n.flag.template.url}")
+	@Value("${i18n.flagTemplateUrl}")
 	private String flagTemplateUrl;
 	
-	@Value("${i18n.resource.path}")
+	@Value("${i18n.resourcePath}")
 	private String resourcePath;
 	
 	private UriComponentsBuilder uriBuilder;

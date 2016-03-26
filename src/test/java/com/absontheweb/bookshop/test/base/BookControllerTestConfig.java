@@ -1,4 +1,4 @@
-package com.absontheweb.bookshop.test;
+package com.absontheweb.bookshop.test.base;
 
 import java.util.List;
 

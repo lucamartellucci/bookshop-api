@@ -14,20 +14,14 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import com.absontheweb.bookshop.application.PersistenceConfig;
 import com.absontheweb.bookshop.book.model.Currency;
 import com.absontheweb.bookshop.model.StorageProvider;
 import com.absontheweb.bookshop.persistence.model.AuthorDBTO;
 import com.absontheweb.bookshop.persistence.model.BookDBTO;
+import com.absontheweb.bookshop.test.base.AbstractDbTest;
 
-@ActiveProfiles(profiles = { "dbtest" })
-@ContextConfiguration(classes = { PersistenceConfig.class }, loader = AnnotationConfigContextLoader.class)
-public class BookDBTORepositoryTest extends AbstractTransactionalJUnit4SpringContextTests {
+public class BookDBTORepositoryTest extends AbstractDbTest {
 	
 	final static Logger logger = LoggerFactory.getLogger(BookDBTORepositoryTest.class);
 

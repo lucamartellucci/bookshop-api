@@ -38,7 +38,7 @@ import com.absontheweb.bookshop.model.PaginatorResult;
 import com.absontheweb.bookshop.model.SimplePaginator;
 import com.absontheweb.bookshop.service.BookService;
 import com.absontheweb.bookshop.service.exception.BookServiceException;
-import com.absontheweb.bookshop.test.BookControllerTestConfig;
+import com.absontheweb.bookshop.test.base.BookControllerTestConfig;
 import com.google.common.collect.ImmutableMap;
 
 @RunWith ( SpringJUnit4ClassRunner.class )

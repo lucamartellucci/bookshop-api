@@ -39,7 +39,7 @@ public class AbstractWebConfig extends WebMvcConfigurerAdapter {
 	@Bean
     public LocalValidatorFactoryBean validator() {
         LocalValidatorFactoryBean validatorFactoryBean = new LocalValidatorFactoryBean();
-    	if (Boolean.parseBoolean(env.getProperty("validation.resolve.error.codes"))) {
+    	if (Boolean.parseBoolean(env.getProperty("validation.resolveErrorCodes"))) {
     		validatorFactoryBean.setValidationMessageSource(messageSource);
     	}
         return validatorFactoryBean;

@@ -37,7 +37,7 @@ import com.absontheweb.bookshop.book.model.Author;
 import com.absontheweb.bookshop.book.model.Book;
 import com.absontheweb.bookshop.book.model.Currency;
 import com.absontheweb.bookshop.service.BookService;
-import com.absontheweb.bookshop.test.BookControllerTestConfig;
+import com.absontheweb.bookshop.test.base.BookControllerTestConfig;
 
 
 @RunWith ( SpringJUnit4ClassRunner.class )

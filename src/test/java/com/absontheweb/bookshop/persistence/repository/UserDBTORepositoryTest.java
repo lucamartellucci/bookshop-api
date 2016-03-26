@@ -9,17 +9,11 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import com.absontheweb.bookshop.application.PersistenceConfig;
 import com.absontheweb.bookshop.persistence.model.UserDBTO;
+import com.absontheweb.bookshop.test.base.AbstractDbTest;
 
-@ActiveProfiles(profiles = { "dbtest" })
-@ContextConfiguration(classes = { PersistenceConfig.class }, loader = AnnotationConfigContextLoader.class)
-public class UserDBTORepositoryTest extends AbstractTransactionalJUnit4SpringContextTests {
+public class UserDBTORepositoryTest extends AbstractDbTest {
 	
 	final static Logger logger = LoggerFactory.getLogger(UserDBTORepositoryTest.class);
 

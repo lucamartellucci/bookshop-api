@@ -1,13 +1,11 @@
 package com.absontheweb.bookshop.controller.exception;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import com.absontheweb.bookshop.controller.exception.RestResponseEntityExceptionHandler;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
+
+import org.junit.Before;
+import org.junit.Test;
 
 
 
