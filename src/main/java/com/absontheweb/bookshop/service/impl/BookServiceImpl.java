@@ -1,7 +1,9 @@
 package com.absontheweb.bookshop.service.impl;
 
 import static com.absontheweb.bookshop.book.model.adapter.BookAdapter.ADAPT_AUTHORS;
+import static com.absontheweb.bookshop.book.model.adapter.BookAdapter.DO_NOT_ADAPT_AUTHORS;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -13,14 +15,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.absontheweb.bookshop.book.model.Author;
 import com.absontheweb.bookshop.book.model.Book;
+import com.absontheweb.bookshop.book.model.adapter.AuthorAdapter;
 import com.absontheweb.bookshop.book.model.adapter.BookAdapter;
 import com.absontheweb.bookshop.model.PaginatorResult;
 import com.absontheweb.bookshop.model.SimplePaginator;
+import com.absontheweb.bookshop.persistence.model.AuthorDBTO;
 import com.absontheweb.bookshop.persistence.model.BookDBTO;
+import com.absontheweb.bookshop.persistence.repository.AuthorDBTORepository;
 import com.absontheweb.bookshop.persistence.repository.BookDBTORepository;
 import com.absontheweb.bookshop.service.BookService;
 import com.absontheweb.bookshop.service.exception.BookServiceException;
+
 
 @Service
 @Transactional(readOnly=true, propagation=Propagation.REQUIRED)
@@ -32,7 +39,13 @@ public class BookServiceImpl implements BookService {
 	BookDBTORepository bookRepository;
 	
 	@Autowired
+	AuthorDBTORepository authorRepository;
+	
+	@Autowired
 	BookAdapter bookAdapter;
+	
+	@Autowired
+	AuthorAdapter authorAdapter;
 
 	@Override
 	public Book getBookById(Long id) throws BookServiceException {
@@ -76,7 +89,25 @@ public class BookServiceImpl implements BookService {
 			logger.info("Create new book with title [{}]", book.getTitle());
 			logger.trace("Create book {}", book);
 			
-			BookDBTO bookDBTO = bookRepository.save(bookAdapter.toDBTO(book, ADAPT_AUTHORS));
+			BookDBTO bookDBTO = bookAdapter.toDBTO(book, DO_NOT_ADAPT_AUTHORS);
+			
+			if (book.getAuthors().size() > 0){
+				logger.debug("Managing [{}] authors", book.getAuthors().size());
+				List<AuthorDBTO> authorDBTOList = new ArrayList<AuthorDBTO>();
+				for (Author author : book.getAuthors()) {
+					if (author.getId() != null) {
+						authorDBTOList.add(authorRepository.findOne(author.getId()));
+					} else {
+						AuthorDBTO authorDBTO = authorAdapter.toDBTO(author, false);
+						authorDBTO = authorRepository.save(authorDBTO);
+						authorDBTOList.add(authorDBTO);
+					}
+				}
+				bookDBTO.setAuthors(authorDBTOList);
+			}
+			
+			bookDBTO = bookRepository.save(bookDBTO);
+			
 			return bookAdapter.toBook(bookDBTO, ADAPT_AUTHORS);
 		} catch (Exception e) {
 			logger.error("Unable to create the book with title [{}]", book.getTitle(), e);

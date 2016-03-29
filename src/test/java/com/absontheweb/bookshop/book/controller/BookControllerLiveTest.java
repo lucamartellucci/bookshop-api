@@ -35,7 +35,7 @@ public class BookControllerLiveTest extends AbstractLiveTest {
 		ResponseEntity<Book> responseEntity = restClient.exchange(
 				BASE_API_URL.concat("/books/{id}"), 
 				HttpMethod.GET, 
-				new HttpEntity<Book>(securityHeaders), 
+				new HttpEntity<Book>(basicAuthHeaders.get(Role.user)), 
 				Book.class, urlVars() );
 		
 		Book book = responseEntity.getBody();
@@ -63,12 +63,57 @@ public class BookControllerLiveTest extends AbstractLiveTest {
 			restClient.exchange(
 					BASE_API_URL.concat("/books/{id}"), 
 					HttpMethod.GET, 
-					new HttpEntity<Book>(securityHeaders), 
+					new HttpEntity<Book>(basicAuthHeaders.get(Role.user)), 
 					Book.class, urlVars() );
 			fail();
 		} catch (HttpClientErrorException e) {
 			assertThat(e.getStatusCode(), is(HttpStatus.NOT_FOUND));
 		}
+	}
+	
+	@Test
+	public void testAddBook_unauthorized() throws Exception {
+		
+		Book book = buildBrandNewBook();
+		
+		HttpEntity<Book> requestEntity = new HttpEntity<Book>(book ,basicAuthHeaders.get(Role.user));
+		
+		try {
+			restClient.exchange(
+					BASE_API_URL.concat("/books"), 
+					HttpMethod.POST, 
+					requestEntity, 
+					Book.class, urlVars() );
+		
+			fail("It should raise a unauthorized exception!");
+		} catch (HttpClientErrorException e) {
+			assertThat(e.getStatusCode(), is(HttpStatus.UNAUTHORIZED));
+		}
+		
+	}
+	
+	@Test
+	public void testAddBook() throws Exception {
+		
+		Book book = buildBrandNewBook();
+		
+		HttpEntity<Book> requestEntity = new HttpEntity<Book>(book ,basicAuthHeaders.get(Role.admin));
+		
+		ResponseEntity<Book> bookResponseEntity = restClient.exchange(
+				BASE_API_URL.concat("/books"), 
+				HttpMethod.POST, 
+				requestEntity, 
+				Book.class, urlVars() );
+		
+		Book savedBook = bookResponseEntity.getBody();
+		
+		
+		assertThat(savedBook.getId(), is(notNullValue()));
+		assertThat(savedBook.getDescription(),is(book.getDescription()));
+		assertThat(savedBook.getAuthors().size(),is(1));
+		assertThat(savedBook.getCurrency(),is(Currency.EUR));
+		assertThat(savedBook.getIsbn(), is(book.getIsbn()));
+		
 	}
 
 }

@@ -27,7 +27,7 @@ public class I18nControllerLiveTest extends AbstractLiveTest {
 		
 		ResponseEntity<Map<String,String>> responseEntity = restClient.exchange(
 				BASE_API_URL.concat("/i18n/messages/{language}"),
-				HttpMethod.GET, new HttpEntity<Map<String,String>>(securityHeaders), 
+				HttpMethod.GET, new HttpEntity<Map<String,String>>(basicAuthHeaders.get(Role.user)), 
 				new ParameterizedTypeReference<Map<String,String>>() {}, 
 				urlVars());
 		
@@ -44,7 +44,7 @@ public class I18nControllerLiveTest extends AbstractLiveTest {
 		
 		ResponseEntity<List<Language>> responseEntity = restClient.exchange(
 				BASE_API_URL.concat("/i18n/languages"),
-				HttpMethod.GET, new HttpEntity<List<Language>>(securityHeaders), 
+				HttpMethod.GET, new HttpEntity<List<Language>>(basicAuthHeaders.get(Role.user)), 
 				new ParameterizedTypeReference<List<Language>>() {}, urlVars());
 		
 		List<Language> languages = responseEntity.getBody();

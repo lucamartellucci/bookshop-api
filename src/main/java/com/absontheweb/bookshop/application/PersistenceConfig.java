@@ -28,11 +28,6 @@ import liquibase.integration.spring.SpringLiquibase;
 @EnableConfigurationProperties
 public class PersistenceConfig {
 	
-//    @Configuration
-//    @Profile("dbtest")
-//    @PropertySource("file:src/test/resources/config/application-dbtest.yml")
-//    static class DbTestProperties{ }
-
     @Autowired
     private Environment env;
 
@@ -86,7 +81,7 @@ public class PersistenceConfig {
         SpringLiquibase liquibase = new SpringLiquibase();
         liquibase.setDataSource(dataSource);
         liquibase.setChangeLog(env.getProperty("liquibase.changelog"));
-        liquibase.setContexts(env.getProperty("liquibase.context"));
+        liquibase.setContexts(env.getProperty("liquibase.contexts"));
         return liquibase;
     }
 }

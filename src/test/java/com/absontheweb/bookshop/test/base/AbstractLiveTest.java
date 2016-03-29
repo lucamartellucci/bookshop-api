@@ -19,6 +19,7 @@ import com.absontheweb.bookshop.application.MessageSourceConfig;
 import com.absontheweb.bookshop.application.PersistenceConfig;
 import com.absontheweb.bookshop.application.SecurityConfig;
 import com.absontheweb.bookshop.application.WebConfig;
+import com.absontheweb.bookshop.book.controller.AbstractBookTest;
 import com.absontheweb.bookshop.security.util.SecurityUtils;
 
 
@@ -27,23 +28,34 @@ import com.absontheweb.bookshop.security.util.SecurityUtils;
 @SpringApplicationConfiguration(classes={Application.class, MessageSourceConfig.class,
 			PersistenceConfig.class, WebConfig.class, SecurityConfig.class})
 @ActiveProfiles(profiles = { "dbtest" })
-public abstract class AbstractLiveTest {
+public abstract class AbstractLiveTest extends AbstractBookTest {
 	
-	protected static final String PASSWORD = "admin";
-	protected static final String LOGIN = "luca";
+	protected static final String USER_PASSWORD = "admin";
+	protected static final String USER_LOGIN = "luca";
+	protected static final String ADMIN_PASSWORD = "admin";
+	protected static final String ADMIN_LOGIN = "admin";
 	protected static final String BASE_API_URL = "http://localhost:{port}/bookshop/api/";
 	
-	protected HttpHeaders securityHeaders;
 	protected RestTemplate restClient;
 	private Map<String, String> urlVariables;
 	protected @Value("${local.server.port}") int port;
+	
+	protected Map<Role,HttpHeaders> basicAuthHeaders;
+	
+	public static enum Role {
+		admin,user
+	}
 
 	
     @Before
     public void setup() {
     	restClient = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
     	urlVariables = new HashMap<>();
-    	securityHeaders = SecurityUtils.createHeaders(LOGIN, PASSWORD);
+    	basicAuthHeaders = new HashMap<>();
+    	
+    	basicAuthHeaders.put(Role.user, SecurityUtils.createHeaders(USER_LOGIN, USER_PASSWORD));
+    	basicAuthHeaders.put(Role.admin, SecurityUtils.createHeaders(ADMIN_LOGIN, ADMIN_PASSWORD));
+    	
     	urlVariables.put("port", String.valueOf(port));
     }
     

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -27,16 +28,29 @@ public class RestResponseEntityExceptionHandler {
 
 	@ExceptionHandler (value = { ResourceNotFoundException.class })
     @ResponseStatus (HttpStatus.NOT_FOUND)
-    protected @ResponseBody Error handleAccessDeniedException( Exception ex, WebRequest request ) {
+    protected @ResponseBody Error handleResourceNotFoundException( Exception ex, WebRequest request ) {
         return ErrorBuilder.error()
         		.withCode(ErrorCode.RESOURCE_NOT_FOUND)
+        		.withMessage(ex.getMessage()).build();
+    }
+	
+	@ExceptionHandler (value = { AccessDeniedException.class })
+    @ResponseStatus (HttpStatus.UNAUTHORIZED)
+    protected @ResponseBody Error handleAccessDeniedException( Exception ex, WebRequest request ) {
+        return ErrorBuilder.error()
+        		.withCode(ErrorCode.ACCESS_DENIED)
         		.withMessage(ex.getMessage()).build();
     }
 
     @ExceptionHandler (value = { InternalServerErrorException.class, Exception.class, UndeclaredThrowableException.class })
     @ResponseStatus (HttpStatus.INTERNAL_SERVER_ERROR)
     protected @ResponseBody Error handleInternalServerErrorExceptions( Exception ex, WebRequest request ) {
-    	return new Error( ErrorCode.GENERIC_ERROR, ex.getCause().getMessage() );
+    	if (ex instanceof InternalServerErrorException) {
+    		return new Error( ErrorCode.GENERIC_ERROR, ex.getCause().getMessage() );
+    	} else {
+    		return new Error( ErrorCode.GENERIC_ERROR, ex.getMessage() );
+    	}
+    	
     }
     
     @ExceptionHandler(MethodArgumentNotValidException.class)

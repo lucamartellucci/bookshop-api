@@ -33,20 +33,24 @@ public class AuthorityManager {
 
 	
 	public boolean isAuthorized(UserDetails p, String function) {
+		boolean authotized = false;
 		// get user authorities from the principal
 		Collection<? extends GrantedAuthority> userAuthorities = p.getAuthorities();
-		logger.debug("Verify authorization for function {} and authorities {}", 
-				function, userAuthorities);
+		
 		
 		// retrieve the authorities that support the function
 		List<String> authorizedRoles = getAuthorityBy(function);
 		
 		for (GrantedAuthority authority : userAuthorities) {
 			if (authorizedRoles.contains(authority.getAuthority())){
-				return true;
+				authotized = true;
 			} 
 		}
-		return false;
+		
+		logger.debug("Function {}, Authorities {} is authorized -> [{}]", 
+				new Object[] {function, userAuthorities, authotized});
+		
+		return authotized;
 	}
 
 	private List<String> getAuthorityBy(String function) {

@@ -63,7 +63,7 @@ public class AuthorAdapter {
 		return authorDBTOs;
 	}
 
-	private AuthorDBTO toDBTO(Author author, boolean adaptBooks) {
+	public AuthorDBTO toDBTO(Author author, boolean adaptBooks) {
 		if (author == null) {
 			return null;
 		}
