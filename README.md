@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/lucamartellucci/bookshop-backend.svg?branch=master)](https://travis-ci.org/lucamartellucci/bookshop-backend)
-[![Coverage Status](https://coveralls.io/repos/lucamartellucci/bookshop-backend/badge.svg?branch=master&service=github)](https://coveralls.io/github/lucamartellucci/bookshop-backend?branch=master)
-
+[![Travis](https://img.shields.io/travis/lucamartellucci/bookshop-backend.svg)]()
+[![Coveralls](https://img.shields.io/coveralls/lucamartellucci/bookshop-backend.svg)]()
+[![Codacy](https://img.shields.io/codacy/109ed4181f9a4fd59d67ae6dadd362ce.svg)]()
 
 BookShop
 =============
