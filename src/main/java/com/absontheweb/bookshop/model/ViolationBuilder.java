@@ -21,7 +21,7 @@ public class ViolationBuilder extends ViolationBuilderBase<ViolationBuilder> {
 	}
 }
 
-class ViolationBuilderBase<GeneratorT extends ViolationBuilderBase<GeneratorT>> {
+class ViolationBuilderBase<T extends ViolationBuilderBase<T>> {
 	private Violation instance;
 
 	protected ViolationBuilderBase(Violation aInstance) {
@@ -33,30 +33,30 @@ class ViolationBuilderBase<GeneratorT extends ViolationBuilderBase<GeneratorT>> 
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withField(String aValue) {
+	public T withField(String aValue) {
 		instance.setField(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withRejectedValue(Object aValue) {
+	public T withRejectedValue(Object aValue) {
 		instance.setRejectedValue(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withObjectName(String aValue) {
+	public T withObjectName(String aValue) {
 		instance.setObjectName(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public GeneratorT withCode(String aValue) {
+	public T withCode(String aValue) {
 		instance.setCode(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 }

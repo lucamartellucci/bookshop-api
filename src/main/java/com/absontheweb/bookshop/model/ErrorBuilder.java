@@ -25,7 +25,7 @@ public class ErrorBuilder extends ErrorBuilderBase<ErrorBuilder> {
 	}
 }
 
-class ErrorBuilderBase<GeneratorT extends ErrorBuilderBase<GeneratorT>> {
+class ErrorBuilderBase<T extends ErrorBuilderBase<T>> {
 	private Error instance;
 
 	protected ErrorBuilderBase(Error aInstance) {
@@ -37,21 +37,21 @@ class ErrorBuilderBase<GeneratorT extends ErrorBuilderBase<GeneratorT>> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withViolations(List<Violation> aValue) {
+	public T withViolations(List<Violation> aValue) {
 		instance.setViolations(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withAddedViolation(Violation aValue) {
+	public T withAddedViolation(Violation aValue) {
 		if (instance.getViolations() == null) {
 			instance.setViolations(new ArrayList<Violation>());
 		}
 
 		((ArrayList<Violation>) instance.getViolations()).add(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 
 	public AddedViolationViolationBuilder withAddedViolation() {
@@ -63,24 +63,24 @@ class ErrorBuilderBase<GeneratorT extends ErrorBuilderBase<GeneratorT>> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withCode(String aValue) {
+	public T withCode(String aValue) {
 		instance.setCode(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withMessage(String aValue) {
+	public T withMessage(String aValue) {
 		instance.setMessage(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withAdditionalParams(Map<String, String> aValue) {
+	public T withAdditionalParams(Map<String, String> aValue) {
 		instance.setAdditionalParams(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 
 	public class AddedViolationViolationBuilder extends
@@ -90,12 +90,12 @@ class ErrorBuilderBase<GeneratorT extends ErrorBuilderBase<GeneratorT>> {
 		}
 
 		@SuppressWarnings("unchecked")
-		public GeneratorT endViolation() {
-			return (GeneratorT) ErrorBuilderBase.this;
+		public T endViolation() {
+			return (T) ErrorBuilderBase.this;
 		}
 	}
 
-	public static class ViolationBuilderBase<GeneratorT extends ViolationBuilderBase<GeneratorT>> {
+	public static class ViolationBuilderBase<T extends ViolationBuilderBase<T>> {
 		private Violation instance;
 
 		protected ViolationBuilderBase(Violation aInstance) {
@@ -107,24 +107,24 @@ class ErrorBuilderBase<GeneratorT extends ErrorBuilderBase<GeneratorT>> {
 		}
 
 		@SuppressWarnings("unchecked")
-		public GeneratorT withField(String aValue) {
+		public T withField(String aValue) {
 			instance.setField(aValue);
 
-			return (GeneratorT) this;
+			return (T) this;
 		}
 
 		@SuppressWarnings("unchecked")
-		public GeneratorT withRejectedValue(Object aValue) {
+		public T withRejectedValue(Object aValue) {
 			instance.setRejectedValue(aValue);
 
-			return (GeneratorT) this;
+			return (T) this;
 		}
 
 		@SuppressWarnings("unchecked")
-		public GeneratorT withMessage(String aValue) {
+		public T withMessage(String aValue) {
 			instance.setObjectName(aValue);
 
-			return (GeneratorT) this;
+			return (T) this;
 		}
 	}
 }

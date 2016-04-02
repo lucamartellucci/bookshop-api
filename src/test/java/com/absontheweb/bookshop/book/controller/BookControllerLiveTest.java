@@ -57,7 +57,7 @@ public class BookControllerLiveTest extends AbstractLiveTest {
 	}
 	
 	@Test
-	public void testGetBook_notExisting() throws Exception {
+	public void testGetBookNotExisting() throws Exception {
 		addVar("id", "1001");
 		try {
 			restClient.exchange(
@@ -72,7 +72,7 @@ public class BookControllerLiveTest extends AbstractLiveTest {
 	}
 	
 	@Test
-	public void testAddBook_unauthorized() throws Exception {
+	public void testAddBookUnauthorized() throws Exception {
 		
 		Book book = buildBrandNewBook();
 		

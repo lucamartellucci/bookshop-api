@@ -27,7 +27,7 @@ import com.absontheweb.bookshop.service.exception.I18nServiceException;
 public class I18nController {
 	
 	@Autowired
-	I18nService i18nService;
+	private I18nService i18nService;
 
 	private static Logger logger = LoggerFactory.getLogger(I18nController.class);
 

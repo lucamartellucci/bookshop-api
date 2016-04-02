@@ -30,10 +30,10 @@ import com.absontheweb.bookshop.persistence.model.BookDBTO;
 public class AuthorAdapterTest {
 	
 	@Mock
-	BookAdapter bookAdapter;
+	protected BookAdapter bookAdapter;
 	
 	@InjectMocks
-	AuthorAdapter authorAdapter;
+	protected AuthorAdapter authorAdapter;
 
 	@Before public void initMocks() {
         MockitoAnnotations.initMocks(this);

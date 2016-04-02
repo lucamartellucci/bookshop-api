@@ -36,7 +36,7 @@ public class IsbnValidatorTest {
 	private static Validator validator;
 	
 	@BeforeClass
-    public static void setup() {
+    public static void setUp() {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
     }

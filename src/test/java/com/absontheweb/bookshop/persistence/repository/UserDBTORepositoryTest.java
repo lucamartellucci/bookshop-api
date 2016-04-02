@@ -6,8 +6,6 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.absontheweb.bookshop.persistence.model.UserDBTO;
@@ -15,8 +13,6 @@ import com.absontheweb.bookshop.test.base.AbstractDbTest;
 
 public class UserDBTORepositoryTest extends AbstractDbTest {
 	
-	final static Logger logger = LoggerFactory.getLogger(UserDBTORepositoryTest.class);
-
     @Autowired
     private UserDBTORepository repo;
     

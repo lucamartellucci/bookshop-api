@@ -25,7 +25,7 @@ public class BookBuilder extends BookBuilderBase<BookBuilder> {
 	}
 }
 
-class BookBuilderBase<GeneratorT extends BookBuilderBase<GeneratorT>> {
+class BookBuilderBase<T extends BookBuilderBase<T>> {
 	private Book instance;
 
 	protected BookBuilderBase(Book aInstance) {
@@ -37,69 +37,69 @@ class BookBuilderBase<GeneratorT extends BookBuilderBase<GeneratorT>> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withId(Long aValue) {
+	public T withId(Long aValue) {
 		instance.setId(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withTitle(String aValue) {
+	public T withTitle(String aValue) {
 		instance.setTitle(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withIsbn(String aValue) {
+	public T withIsbn(String aValue) {
 		instance.setIsbn(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withDescription(String aValue) {
+	public T withDescription(String aValue) {
 		instance.setDescription(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withAuthors(List<Author> aValue) {
+	public T withAuthors(List<Author> aValue) {
 		instance.setAuthors(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withAddedAuthor(Author aValue) {
+	public T withAddedAuthor(Author aValue) {
 		if (instance.getAuthors() == null) {
 			instance.setAuthors(new ArrayList<Author>());
 		}
 
 		((ArrayList<Author>) instance.getAuthors()).add(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withPrice(Double aValue) {
+	public T withPrice(Double aValue) {
 		instance.setPrice(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withReleaseDate(LocalDate aValue) {
+	public T withReleaseDate(LocalDate aValue) {
 		instance.setReleaseDate(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withCurrency(Currency aValue) {
+	public T withCurrency(Currency aValue) {
 		instance.setCurrency(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 }

@@ -21,7 +21,7 @@ public class UserBuilder extends UserBuilderBase<UserBuilder> {
 	}
 }
 
-class UserBuilderBase<GeneratorT extends UserBuilderBase<GeneratorT>> {
+class UserBuilderBase<T extends UserBuilderBase<T>> {
 	private User instance;
 
 	protected UserBuilderBase(User aInstance) {
@@ -33,44 +33,44 @@ class UserBuilderBase<GeneratorT extends UserBuilderBase<GeneratorT>> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withId(Long aValue) {
+	public T withId(Long aValue) {
 		instance.setId(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withUsername(String aValue) {
+	public T withUsername(String aValue) {
 		instance.setUsername(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withEmail(String aValue) {
+	public T withEmail(String aValue) {
 		instance.setEmail(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withPassword(String aValue) {
+	public T withPassword(String aValue) {
 		instance.setPassword(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withFirstname(String aValue) {
+	public T withFirstname(String aValue) {
 		instance.setFirstname(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public GeneratorT withLastname(String aValue) {
+	public T withLastname(String aValue) {
 		instance.setLastname(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 }

@@ -31,10 +31,6 @@ public class PersistenceConfig {
     @Autowired
     private Environment env;
 
-    public PersistenceConfig() {
-        super();
-    }
-
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();

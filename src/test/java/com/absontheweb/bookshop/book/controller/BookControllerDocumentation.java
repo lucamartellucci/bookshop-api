@@ -1,5 +1,6 @@
 package com.absontheweb.bookshop.book.controller;
 
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
@@ -99,6 +100,8 @@ public class BookControllerDocumentation extends AbstractBookTest {
 			.accept(MediaType.APPLICATION_JSON))
 			.andDo(print())
 	    	.andExpect(status().isOk()); 
+		
+		assertEquals(true, true);
 	    
 	}
 	

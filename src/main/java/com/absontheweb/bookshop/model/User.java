@@ -8,10 +8,6 @@ import lombok.Data;
 @Data
 public class User {
 	
-	public User(){
-		this.roles = new ArrayList<>();
-	}
-
     private Long id;
 
     private String username;
@@ -29,5 +25,9 @@ public class User {
     private String langKey;
 
     private List<String> roles;
+    
+    public User(){
+		this.roles = new ArrayList<>();
+	}
 
 }

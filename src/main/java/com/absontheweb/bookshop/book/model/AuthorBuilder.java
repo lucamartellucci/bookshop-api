@@ -25,7 +25,7 @@ public class AuthorBuilder extends AuthorBuilderBase<AuthorBuilder> {
 	}
 }
 
-class AuthorBuilderBase<GeneratorT extends AuthorBuilderBase<GeneratorT>> {
+class AuthorBuilderBase<T extends AuthorBuilderBase<T>> {
 	private Author instance;
 
 	protected AuthorBuilderBase(Author aInstance) {
@@ -37,63 +37,63 @@ class AuthorBuilderBase<GeneratorT extends AuthorBuilderBase<GeneratorT>> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withId(Long aValue) {
+	public T withId(Long aValue) {
 		instance.setId(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withName(String aValue) {
+	public T withName(String aValue) {
 		instance.setName(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withSurname(String aValue) {
+	public T withSurname(String aValue) {
 		instance.setSurname(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withBirthplace(String aValue) {
+	public T withBirthplace(String aValue) {
 		instance.setBirthplace(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withBorn(LocalDate aValue) {
+	public T withBorn(LocalDate aValue) {
 		instance.setBorn(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withDied(LocalDate aValue) {
+	public T withDied(LocalDate aValue) {
 		instance.setDied(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withBooks(List<Book> aValue) {
+	public T withBooks(List<Book> aValue) {
 		instance.setBooks(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withAddedBook(Book aValue) {
+	public T withAddedBook(Book aValue) {
 		if (instance.getBooks() == null) {
 			instance.setBooks(new ArrayList<Book>());
 		}
 
 		((ArrayList<Book>) instance.getBooks()).add(aValue);
 
-		return (GeneratorT) this;
+		return (T) this;
 	}
 
 	public AddedBookBookBuilder withAddedBook() {
@@ -111,12 +111,12 @@ class AuthorBuilderBase<GeneratorT extends AuthorBuilderBase<GeneratorT>> {
 		}
 
 		@SuppressWarnings("unchecked")
-		public GeneratorT endBook() {
-			return (GeneratorT) AuthorBuilderBase.this;
+		public T endBook() {
+			return (T) AuthorBuilderBase.this;
 		}
 	}
 
-	public static class BookBuilderBase<GeneratorT extends BookBuilderBase<GeneratorT>> {
+	public static class BookBuilderBase<T extends BookBuilderBase<T>> {
 		private Book instance;
 
 		protected BookBuilderBase(Book aInstance) {
@@ -128,70 +128,70 @@ class AuthorBuilderBase<GeneratorT extends AuthorBuilderBase<GeneratorT>> {
 		}
 
 		@SuppressWarnings("unchecked")
-		public GeneratorT withId(Long aValue) {
+		public T withId(Long aValue) {
 			instance.setId(aValue);
 
-			return (GeneratorT) this;
+			return (T) this;
 		}
 
 		@SuppressWarnings("unchecked")
-		public GeneratorT withTitle(String aValue) {
+		public T withTitle(String aValue) {
 			instance.setTitle(aValue);
 
-			return (GeneratorT) this;
+			return (T) this;
 		}
 
 		@SuppressWarnings("unchecked")
-		public GeneratorT withIsbn(String aValue) {
+		public T withIsbn(String aValue) {
 			instance.setIsbn(aValue);
 
-			return (GeneratorT) this;
+			return (T) this;
 		}
 
 		@SuppressWarnings("unchecked")
-		public GeneratorT withDescription(String aValue) {
+		public T withDescription(String aValue) {
 			instance.setDescription(aValue);
 
-			return (GeneratorT) this;
+			return (T) this;
 		}
 
 		@SuppressWarnings("unchecked")
-		public GeneratorT withAuthors(List<Author> aValue) {
+		public T withAuthors(List<Author> aValue) {
 			instance.setAuthors(aValue);
 
-			return (GeneratorT) this;
+			return (T) this;
 		}
 
 		@SuppressWarnings("unchecked")
-		public GeneratorT withAddedAuthor(Author aValue) {
+		public T withAddedAuthor(Author aValue) {
 			if (instance.getAuthors() == null) {
 				instance.setAuthors(new ArrayList<Author>());
 			}
 
 			((ArrayList<Author>) instance.getAuthors()).add(aValue);
 
-			return (GeneratorT) this;
+			return (T) this;
 		}
 
 		@SuppressWarnings("unchecked")
-		public GeneratorT withPrice(Double aValue) {
+		public T withPrice(Double aValue) {
 			instance.setPrice(aValue);
 
-			return (GeneratorT) this;
+			return (T) this;
 		}
 
 		@SuppressWarnings("unchecked")
-		public GeneratorT withReleaseDate(LocalDate aValue) {
+		public T withReleaseDate(LocalDate aValue) {
 			instance.setReleaseDate(aValue);
 
-			return (GeneratorT) this;
+			return (T) this;
 		}
 
 		@SuppressWarnings("unchecked")
-		public GeneratorT withCurrency(Currency aValue) {
+		public T withCurrency(Currency aValue) {
 			instance.setCurrency(aValue);
 
-			return (GeneratorT) this;
+			return (T) this;
 		}
 	}
 }

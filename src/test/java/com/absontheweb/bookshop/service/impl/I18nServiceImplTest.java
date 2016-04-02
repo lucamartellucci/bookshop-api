@@ -23,7 +23,7 @@ public class I18nServiceImplTest {
 	private static Logger logger = LoggerFactory.getLogger(I18nServiceImplTest.class);
 	
 	@Before
-	public void setup() throws Exception {
+	public void setUp() throws Exception {
 		this.i18nServiceImpl = new I18nServiceImpl();
 		this.i18nServiceImpl.setFlagTemplateUrl("http://localhost:8080/assets/{locale}_flag.png");
 		this.i18nServiceImpl.setResourcePath("/i18n");
@@ -60,6 +60,7 @@ public class I18nServiceImplTest {
 		assertThat(language.getName(),is("Italiano"));
 		assertThat(language.getLocale(),is("IT"));
 		assertThat(language.getFlagUrl(),is("http://localhost:8080/assets/IT_flag.png"));
+		
 	}
 
 	@Test

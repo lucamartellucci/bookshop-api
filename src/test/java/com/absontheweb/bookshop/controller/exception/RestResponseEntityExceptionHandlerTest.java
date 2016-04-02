@@ -14,7 +14,7 @@ public class RestResponseEntityExceptionHandlerTest {
 	private RestResponseEntityExceptionHandler handler;
 
 	@Before
-	public void setup() {
+	public void setUp() {
 		this.handler = new RestResponseEntityExceptionHandler();
 	}
 

@@ -11,8 +11,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.absontheweb.bookshop.book.model.Currency;
@@ -23,8 +21,6 @@ import com.absontheweb.bookshop.test.base.AbstractDbTest;
 
 public class BookDBTORepositoryTest extends AbstractDbTest {
 	
-	final static Logger logger = LoggerFactory.getLogger(BookDBTORepositoryTest.class);
-
     @Autowired
     private BookDBTORepository repo;
     
@@ -49,7 +45,7 @@ public class BookDBTORepositoryTest extends AbstractDbTest {
     }
     
     @Test
-    public void testFindOne_notExisting() throws Exception {
+    public void testFindOneNotExisting() throws Exception {
     	BookDBTO bookDBTO = repo.findOne(1000L);
     	assertThat(bookDBTO,is(nullValue()));
     }

@@ -20,7 +20,7 @@ public class UserDetailsService implements org.springframework.security.core.use
     @Autowired
     private UserDBTORepository userRepository;
     @Autowired
-    UserAdapter userAdapter;
+    private UserAdapter userAdapter;
 
     @Override
     @Transactional

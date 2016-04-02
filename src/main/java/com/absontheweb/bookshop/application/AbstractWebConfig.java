@@ -26,12 +26,8 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 public class AbstractWebConfig extends WebMvcConfigurerAdapter {
 
-	public AbstractWebConfig() {
-        super();
-    }
-	
 	@Autowired
-    Environment env;
+    private Environment env;
 	
     @Autowired
     private MessageSource messageSource;

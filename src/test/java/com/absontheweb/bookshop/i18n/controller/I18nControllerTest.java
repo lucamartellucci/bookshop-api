@@ -47,7 +47,7 @@ public class I18nControllerTest {
     private MockMvc mockMvc;
     
     @Before
-    public void setup() {
+    public void setUp() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup( this.wac ).build();
         reset(i18nService);
     }
@@ -78,7 +78,7 @@ public class I18nControllerTest {
 	}
 	
 	@Test
-	public void testGetLanguages_internalError() throws Exception {
+	public void testGetLanguagesInternalError() throws Exception {
 		final String message = "Internal error";
 		when(i18nService.retrieveSupportedLanguages()).thenThrow(new I18nServiceException(message));
 		this.mockMvc.perform( get( "/api/i18n/languages" ).accept( MediaType.parseMediaType( "application/json;charset=UTF-8" ) ) )
@@ -112,7 +112,7 @@ public class I18nControllerTest {
 	}
 	
 	@Test
-	public void testGetMessages_internalError() throws Exception {
+	public void testGetMessagesInternalError() throws Exception {
 		final String message = "Internal error";
 		when(i18nService.retrieveMessageResourceLocale()).thenThrow(new I18nServiceException(message));
 		this.mockMvc.perform( get( "/api/i18n/messages/EN" ).accept( MediaType.parseMediaType( "application/json;charset=UTF-8" ) ) )

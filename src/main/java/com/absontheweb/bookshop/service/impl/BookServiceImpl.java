@@ -36,16 +36,16 @@ public class BookServiceImpl implements BookService {
 	private static final Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
 	
 	@Autowired
-	BookDBTORepository bookRepository;
+	private BookDBTORepository bookRepository;
 	
 	@Autowired
-	AuthorDBTORepository authorRepository;
+	private AuthorDBTORepository authorRepository;
 	
 	@Autowired
-	BookAdapter bookAdapter;
+	private BookAdapter bookAdapter;
 	
 	@Autowired
-	AuthorAdapter authorAdapter;
+	private AuthorAdapter authorAdapter;
 
 	@Override
 	public Book getBookById(Long id) throws BookServiceException {
