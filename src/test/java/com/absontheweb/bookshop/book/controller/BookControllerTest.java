@@ -1,7 +1,6 @@
 package com.absontheweb.bookshop.book.controller;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -103,7 +102,6 @@ public class BookControllerTest extends AbstractBookTest {
 	        
         verify(bookService).getBooks(ALL);
         
-        assertEquals(true, true);
 	}
 	
 	@Test
