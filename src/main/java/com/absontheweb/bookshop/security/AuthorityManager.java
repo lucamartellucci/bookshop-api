@@ -53,7 +53,7 @@ public class AuthorityManager {
 		return authotized;
 	}
 
-	private List<String> getAuthorityBy(String function) {
+	protected List<String> getAuthorityBy(String function) {
 		if (this.authsByFunctionMap.containsKey(function)) {
 			return authsByFunctionMap.get(function);
 		} else {
