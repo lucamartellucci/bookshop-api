@@ -2,8 +2,7 @@
 [![Coveralls](https://img.shields.io/coveralls/lucamartellucci/bookshop-backend.svg)](https://coveralls.io/repos/lucamartellucci/bookshop-backend/badge.svg?branch=master&service=github)
 [![Codacy](https://img.shields.io/codacy/109ed4181f9a4fd59d67ae6dadd362ce.svg)](https://www.codacy.com/app/luca-martellucci/bookshop-backend/dashboard)
 [![GitHub license](https://img.shields.io/github/license/lucamartellucci/bookshop-backend.svg)](https://github.com/lucamartellucci/bookshop-backend/blob/master/LICENSE.md)
-
-
+[![Dependency Status](https://www.versioneye.com/user/projects/57052558fcd19a0039f15cca/badge.svg?style=plastic)](https://www.versioneye.com/user/projects/57052558fcd19a0039f15cca)
 BookShop
 =============
 
