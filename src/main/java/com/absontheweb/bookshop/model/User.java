@@ -29,5 +29,10 @@ public class User {
     public User(){
 		this.roles = new ArrayList<>();
 	}
+    
+    public User withRoles(List<String> roles) {
+    	this.roles = roles;
+    	return this;
+    }
 
 }

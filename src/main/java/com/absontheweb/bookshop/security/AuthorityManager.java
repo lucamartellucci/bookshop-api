@@ -39,7 +39,7 @@ public class AuthorityManager {
 		
 		
 		// retrieve the authorities that support the function
-		List<String> authorizedRoles = getAuthorityBy(function);
+		List<String> authorizedRoles = getAuthoritiesFor(function);
 		
 		for (GrantedAuthority authority : userAuthorities) {
 			if (authorizedRoles.contains(authority.getAuthority())){
@@ -53,13 +53,13 @@ public class AuthorityManager {
 		return authotized;
 	}
 
-	protected List<String> getAuthorityBy(String function) {
+	protected List<String> getAuthoritiesFor(String function) {
 		if (this.authsByFunctionMap.containsKey(function)) {
 			return authsByFunctionMap.get(function);
 		} else {
 			//access the environment
 			String stringAuthorities = environment.getProperty(function);
-			Preconditions.checkNotNull(stringAuthorities);
+			Preconditions.checkNotNull(stringAuthorities, "Authorities not found for ".concat(function));
 			List<String> authorities = Arrays.asList(stringAuthorities.split("\\,"));
 			authsByFunctionMap.put(function, authorities);
 			return authorities;
