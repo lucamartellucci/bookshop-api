@@ -27,7 +27,7 @@ import org.springframework.security.crypto.password.StandardPasswordEncoder;
  * it has support for JSR-250 
  */
 @EnableGlobalMethodSecurity(prePostEnabled=true, jsr250Enabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class BasicAuthSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
     private UserDetailsService userDetailsService;
@@ -78,21 +78,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-    
-
-//    @Override
-//    @Bean
-//    public AuthenticationManager authenticationManagerBean() throws Exception {
-//        return super.authenticationManagerBean();
-//    }
-//    
-
-//    @EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true)
-//    private static class GlobalSecurityConfiguration extends GlobalMethodSecurityConfiguration {
-//        @Override
-//        protected MethodSecurityExpressionHandler createExpressionHandler() {
-//            return new OAuth2MethodSecurityExpressionHandler();
-//        }
-//    }
 
 }

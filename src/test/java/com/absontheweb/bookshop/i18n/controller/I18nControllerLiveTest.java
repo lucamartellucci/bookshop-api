@@ -16,10 +16,10 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 
 import com.absontheweb.bookshop.i18n.model.Language;
-import com.absontheweb.bookshop.test.base.AbstractLiveTest;
+import com.absontheweb.bookshop.test.base.AbstractBasicAuthLiveTest;
 
 
-public class I18nControllerLiveTest extends AbstractLiveTest {
+public class I18nControllerLiveTest extends AbstractBasicAuthLiveTest {
 
 	@Test
 	public void testGetMessages() throws Exception {

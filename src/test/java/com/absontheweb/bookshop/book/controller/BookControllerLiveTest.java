@@ -21,9 +21,9 @@ import org.springframework.web.client.HttpClientErrorException;
 import com.absontheweb.bookshop.book.model.Author;
 import com.absontheweb.bookshop.book.model.Book;
 import com.absontheweb.bookshop.book.model.Currency;
-import com.absontheweb.bookshop.test.base.AbstractLiveTest;
+import com.absontheweb.bookshop.test.base.AbstractBasicAuthLiveTest;
 
-public class BookControllerLiveTest extends AbstractLiveTest {
+public class BookControllerLiveTest extends AbstractBasicAuthLiveTest {
 
 	private static Logger logger = LoggerFactory.getLogger(BookControllerLiveTest.class);
 	

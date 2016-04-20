@@ -12,6 +12,7 @@ import com.absontheweb.bookshop.book.model.AuthorBuilder;
 import com.absontheweb.bookshop.book.model.Book;
 import com.absontheweb.bookshop.book.model.BookBuilder;
 import com.absontheweb.bookshop.book.model.Currency;
+import com.absontheweb.bookshop.util.ISBNGenerator;
 
 public class AbstractBookTest {
 
@@ -36,7 +37,7 @@ public class AbstractBookTest {
 				.withTitle("title"+id)
 				.withDescription("desc"+id)
 				.withCurrency(currency)
-				.withIsbn("88-04-50279-7")
+				.withIsbn(ISBNGenerator.generate())
 				.withPrice(price)
 				.withAuthors(authors)
 				.withReleaseDate(toDate("2006-12-31"))
@@ -49,7 +50,7 @@ public class AbstractBookTest {
 				.withTitle("title"+UUID.randomUUID().toString())
 				.withDescription("desc"+UUID.randomUUID().toString())
 				.withCurrency(Currency.EUR)
-				.withIsbn("88-04-50279-7")
+				.withIsbn(ISBNGenerator.generate())
 				.withPrice(12d)
 				.withAuthors(Arrays.asList(buildBrandNewAuthor()))
 				.withReleaseDate(toDate("2006-12-31"))
