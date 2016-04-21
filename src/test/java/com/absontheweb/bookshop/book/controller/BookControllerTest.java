@@ -81,7 +81,7 @@ public class BookControllerTest extends AbstractBookTest {
 		paginatedBooks.setTotalPages(1);
 		
 		// program bookService mock to return a collection of books
-		when(bookService.getBooks(ALL)).thenReturn(paginatedBooks);
+		when(bookService.getByPage(ALL)).thenReturn(paginatedBooks);
     	
         this.mockMvc.perform( get( "/api/books" ).accept( MediaType.parseMediaType( "application/json;charset=UTF-8" ) ) )
 	        .andExpect( status().isOk() )
@@ -100,7 +100,7 @@ public class BookControllerTest extends AbstractBookTest {
 	        .andExpect( jsonPath( "$.result[0].authors[0].born" ).value( book1.getAuthors().get(0).getBorn().format(DateTimeFormatter.ISO_DATE) ))
 	        .andExpect( jsonPath( "$.result[0].authors[0].birthplace" ).value( book1.getAuthors().get(0).getBirthplace() ));
 	        
-        verify(bookService).getBooks(ALL);
+        verify(bookService).getByPage(ALL);
         
 	}
 	
@@ -121,7 +121,7 @@ public class BookControllerTest extends AbstractBookTest {
 		paginatedBooks.setTotalPages(1);
 		
 		// program bookService mock to return a collection of books
-		when(bookService.getBooks(PAGE_1)).thenReturn(paginatedBooks);
+		when(bookService.getByPage(PAGE_1)).thenReturn(paginatedBooks);
     	
         this.mockMvc.perform( get( "/api/books?page=0&size=10" ).accept( MediaType.parseMediaType( "application/json;charset=UTF-8" ) ) )
 	        .andExpect( status().isOk() )
@@ -140,7 +140,7 @@ public class BookControllerTest extends AbstractBookTest {
 	        .andExpect( jsonPath( "$.result[0].authors[0].born" ).value( book1.getAuthors().get(0).getBorn().format(DateTimeFormatter.ISO_DATE)))
 	        .andExpect( jsonPath( "$.result[0].authors[0].birthplace" ).value( book1.getAuthors().get(0).getBirthplace() ));
 	        
-        verify(bookService).getBooks(PAGE_1);
+        verify(bookService).getByPage(PAGE_1);
 	}
 	
 	
@@ -148,7 +148,7 @@ public class BookControllerTest extends AbstractBookTest {
 	public void testGetBooksInternalServerError() throws Exception {
 		
 		// program bookService mock to throw an exception
-		when(bookService.getBooks(ALL)).thenThrow(new BookServiceException());
+		when(bookService.getByPage(ALL)).thenThrow(new BookServiceException());
     	
         this.mockMvc.perform( get( "/api/books" ).accept( MediaType.parseMediaType( "application/json;charset=UTF-8" ) ) )
 	        .andExpect( status().isInternalServerError() )
@@ -156,7 +156,7 @@ public class BookControllerTest extends AbstractBookTest {
 	        .andDo( print() )
 	        .andExpect( jsonPath("$.code").value("GENERIC_ERROR")) ;
 
-        verify(bookService).getBooks(ALL);
+        verify(bookService).getByPage(ALL);
 	}
 	
 	@Test
@@ -167,7 +167,7 @@ public class BookControllerTest extends AbstractBookTest {
 		Book book = buildBook(bookId, Currency.EUR, 10.0, authors);
 		
 		// program bookService mock to return the book with id bookId
-		when(bookService.getBookById(bookId)).thenReturn(book);
+		when(bookService.getById(bookId)).thenReturn(book);
     	
         this.mockMvc.perform( get( "/api/books/" + bookId ).accept( MediaType.parseMediaType( "application/json;charset=UTF-8" ) ) )
 	        .andExpect( status().isOk() )
@@ -185,7 +185,7 @@ public class BookControllerTest extends AbstractBookTest {
 	        .andExpect( jsonPath( "$.authors[0].born" ).value( book.getAuthors().get(0).getBorn().format(DateTimeFormatter.ISO_DATE)))
 	        .andExpect( jsonPath( "$.authors[0].birthplace" ).value( book.getAuthors().get(0).getBirthplace() ));
 	        
-        verify(bookService).getBookById(bookId);
+        verify(bookService).getById(bookId);
 	}
 	
 	@Test
@@ -194,7 +194,7 @@ public class BookControllerTest extends AbstractBookTest {
 		Long bookId = 2L;
 		
 		// program bookService mock to return the book with id bookId
-		when(bookService.getBookById(bookId)).thenThrow(new BookServiceException());
+		when(bookService.getById(bookId)).thenThrow(new BookServiceException());
     	
         this.mockMvc.perform( get( "/api/books/" + bookId ).accept( MediaType.parseMediaType( "application/json;charset=UTF-8" ) ) )
 	        .andExpect( status().isInternalServerError() )
@@ -202,7 +202,7 @@ public class BookControllerTest extends AbstractBookTest {
 	        .andDo( print() )
 	        .andExpect( jsonPath("$.code").value("GENERIC_ERROR")) ;
 	        
-        verify(bookService).getBookById(bookId);
+        verify(bookService).getById(bookId);
 	}
 	
 	
@@ -211,13 +211,13 @@ public class BookControllerTest extends AbstractBookTest {
 		Long bookId = 2L;
 		
 		// program bookService mock to return null
-		when(bookService.getBookById(bookId)).thenReturn(null);
+		when(bookService.getById(bookId)).thenReturn(null);
     	
         this.mockMvc.perform( get( "/api/books/" + bookId ).accept( MediaType.parseMediaType( "application/json;charset=UTF-8" ) ) )
 	    	.andDo( print() )    
 	    	.andExpect( status().isNotFound() );
 	        
-        verify(bookService).getBookById(bookId);
+        verify(bookService).getById(bookId);
         
 	}
 	
@@ -227,7 +227,7 @@ public class BookControllerTest extends AbstractBookTest {
 		Book book = buildBook(3L, Currency.EUR, 20.50, Arrays.asList(buildAuthor(1L, toDate("1978-09-25"), null)));
 		book.setId(null);
 		Book savedBook = buildBook(3L, Currency.EUR, 20.50, Arrays.asList(buildAuthor(1L, toDate("1978-09-25"), null)));
-		when(bookService.createBook(book)).thenReturn(savedBook);
+		when(bookService.createNew(book)).thenReturn(savedBook);
 		
 		this.mockMvc.perform( post( "/api/books" ).accept( MediaType.parseMediaType( "application/json;charset=UTF-8" ) )
         		.content(Jackson2ObjectMapperBuilder.json().build().writeValueAsString(book))
@@ -239,7 +239,7 @@ public class BookControllerTest extends AbstractBookTest {
 	        .andExpect( jsonPath( "$.title" ).value( savedBook.getTitle() ) )
 	        .andExpect( jsonPath( "$.description" ).value( savedBook.getDescription() ) );
 		
-		verify(bookService).createBook(book);
+		verify(bookService).createNew(book);
 	}
 	
 	
@@ -273,7 +273,7 @@ public class BookControllerTest extends AbstractBookTest {
 		Book book = buildBook(3L, Currency.EUR, 20.50, Arrays.asList(buildAuthor(1L, toDate("1978-09-25"), null)));
 		book.setId(null);
 
-		when(bookService.createBook(book)).thenThrow(new BookServiceException());
+		when(bookService.createNew(book)).thenThrow(new BookServiceException());
 		
 		this.mockMvc.perform( post( "/api/books" ).accept( MediaType.parseMediaType( "application/json;charset=UTF-8" ) )
     		.content(Jackson2ObjectMapperBuilder.json().build().writeValueAsString(book))
@@ -281,7 +281,7 @@ public class BookControllerTest extends AbstractBookTest {
             .andDo( print() )
 	        .andExpect( jsonPath("$.code").value("GENERIC_ERROR")) ;
 
-        verify(bookService).createBook(book);
+        verify(bookService).createNew(book);
 	}
 	
 

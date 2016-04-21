@@ -44,7 +44,7 @@ public class BookController {
 	public ResponseEntity<PaginatorResult<Book>> getBooks(@Paginator SimplePaginator paginator) throws InternalServerErrorException {
 		try {
 			logger.debug("Paginator is: {}", paginator);
-			PaginatorResult<Book> paginatedBooks = bookService.getBooks(paginator);
+			PaginatorResult<Book> paginatedBooks = bookService.getByPage(paginator);
 			ResponseEntity<PaginatorResult<Book>> response = ResponseEntity.ok(paginatedBooks);
 			return response;
 		} catch (Exception e) {
@@ -61,7 +61,7 @@ public class BookController {
 			throws InternalServerErrorException, ResourceNotFoundException {
 		try {
 			logger.debug("Logger User is: {}", user);
-			Book book = bookService.getBookById(id);
+			Book book = bookService.getById(id);
 			if (book != null) {
 				return ResponseEntity.ok(book);
 			} 
@@ -79,7 +79,7 @@ public class BookController {
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Book> createBook(@Valid @RequestBody Book book) throws InternalServerErrorException {
 		try {
-			Book savedBook = bookService.createBook(book);
+			Book savedBook = bookService.createNew(book);
 			return ResponseEntity.created(new URI(String.format("/api/book/%d", savedBook.getId()))).body(savedBook);
 		} catch (Exception e) {
 			throw new InternalServerErrorException(String.format("Unable create book with title [%s]", book.getTitle()), e);

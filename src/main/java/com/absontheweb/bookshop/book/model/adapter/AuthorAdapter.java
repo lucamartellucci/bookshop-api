@@ -74,4 +74,8 @@ public class AuthorAdapter {
 		}
 		return authorDBTO;
 	}
+
+	public void setBookAdapter(BookAdapter bookAdapter) {
+		this.bookAdapter=bookAdapter;
+	}
 }

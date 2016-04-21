@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import com.absontheweb.bookshop.i18n.model.Language;
 import com.absontheweb.bookshop.i18n.model.MessageResourceLocale;
+import com.absontheweb.bookshop.service.exception.I18nServiceException;
 
 
 public class I18nServiceImplTest {
@@ -79,6 +80,10 @@ public class I18nServiceImplTest {
 		logger.info("Delivery date is: {}",date);
 	}
 
+	@Test(expected=I18nServiceException.class)
+	public void testBuildMessageResourceLocale() throws Exception {
+		this.i18nServiceImpl.buildMessageResourceLocale("fakepath");
+	}
 	
 
 }

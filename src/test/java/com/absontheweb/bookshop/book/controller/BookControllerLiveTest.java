@@ -96,6 +96,10 @@ public class BookControllerLiveTest extends AbstractBasicAuthLiveTest {
 	public void testAddBook() throws Exception {
 		
 		Book book = buildBrandNewBook();
+		//add also an existing co-author
+		Author e = new Author();
+		e.setId(1L);
+		book.getAuthors().add(e);
 		
 		HttpEntity<Book> requestEntity = new HttpEntity<Book>(book ,basicAuthHeaders.get(Role.admin));
 		
@@ -107,13 +111,11 @@ public class BookControllerLiveTest extends AbstractBasicAuthLiveTest {
 		
 		Book savedBook = bookResponseEntity.getBody();
 		
-		
 		assertThat(savedBook.getId(), is(notNullValue()));
 		assertThat(savedBook.getDescription(),is(book.getDescription()));
-		assertThat(savedBook.getAuthors().size(),is(1));
+		assertThat(savedBook.getAuthors().size(),is(2));
 		assertThat(savedBook.getCurrency(),is(Currency.EUR));
 		assertThat(savedBook.getIsbn(), is(book.getIsbn()));
-		
 	}
 
 }

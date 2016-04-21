@@ -48,7 +48,7 @@ public class BookServiceImpl implements BookService {
 	private AuthorAdapter authorAdapter;
 
 	@Override
-	public Book getBookById(Long id) throws BookServiceException {
+	public Book getById(Long id) throws BookServiceException {
 		try {
 			logger.info("Loading book with id {}", id);
 			Book book = bookAdapter.toBook(bookRepository.findOne(id), ADAPT_AUTHORS);
@@ -61,7 +61,7 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public Book getBookByTitle(String title) throws BookServiceException {
+	public Book searchByTitle(String title) throws BookServiceException {
 		try {
 			logger.info("Loading book with title {}", title);
 			return bookAdapter.toBook(bookRepository.findByTitle(title));
@@ -72,7 +72,7 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public List<Book> getAllBooks() throws BookServiceException {
+	public List<Book> getAll() throws BookServiceException {
 		try {
 			logger.info("Load all books");
 			return bookAdapter.toBooks(bookRepository.findAll(), ADAPT_AUTHORS);
@@ -84,7 +84,7 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	@Transactional(readOnly=false)
-	public Book createBook(Book book) throws BookServiceException {
+	public Book createNew(Book book) throws BookServiceException {
 		try {
 			logger.info("Create new book with title [{}]", book.getTitle());
 			logger.trace("Create book {}", book);
@@ -116,7 +116,7 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public PaginatorResult<Book> getBooks(SimplePaginator paginator)
+	public PaginatorResult<Book> getByPage(SimplePaginator paginator)
 			throws BookServiceException {
 
 		try {
@@ -146,5 +146,15 @@ public class BookServiceImpl implements BookService {
 			throw new BookServiceException("Unable to load books", e);
 		}
 	}
+
+	public void setBookAdapter(BookAdapter bookAdapter) {
+		this.bookAdapter = bookAdapter;
+	}
+
+	public void setAuthorAdapter(AuthorAdapter authorAdapter) {
+		this.authorAdapter = authorAdapter;
+	}
+
+	
 
 }

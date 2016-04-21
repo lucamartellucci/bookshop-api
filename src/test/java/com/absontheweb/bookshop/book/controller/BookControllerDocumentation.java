@@ -78,7 +78,7 @@ public class BookControllerDocumentation extends AbstractBookTest {
 		Book book = buildBook(bookId, Currency.EUR, 10.0, authors);
 		
 		// program bookService mock to return the book with id bookId
-		when(bookService.getBookById(bookId)).thenReturn(book);
+		when(bookService.getById(bookId)).thenReturn(book);
 		
 		this.document.snippets(responseFields( 
 	    		fieldWithPath("id").description("The book's id").type(JsonFieldType.NUMBER), 

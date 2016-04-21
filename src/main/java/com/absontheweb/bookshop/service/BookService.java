@@ -9,14 +9,14 @@ import com.absontheweb.bookshop.service.exception.BookServiceException;
 
 public interface BookService {
 	
-	public Book getBookById(final Long id) throws BookServiceException;
+	public Book getById(final Long id) throws BookServiceException;
 	
-	public Book getBookByTitle(final String title) throws BookServiceException;
+	public Book searchByTitle(final String title) throws BookServiceException;
 	
-	public List<Book> getAllBooks() throws BookServiceException;
+	public List<Book> getAll() throws BookServiceException;
 	
-	public Book createBook(final Book book) throws BookServiceException;
+	public Book createNew(final Book book) throws BookServiceException;
 
-	public PaginatorResult<Book> getBooks(SimplePaginator paginator)  throws BookServiceException;
+	public PaginatorResult<Book> getByPage(SimplePaginator paginator)  throws BookServiceException;
 
 }

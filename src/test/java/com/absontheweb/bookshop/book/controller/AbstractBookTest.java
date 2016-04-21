@@ -3,7 +3,7 @@ package com.absontheweb.bookshop.book.controller;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -46,13 +46,16 @@ public class AbstractBookTest {
 	}
 	
 	protected Book buildBrandNewBook() throws Exception {
+		List<Author> authors = new ArrayList<>();
+		authors.add(buildBrandNewAuthor());
+		
 		Book book = BookBuilder.book()
 				.withTitle("title"+UUID.randomUUID().toString())
 				.withDescription("desc"+UUID.randomUUID().toString())
 				.withCurrency(Currency.EUR)
 				.withIsbn(ISBNGenerator.generate())
 				.withPrice(12d)
-				.withAuthors(Arrays.asList(buildBrandNewAuthor()))
+				.withAuthors(authors)
 				.withReleaseDate(toDate("2006-12-31"))
 			.build();
 		return book;
