@@ -1,15 +1,15 @@
 {
-  "modelPackages": ["com.absontheweb.bookshop.book.model"],
+  "modelPackages": ["io.lucci.bookshop.book.model"],
   "excludedClasses": [
-  	"com.absontheweb.bookshop.model.AuthorBuilder",
-  	"com.absontheweb.bookshop.model.BookBuilder",
-  	"com.absontheweb.bookshop.model.ErrorBuilder",
-  	"com.absontheweb.bookshop.model.PaginatorResult",
-  	"com.absontheweb.bookshop.model.SimplePaginator",
-  	"com.absontheweb.bookshop.model.UserBuilder",
-  	"com.absontheweb.bookshop.model.ViolationBuilder"
+  	"io.lucci.bookshop.model.AuthorBuilder",
+  	"io.lucci.bookshop.model.BookBuilder",
+  	"io.lucci.bookshop.model.ErrorBuilder",
+  	"io.lucci.bookshop.model.PaginatorResult",
+  	"io.lucci.bookshop.model.SimplePaginator",
+  	"io.lucci.bookshop.model.UserBuilder",
+  	"io.lucci.bookshop.model.ViolationBuilder"
   ],
-  "customAnnotationClasses": ["com.absontheweb.bookshop.book.model.validation.Isbn"],
+  "customAnnotationClasses": ["io.lucci.bookshop.book.model.validation.Isbn"],
   "corsAllowOriginPattern": "*",
   "outputFullTypeName": false,
   "outputFile": "${project.build.directory}/${project.build.finalName}/constraints.json"

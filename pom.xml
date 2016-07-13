@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.absontheweb</groupId>
+	<groupId>io.lucci</groupId>
 	<artifactId>bookshop</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
@@ -281,6 +281,19 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+	
+	<distributionManagement>
+    <repository>
+      <id>nexus</id>
+      <name>Releases</name>
+      <url>http://localhost:8081/repository/maven-releases/</url>
+    </repository>
+    <snapshotRepository>
+      <id>nexus</id>
+      <name>Snapshot</name>
+      <url>http://localhost:8081/repository/maven-snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
 
 	<profiles>
 		<profile>
