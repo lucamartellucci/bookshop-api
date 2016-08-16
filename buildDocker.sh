@@ -1,16 +1,16 @@
-#!/bin/sh
+#!/bin/bash
 
 # env setup
 DOCKER_BUILD_DIR=target-docker
 DOCKER_SRC_DIR=docker
 JAVA_TARGET_DIR=target
-MIDDLEWARE_IMAGE_NAME="abs/bookshop-middleware"
+MIDDLEWARE_IMAGE_NAME="lucci/bookshop-middleware"
 
 
 echo "Building book-service application"
-mvn clean package -DskipTest=true
+mvn clean package -DskipTests
 
-if [-d "$DOCKER_BUILD_DIR" ]; then
+if [ -d "$DOCKER_BUILD_DIR" ]; then
  rm -rf $DOCKER_BUILD_DIR
 fi
 
