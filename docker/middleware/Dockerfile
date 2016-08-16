@@ -1,11 +1,15 @@
-FROM java
+FROM openjdk:8
 
 WORKDIR /
 
 RUN mkdir logs
 
-COPY files/bookshop-0.0.1-SNAPSHOT.jar /
+COPY files/bookshop.jar /
+COPY files/startup.sh /
+COPY files/wait-for-it.sh /
+    
+RUN /bin/bash -c 'chmod +x startup.sh wait-for-it.sh'
 
-CMD ["/usr/bin/java", "-jar", "bookshop-0.0.1-SNAPSHOT.jar", "-logging.file=logs/bookshop.log"]
+CMD ["./startup.sh"]
 
 

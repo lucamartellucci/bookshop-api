@@ -23,10 +23,10 @@ public class UserDBTORepositoryTest extends AbstractDbTest {
     	assertThat(userDBTO,is(notNullValue()));
     	assertThat(userDBTO.getId(), is(4L));
     	assertThat(userDBTO.getUsername(), is(equalTo("luca")));
-    	assertThat(userDBTO.getPassword(), is(equalTo("b8f57d6d6ec0a60dfe2e20182d4615b12e321cad9e2979e0b9f81e0d6eda78ad9b6dcfe53e4e22d1")));
+    	assertThat(userDBTO.getPassword(), is(equalTo("cb7c16bdaf2f6445988230b8862290fed48650be99e808ce68f6a12f905199af0ce2659148d69b8a")));
     	assertThat(userDBTO.getFirstname(), is(equalTo("luca")));
     	assertThat(userDBTO.getLastname(), is(equalTo("martellucci")));
-    	assertThat(userDBTO.getEmail(), is(equalTo("luca.martellucci@absontheweb.com")));
+    	assertThat(userDBTO.getEmail(), is(equalTo("luca.martellucci@email.com")));
     	assertThat(userDBTO.isEnabled(), is(true));
     	assertThat(userDBTO.getLangKey(), is("en"));
     }

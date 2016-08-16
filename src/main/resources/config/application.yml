@@ -30,8 +30,10 @@ hibernate:
     dialect: org.hibernate.dialect.MySQL5Dialect
     show_sql: false
     hbm2ddl:
-        auto: none
-        
+        auto: validate
+
+
+### ROLES ###     
 authorities:
     BOOKS_GET: ROLE_USER,ROLE_ADMIN
     BOOKS_GET_DETAIL: ROLE_USER,ROLE_ADMIN
@@ -39,4 +41,3 @@ authorities:
     I18N_GET_LANGS: ROLE_USER,ROLE_ADMIN
     I18N_TRANSLATE_MSG: ROLE_USER,ROLE_ADMIN
     USER_GET: ROLE_USER,ROLE_ADMIN
-        

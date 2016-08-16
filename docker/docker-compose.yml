@@ -1,5 +1,5 @@
-bookshopApi:
-  image: abs/bookshop-middleware
+bookshop:
+  image: lucci/bookshop-middleware
   expose:
     - "8080"
   links:
