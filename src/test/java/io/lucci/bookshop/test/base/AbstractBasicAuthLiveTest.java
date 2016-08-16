@@ -36,9 +36,9 @@ import io.lucci.bookshop.security.util.SecurityUtils;
 @ActiveProfiles(profiles = { "dbtest" })
 public abstract class AbstractBasicAuthLiveTest extends AbstractBookTest {
 	
-	protected static final String USER_PASSWORD = "admin";
+	protected static final String USER_PASSWORD = "password01";
 	protected static final String USER_LOGIN = "luca";
-	protected static final String ADMIN_PASSWORD = "admin";
+	protected static final String ADMIN_PASSWORD = "password01";
 	protected static final String ADMIN_LOGIN = "admin";
 	protected static final String BASE_API_URL = "http://localhost:{port}/bookshop/api/";
 	
