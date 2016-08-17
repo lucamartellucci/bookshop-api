@@ -42,7 +42,9 @@ The output of the build is a jar file. To run it just use the classical way:
 ```sh
 $ java -jar bookshop.jar 
 ```
+The application, by default, will try to connect to a local instance of MySql. I you prefer to connect to a remote database is possible to use the JDBC_DATABASE_HOSTNAME option.
 
+##### JVM Options
 is possible to specify two options:
 * logging.file --> specify the location of the logging file
 * JDBC_DATABASE_HOSTNAME --> specify the hostname of the database
