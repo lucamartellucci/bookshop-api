@@ -71,7 +71,6 @@ To test the api try with a curl
 ```sh
 $ curl --user admin:password01 http://localhost:8080/bookshop/api/books/1
 
-
 * Connected to localhost port 8080 (#0)
 * Server auth using Basic with user 'admin'
 > GET /bookshop/api/books/1 HTTP/1.1
@@ -109,7 +108,6 @@ Authorization: Basic bHVjYTpwYXNzd29yZDAx
 Host: localhost:8080
 User-Agent: HTTPie/0.8.0
 
-
 HTTP/1.1 200 OK
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Content-Type: application/json;charset=UTF-8
@@ -140,7 +138,6 @@ X-XSS-Protection: 1; mode=block
     "releaseDate": "2008-11-02", 
     "title": "Gomorra"
 }
-
 
 ```
 
