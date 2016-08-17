@@ -66,13 +66,82 @@ At the moment the docker-compose file use the old docker-compose syntax (**versi
 ```sh
 $ ./dockerBuildAndRun.sh
 ```
-
+### Test
 To test the api try with a curl
 ```sh
-$ curl --user admin:password01 http://172.17.0.3:8080/bookshop/api/books
+$ curl --user admin:password01 http://localhost:8080/bookshop/api/books/1
+
+
+* Connected to localhost port 8080 (#0)
+* Server auth using Basic with user 'admin'
+> GET /bookshop/api/books/1 HTTP/1.1
+> Authorization: Basic YWRtaW46cGFzc3dvcmQwMQ==
+> User-Agent: curl/7.35.0
+> Host: localhost:8080
+> Accept: */*
+> 
+< HTTP/1.1 200 OK
+* Server Apache-Coyote/1.1 is not blacklisted
+< Server: Apache-Coyote/1.1
+< X-Content-Type-Options: nosniff
+< X-XSS-Protection: 1; mode=block
+< Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+< Pragma: no-cache
+< Expires: 0
+< X-Frame-Options: DENY
+< Content-Type: application/json;charset=UTF-8
+< Transfer-Encoding: chunked
+< Date: Wed, 17 Aug 2016 20:52:09 GMT
+< 
+* Connection #0 to host localhost left intact
+{"id":1,"title":"Gomorra","isbn":"1234567890","description":"Gomorra desc","authors":[{"id":1,"name":"Roberto","surname":"Saviano","birthplace":"Napoli","born":"1975-11-02"}],"price":12.0,"releaseDate":"2008-11-02","currency":"EUR"}
+
 ```
 
 or if you prefer httpie ( https://github.com/jkbrzt/httpie )
 ```sh
-$ http -v -a luca:password01 GET http://172.17.0.3:8080/bookshop/api/books
+$ http -v -a luca:password01 GET http://localhost:8080/bookshop/api/books/1
+
+GET /bookshop/api/books/1 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate, compress
+Authorization: Basic bHVjYTpwYXNzd29yZDAx
+Host: localhost:8080
+User-Agent: HTTPie/0.8.0
+
+
+HTTP/1.1 200 OK
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Content-Type: application/json;charset=UTF-8
+Date: Wed, 17 Aug 2016 20:50:32 GMT
+Expires: 0
+Pragma: no-cache
+Server: Apache-Coyote/1.1
+Transfer-Encoding: chunked
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+
+{
+    "authors": [
+        {
+            "birthplace": "Napoli", 
+            "born": "1975-11-02", 
+            "id": 1, 
+            "name": "Roberto", 
+            "surname": "Saviano"
+        }
+    ], 
+    "currency": "EUR", 
+    "description": "Gomorra desc", 
+    "id": 1, 
+    "isbn": "1234567890", 
+    "price": 12.0, 
+    "releaseDate": "2008-11-02", 
+    "title": "Gomorra"
+}
+
+
 ```
+
+
