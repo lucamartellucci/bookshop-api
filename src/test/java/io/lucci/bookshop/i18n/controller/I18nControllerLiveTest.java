@@ -11,7 +11,6 @@ import java.util.Map;
 
 import org.junit.Test;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 
@@ -27,7 +26,7 @@ public class I18nControllerLiveTest extends AbstractBasicAuthLiveTest {
 		
 		ResponseEntity<Map<String,String>> responseEntity = restClient.exchange(
 				BASE_API_URL.concat("/i18n/messages/{language}"),
-				HttpMethod.GET, new HttpEntity<Map<String,String>>(basicAuthHeaders.get(Role.user)), 
+				HttpMethod.GET, null, 
 				new ParameterizedTypeReference<Map<String,String>>() {}, 
 				urlVars());
 		
@@ -44,8 +43,7 @@ public class I18nControllerLiveTest extends AbstractBasicAuthLiveTest {
 		
 		ResponseEntity<List<Language>> responseEntity = restClient.exchange(
 				BASE_API_URL.concat("/i18n/languages"),
-				HttpMethod.GET, new HttpEntity<List<Language>>(basicAuthHeaders.get(Role.user)), 
-				new ParameterizedTypeReference<List<Language>>() {}, urlVars());
+				HttpMethod.GET, null, new ParameterizedTypeReference<List<Language>>() {}, urlVars());
 		
 		List<Language> languages = responseEntity.getBody();
 

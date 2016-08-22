@@ -29,11 +29,11 @@ public class I18nController {
 	@Autowired
 	private I18nService i18nService;
 
-	private static Logger logger = LoggerFactory.getLogger(I18nController.class);
+	private static Logger LOGGER = LoggerFactory.getLogger(I18nController.class);
 
 	@RequestMapping ( method = RequestMethod.GET, value = "/languages" )
     public @ResponseBody List<Language> getLanguages() throws InternalServerErrorException {
-        logger.debug( "Retrieve all available languages" );
+        LOGGER.debug( "Retrieve all available languages" );
         try {
             return i18nService.retrieveSupportedLanguages();
         } catch ( Exception e ) {
@@ -44,12 +44,12 @@ public class I18nController {
 	@RequestMapping ( method = RequestMethod.GET, value = "/messages/{language}" )
     public @ResponseBody Map<String,String> getMessages( @PathVariable String language ) throws InternalServerErrorException, ResourceNotFoundException {
 
-        logger.info( "Get messages for language [{}]", language );
+        LOGGER.info( "Get messages for language [{}]", language );
         MessageResourceLocale messageResourceLocale;
         try {
             messageResourceLocale = i18nService.retrieveMessageResourceLocale();
         } catch ( I18nServiceException e ) {
-        	logger.error("Unable to retrieve the message resource for language {}", language, e);
+        	LOGGER.error("Unable to retrieve the message resource for language {}", language, e);
             throw new InternalServerErrorException("Unable to retrieve the message resource for language ".concat(language), e);
         }
         return buildMessages( language, messageResourceLocale );

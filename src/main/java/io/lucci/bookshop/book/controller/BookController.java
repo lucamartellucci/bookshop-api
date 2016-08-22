@@ -1,5 +1,6 @@
 package io.lucci.bookshop.book.controller;
 
+import static io.lucci.bookshop.security.SecurityRules.*;
 import java.net.URI;
 
 import javax.validation.Valid;
@@ -24,6 +25,7 @@ import io.lucci.bookshop.controller.resolver.Paginator;
 import io.lucci.bookshop.model.PaginatorResult;
 import io.lucci.bookshop.model.SimplePaginator;
 import io.lucci.bookshop.model.User;
+import io.lucci.bookshop.security.SecurityRules;
 import io.lucci.bookshop.service.BookService;
 import io.lucci.bookshop.service.exception.BookServiceException;
 
@@ -37,7 +39,8 @@ public class BookController {
 	@Autowired
 	private BookService bookService;
 	
-	@PreAuthorize("@authmgr.isAuthorized(principal, 'BOOKS_GET')")
+	
+	@PreAuthorize(BOOKS_GET)
 	@RequestMapping(value = "/books", 
 			method = RequestMethod.GET, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
@@ -53,7 +56,7 @@ public class BookController {
 	}
 	
 
-	@PreAuthorize("@authmgr.isAuthorized(principal, 'BOOKS_GET_DETAIL')")
+	@PreAuthorize(BOOKS_GET_DETAIL)
 	@RequestMapping(value = "/books/{id}", 
 			method = RequestMethod.GET, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
@@ -73,7 +76,7 @@ public class BookController {
 	}
 	
 
-	@PreAuthorize("@authmgr.isAuthorized(principal, 'BOOKS_ADD')")
+	@PreAuthorize(SecurityRules.BOOKS_ADD)
 	@RequestMapping(value = "/books", 
 			method = RequestMethod.POST, 
 			produces = MediaType.APPLICATION_JSON_VALUE)

@@ -22,7 +22,7 @@ liquibase:
 
 jdbc:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://${JDBC_DATABASE_HOSTNAME:localhost}:3306/bookshop?createDatabaseIfNotExist=false&tinyInt1isBit=false
+    url: jdbc:mysql://${JDBC_DATABASE_HOSTNAME:localhost}:${JDBC_DATABASE_PORT:3306}/bookshop?createDatabaseIfNotExist=false&tinyInt1isBit=false
     user: bookshop
     pass: bookshop
 
@@ -32,12 +32,8 @@ hibernate:
     hbm2ddl:
         auto: validate
 
-
-### ROLES ###     
-authorities:
-    BOOKS_GET: ROLE_USER,ROLE_ADMIN
-    BOOKS_GET_DETAIL: ROLE_USER,ROLE_ADMIN
-    BOOKS_ADD: ROLE_ADMIN
-    I18N_GET_LANGS: ROLE_USER,ROLE_ADMIN
-    I18N_TRANSLATE_MSG: ROLE_USER,ROLE_ADMIN
-    USER_GET: ROLE_USER,ROLE_ADMIN
+### SECURITY ###     
+security:
+    authorities:
+        ROLE_USER: BOOKS_GET,BOOKS_GET_DETAIL,USER_GET
+        ROLE_ADMIN: BOOKS_GET,BOOKS_GET_DETAIL,USER_GET,BOOKS_ADD

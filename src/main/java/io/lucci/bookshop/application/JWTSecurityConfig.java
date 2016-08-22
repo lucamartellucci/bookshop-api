@@ -1,11 +1,10 @@
  package io.lucci.bookshop.application;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -19,17 +18,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 
 @Configuration
-//@Profile("security-basicauth")
-@ComponentScan({ "io.lucci.bookshop.security" })
+@Profile("security-jwt")
+@ComponentScan({ "io.lucci.bookshop.security", "io.lucci.bookshop.security.jwt" })
 @EnableWebSecurity
-//@PropertySource({"classpath:/config/authorities.properties"})
 
 /* This annotation (@EnableGlobalMethodSecurity) provides AOP security on methods 
  * some of annotation it will enable are PreAuthorize PostAuthorize also 
  * it has support for JSR-250 
  */
 @EnableGlobalMethodSecurity(prePostEnabled=true, jsr250Enabled = true)
-public class BasicAuthSecurityConfig extends WebSecurityConfigurerAdapter {
+public class JWTSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
     private UserDetailsService userDetailsService;
@@ -69,12 +67,10 @@ public class BasicAuthSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
 
         web.ignoring()
-        	.antMatchers("/api/i18n/**")
 			.antMatchers("/api/register")
 			.antMatchers("/api/activate")
 			.antMatchers("/api/lostpassword")
 			.antMatchers("/api/resetpassword");
-        
     }
     
     @Bean
