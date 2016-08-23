@@ -9,9 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import io.lucci.bookshop.book.controller.UserArgumentResolverMock;
-
 import io.lucci.bookshop.application.AbstractWebConfig;
+import io.lucci.bookshop.book.controller.UserArgumentResolverMock;
 import io.lucci.bookshop.controller.resolver.PaginatorArgumentResolver;
 import io.lucci.bookshop.service.BookService;
 

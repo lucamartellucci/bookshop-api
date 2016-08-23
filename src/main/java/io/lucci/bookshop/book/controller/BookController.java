@@ -1,6 +1,9 @@
 package io.lucci.bookshop.book.controller;
 
-import static io.lucci.bookshop.security.SecurityRules.*;
+import static io.lucci.bookshop.security.SecurityRules.BOOKS_ADD;
+import static io.lucci.bookshop.security.SecurityRules.BOOKS_GET;
+import static io.lucci.bookshop.security.SecurityRules.BOOKS_GET_DETAIL;
+
 import java.net.URI;
 
 import javax.validation.Valid;
@@ -25,7 +28,6 @@ import io.lucci.bookshop.controller.resolver.Paginator;
 import io.lucci.bookshop.model.PaginatorResult;
 import io.lucci.bookshop.model.SimplePaginator;
 import io.lucci.bookshop.model.User;
-import io.lucci.bookshop.security.SecurityRules;
 import io.lucci.bookshop.service.BookService;
 import io.lucci.bookshop.service.exception.BookServiceException;
 

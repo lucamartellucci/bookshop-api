@@ -14,13 +14,12 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
-import io.lucci.bookshop.book.controller.AbstractBookTest;
-
 import io.lucci.bookshop.application.Application;
 import io.lucci.bookshop.application.BasicAuthSecurityConfig;
 import io.lucci.bookshop.application.MessageSourceConfig;
 import io.lucci.bookshop.application.PersistenceConfig;
 import io.lucci.bookshop.application.WebConfig;
+import io.lucci.bookshop.book.controller.AbstractBookTest;
 import io.lucci.bookshop.security.util.SecurityUtils;
 
 

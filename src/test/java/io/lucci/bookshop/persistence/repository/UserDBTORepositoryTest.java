@@ -9,7 +9,6 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import io.lucci.bookshop.persistence.model.UserDBTO;
-import io.lucci.bookshop.persistence.repository.UserDBTORepository;
 import io.lucci.bookshop.test.base.AbstractDbTest;
 
 public class UserDBTORepositoryTest extends AbstractDbTest {

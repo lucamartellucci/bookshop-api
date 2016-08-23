@@ -32,7 +32,6 @@ import io.lucci.bookshop.persistence.model.BookDBTO;
 import io.lucci.bookshop.persistence.repository.AuthorDBTORepository;
 import io.lucci.bookshop.persistence.repository.BookDBTORepository;
 import io.lucci.bookshop.service.exception.BookServiceException;
-import io.lucci.bookshop.service.impl.BookServiceImpl;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookServiceImplTest {

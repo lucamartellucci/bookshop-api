@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
 import io.lucci.bookshop.i18n.model.Language;
 import io.lucci.bookshop.i18n.model.MessageResourceLocale;
 import io.lucci.bookshop.service.exception.I18nServiceException;
-import io.lucci.bookshop.service.impl.I18nServiceImpl;
 
 
 public class I18nServiceImplTest {

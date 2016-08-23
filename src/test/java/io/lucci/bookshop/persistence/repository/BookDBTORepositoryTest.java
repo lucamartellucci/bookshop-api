@@ -17,8 +17,6 @@ import io.lucci.bookshop.book.model.Currency;
 import io.lucci.bookshop.model.StorageProvider;
 import io.lucci.bookshop.persistence.model.AuthorDBTO;
 import io.lucci.bookshop.persistence.model.BookDBTO;
-import io.lucci.bookshop.persistence.repository.AuthorDBTORepository;
-import io.lucci.bookshop.persistence.repository.BookDBTORepository;
 import io.lucci.bookshop.test.base.AbstractDbTest;
 
 public class BookDBTORepositoryTest extends AbstractDbTest {

@@ -24,8 +24,6 @@ import io.lucci.bookshop.book.model.Author;
 import io.lucci.bookshop.book.model.Book;
 import io.lucci.bookshop.book.model.BookBuilder;
 import io.lucci.bookshop.book.model.Currency;
-import io.lucci.bookshop.book.model.adapter.AuthorAdapter;
-import io.lucci.bookshop.book.model.adapter.BookAdapter;
 import io.lucci.bookshop.persistence.model.AuthorDBTO;
 import io.lucci.bookshop.persistence.model.BookDBTO;
 
