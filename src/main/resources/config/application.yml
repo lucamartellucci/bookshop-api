@@ -13,11 +13,11 @@ i18n:
 
 server:
     contextPath: /bookshop
-    ssl:
-        enabled: true
-        key-alias: tomcat
-        key-store: classpath:keystore/keystore.jks
-        key-store-password: ${KEYSTORE_PASSWORD:changeit}
+#    ssl:
+#        enabled: true
+#        key-alias: tomcat
+#        key-store: classpath:keystore/keystore.jks
+#        key-store-password: ${KEYSTORE_PASSWORD:changeit}
 
 ### PERSISTENCE ###
 liquibase:
@@ -26,7 +26,7 @@ liquibase:
 
 jdbc:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://${JDBC_DATABASE_HOSTNAME:localhost}:3306/bookshop?createDatabaseIfNotExist=false&tinyInt1isBit=false&useSSL=false
+    url: jdbc:mysql://${JDBC_DATABASE_HOSTNAME:localhost}:${JDBC_DATABASE_PORT:3306}/bookshop?createDatabaseIfNotExist=false&tinyInt1isBit=false&useSSL=false
     user: bookshop
     pass: bookshop
 

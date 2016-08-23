@@ -20,8 +20,8 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jacoco.plugin.version>0.7.6.201602180812</jacoco.plugin.version>
-		<coveralls.plugin.version>4.1.0</coveralls.plugin.version>
+		<jacoco.plugin.version>0.7.7.201606060606</jacoco.plugin.version>
+		<coveralls.plugin.version>4.2.0</coveralls.plugin.version>
 		<snippetsDirectory>${project.build.directory}/generated-snippets</snippetsDirectory>
 	</properties>
 
@@ -51,7 +51,7 @@
 		<dependency>
 			<groupId>commons-validator</groupId>
 			<artifactId>commons-validator</artifactId>
-			<version>1.5.0</version>
+			<version>1.5.1</version>
 		</dependency>
 
 		<dependency>
@@ -78,7 +78,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.16.8</version>
+			<version>1.16.10</version>
 			<scope>provided</scope>
 		</dependency>
 

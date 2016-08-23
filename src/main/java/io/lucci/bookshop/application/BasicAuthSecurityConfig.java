@@ -2,7 +2,6 @@
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +21,6 @@ import org.springframework.security.crypto.password.StandardPasswordEncoder;
 //@Profile("security-basicauth")
 @ComponentScan({ "io.lucci.bookshop.security" })
 @EnableWebSecurity
-//@PropertySource({"classpath:/config/authorities.properties"})
 
 /* This annotation (@EnableGlobalMethodSecurity) provides AOP security on methods 
  * some of annotation it will enable are PreAuthorize PostAuthorize also 

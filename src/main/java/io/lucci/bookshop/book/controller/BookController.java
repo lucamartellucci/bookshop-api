@@ -76,7 +76,7 @@ public class BookController {
 	}
 	
 
-	@PreAuthorize(SecurityRules.BOOKS_ADD)
+	@PreAuthorize(BOOKS_ADD)
 	@RequestMapping(value = "/books", 
 			method = RequestMethod.POST, 
 			produces = MediaType.APPLICATION_JSON_VALUE)

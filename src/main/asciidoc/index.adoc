@@ -1,5 +1,5 @@
-= Bookshop-service Getting Started Guide
-Jane Doe;
+= Bookshop-API Getting Started Guide
+Luca Martellucci;
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs

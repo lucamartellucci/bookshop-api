@@ -85,8 +85,7 @@ public class BookServiceImplTest {
 		try {
 			bookService.getById(notExistingbookId);
 			fail();
-		} catch (Exception e) {
-			assertTrue(e instanceof BookServiceException);
+		} catch (BookServiceException e) {
 			assertTrue(e.getMessage().contains(""+notExistingbookId));
 		}
 		

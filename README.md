@@ -47,10 +47,11 @@ The application, by default, will try to connect to a local instance of MySql. I
 ##### JVM Options
 is possible to specify two options:
 * logging.file --> specify the location of the logging file
-* JDBC_DATABASE_HOSTNAME --> specify the hostname of the database
+* JDBC_DATABASE_HOSTNAME --> specify the hostname of the database (default value is localhost)
+* JDBC_DATABASE_PORT --> specify the port of the database (default value is 3306)
 
 ```sh
-$ java -Dlogging.file=logs/bookshop.log -DJDBC_DATABASE_HOSTNAME=127.0.0.1 -jar bookshop.jar 
+$ java -Dlogging.file=logs/bookshop.log -DJDBC_DATABASE_HOSTNAME=127.0.0.1 -DJDBC_DATABASE_PORT=3306 -jar bookshop.jar 
 ```
 
 ### Build and Run - docker way
