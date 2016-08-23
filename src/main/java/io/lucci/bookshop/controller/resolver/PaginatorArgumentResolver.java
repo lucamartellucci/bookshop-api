@@ -13,7 +13,7 @@ import io.lucci.bookshop.model.SimplePaginator;
 
 public class PaginatorArgumentResolver implements HandlerMethodArgumentResolver {
 	
-    private static Logger logger = LoggerFactory.getLogger( PaginatorArgumentResolver.class );
+    private static Logger LOGGER = LoggerFactory.getLogger( PaginatorArgumentResolver.class );
 
     @Override
     public boolean supportsParameter( MethodParameter methodParameter ) {
@@ -22,7 +22,7 @@ public class PaginatorArgumentResolver implements HandlerMethodArgumentResolver 
 
     @Override
     public Object resolveArgument( MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory ) throws Exception {
-        logger.debug( "resolving argument of methodParameter: {}", methodParameter );
+        LOGGER.debug( "resolving argument of methodParameter: {}", methodParameter );
         
         Integer page = null;
         if ( nativeWebRequest.getParameter( "page" ) != null ) {
@@ -36,7 +36,7 @@ public class PaginatorArgumentResolver implements HandlerMethodArgumentResolver 
         if (size != null && page != null) {
         	pageRequest = new SimplePaginator( page, size );
         }
-        logger.debug( "argument resolved as {}", pageRequest );
+        LOGGER.debug( "argument resolved as {}", pageRequest );
         return pageRequest;
     }
 
