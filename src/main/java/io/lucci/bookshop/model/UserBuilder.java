@@ -7,6 +7,9 @@
 
 package io.lucci.bookshop.model;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class UserBuilder extends UserBuilderBase<UserBuilder> {
 	public static UserBuilder user() {
 		return new UserBuilder();
@@ -71,6 +74,18 @@ class UserBuilderBase<T extends UserBuilderBase<T>> {
 	public T withLastname(String aValue) {
 		instance.setLastname(aValue);
 
+		return (T) this;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public T withRoles(List<String> roles) {
+		instance.withRoles(roles);
+		return (T) this;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public T withRoles(String roles) {
+		instance.withRoles(Arrays.asList(roles.split("\\,")));
 		return (T) this;
 	}
 }

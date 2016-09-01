@@ -37,6 +37,15 @@ hibernate:
         auto: validate
 
 ### SECURITY ###     
+jwt:
+  header: Authorization
+  secret: mySecret
+  expiration: 604800
+  route:
+    authentication:
+      path: auth
+      refresh: refresh
+
 security:
     authorities:
         ROLE_USER: BOOKS_GET,BOOKS_GET_DETAIL,USER_GET

@@ -2,6 +2,7 @@ package io.lucci.bookshop.security;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -21,7 +22,10 @@ public class SimpleUserDetails implements UserDetails {
 	private User user;
 	private Collection<GrantedAuthority> autorities;
 
-	public SimpleUserDetails(){ }
+	public SimpleUserDetails(){ 
+		user = new User();
+		autorities = Collections.emptyList();
+	}
 	
 	public SimpleUserDetails(User user){
 		this.user = user;
@@ -31,15 +35,15 @@ public class SimpleUserDetails implements UserDetails {
 	public User getUser() {
 		return user;
 	}
-	public void setUser(User user) {
-		this.user = user;
-		this.autorities = buildAutorities(user.getRoles());
-	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return autorities;
 	}
+	public void setAutorities(Collection<GrantedAuthority> autorities) {
+		this.autorities = autorities;
+	}
+
 	@Override
 	public String getPassword() {
 		return user.getPassword();
