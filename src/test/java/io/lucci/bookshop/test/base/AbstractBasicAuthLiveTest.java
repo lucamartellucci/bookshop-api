@@ -6,8 +6,8 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.test.context.ActiveProfiles;
@@ -24,15 +24,17 @@ import io.lucci.bookshop.security.util.SecurityUtils;
 
 
 @RunWith(value=SpringJUnit4ClassRunner.class)
-@WebIntegrationTest("server.port=0")
-@SpringApplicationConfiguration(classes={
+@ActiveProfiles(profiles = { "dbtest" })
+@SpringBootTest(
+	webEnvironment=WebEnvironment.RANDOM_PORT, 
+	classes={
 		Application.class, 
 		MessageSourceConfig.class,
 		PersistenceConfig.class, 
 		WebConfig.class, 
 		BasicAuthSecurityConfig.class
-})
-@ActiveProfiles(profiles = { "dbtest" })
+	}
+)
 public abstract class AbstractBasicAuthLiveTest extends AbstractBookTest {
 	
 	protected static final String USER_PASSWORD = "password01";

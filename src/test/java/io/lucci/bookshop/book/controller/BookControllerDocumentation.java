@@ -21,9 +21,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.ConfigFileApplicationContextInitializer;
+import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.RestDocumentation;
+import org.springframework.restdocs.JUnitRestDocumentation;
 import org.springframework.restdocs.mockmvc.RestDocumentationResultHandler;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.context.ContextConfiguration;
@@ -48,7 +48,7 @@ import io.lucci.bookshop.test.base.BookControllerTestConfig;
 public class BookControllerDocumentation extends AbstractBookTest {
 	
 	@Rule
-	public RestDocumentation restDocumentation = new RestDocumentation("target/generated-snippets");
+	public JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation("target/generated-snippets");
 	
 	@Autowired
 	private WebApplicationContext context;
@@ -80,7 +80,8 @@ public class BookControllerDocumentation extends AbstractBookTest {
 		// program bookService mock to return the book with id bookId
 		when(bookService.getById(bookId)).thenReturn(book);
 		
-		this.document.snippets(responseFields( 
+		
+		this.document.document(responseFields( 
 	    		fieldWithPath("id").description("The book's id").type(JsonFieldType.NUMBER), 
 	            fieldWithPath("title").description("The book's title").type(JsonFieldType.STRING),
 	    		fieldWithPath("isbn").description("The book's ISBN code").type(JsonFieldType.STRING),
