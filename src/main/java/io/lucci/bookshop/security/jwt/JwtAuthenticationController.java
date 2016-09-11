@@ -32,7 +32,7 @@ public class JwtAuthenticationController {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @RequestMapping(value = "/auth/token", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/auth/token", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest) throws AuthenticationException {
 
         // Perform the security
@@ -52,7 +52,7 @@ public class JwtAuthenticationController {
         return ResponseEntity.ok(new JwtAuthenticationResponse(token));
     }
 
-    @RequestMapping(value = "/auth/refresh", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/auth/refresh", method = RequestMethod.GET)
     public ResponseEntity<?> refreshAndGetAuthenticationToken(HttpServletRequest request) {
         String token = request.getHeader(tokenHeader);
 

@@ -9,10 +9,12 @@ import static org.junit.Assert.fail;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +23,35 @@ import org.springframework.web.client.HttpClientErrorException;
 import io.lucci.bookshop.book.model.Author;
 import io.lucci.bookshop.book.model.Book;
 import io.lucci.bookshop.book.model.Currency;
+import io.lucci.bookshop.security.jwt.JwtAuthenticationRequest;
+import io.lucci.bookshop.security.jwt.JwtAuthenticationResponse;
+import io.lucci.bookshop.security.util.SecurityUtils;
 import io.lucci.bookshop.test.base.AbstractBasicAuthLiveTest;
 
 public class BookControllerLiveTest extends AbstractBasicAuthLiveTest {
 
-	private static Logger logger = LoggerFactory.getLogger(BookControllerLiveTest.class);
+	private static Logger LOGGER = LoggerFactory.getLogger(BookControllerLiveTest.class);
+	private String token;
+	private HttpHeaders jwtHeader;
+	
+	@Before
+	public void setUp() {
+		super.setUp();
+		
+		JwtAuthenticationRequest request = new JwtAuthenticationRequest();
+		request.setUsername(ADMIN_LOGIN);
+		request.setPassword(ADMIN_PASSWORD);
+		
+		ResponseEntity<JwtAuthenticationResponse> responseEntity = restClient.exchange(BASE_API_URL.concat("/auth/token"), 
+				HttpMethod.POST, 
+				new HttpEntity<JwtAuthenticationRequest>(request), 
+				JwtAuthenticationResponse.class, urlVars());
+		
+		token = responseEntity.getBody().getToken();
+		LOGGER.info("Token is {}", token);
+		jwtHeader = SecurityUtils.createJwtAuthHeaders(token);
+		
+	}
 	
 	@Test
 	public void testGetBook() throws Exception {
@@ -35,12 +61,13 @@ public class BookControllerLiveTest extends AbstractBasicAuthLiveTest {
 		ResponseEntity<Book> responseEntity = restClient.exchange(
 				BASE_API_URL.concat("/books/{id}"), 
 				HttpMethod.GET, 
-				new HttpEntity<Book>(basicAuthHeaders.get(Role.user)), 
+//				new HttpEntity<Book>(basicAuthHeaders.get(Role.user)), 
+				new HttpEntity<Book>(jwtHeader), 
 				Book.class, urlVars() );
 		
 		Book book = responseEntity.getBody();
 		
-		logger.debug("Retrieved book is [{}]", book);
+		LOGGER.debug("Retrieved book is [{}]", book);
 		
 		assertThat(book,is(notNullValue()));
     	assertThat(book.getTitle(), is(equalTo("Gomorra")));
@@ -63,7 +90,8 @@ public class BookControllerLiveTest extends AbstractBasicAuthLiveTest {
 			restClient.exchange(
 					BASE_API_URL.concat("/books/{id}"), 
 					HttpMethod.GET, 
-					new HttpEntity<Book>(basicAuthHeaders.get(Role.user)), 
+//					new HttpEntity<Book>(basicAuthHeaders.get(Role.user)), 
+					new HttpEntity<Book>(jwtHeader), 
 					Book.class, urlVars() );
 			fail();
 		} catch (HttpClientErrorException e) {
@@ -101,7 +129,8 @@ public class BookControllerLiveTest extends AbstractBasicAuthLiveTest {
 		e.setId(1L);
 		book.getAuthors().add(e);
 		
-		HttpEntity<Book> requestEntity = new HttpEntity<Book>(book ,basicAuthHeaders.get(Role.admin));
+//		HttpEntity<Book> requestEntity = new HttpEntity<Book>(book ,basicAuthHeaders.get(Role.admin));
+		HttpEntity<Book> requestEntity = new HttpEntity<Book>(book ,jwtHeader);
 		
 		ResponseEntity<Book> bookResponseEntity = restClient.exchange(
 				BASE_API_URL.concat("/books"), 

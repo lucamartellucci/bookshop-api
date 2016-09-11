@@ -45,8 +45,8 @@ public class JwtAuthenticationTokenFilter extends GenericFilterBean {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
 
         } else {
-        	SecurityContextHolder.clearContext();
-            httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "unauthorized");
+//        	SecurityContextHolder.clearContext();
+//            httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "unauthorized");
         }
         
         chain.doFilter(request, response);

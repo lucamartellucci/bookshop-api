@@ -41,6 +41,7 @@ jwt:
   header: Authorization
   secret: mySecret
   expiration: 604800
+  issuer: lucci.io
   route:
     authentication:
       path: auth

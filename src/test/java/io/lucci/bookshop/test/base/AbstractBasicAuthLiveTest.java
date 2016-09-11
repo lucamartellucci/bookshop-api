@@ -55,13 +55,13 @@ public abstract class AbstractBasicAuthLiveTest extends AbstractBookTest {
 
 	
     @Before
-    public void setup() {
+    public void setUp() {
     	restClient = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
     	urlVariables = new HashMap<>();
     	basicAuthHeaders = new HashMap<>();
     	
-    	basicAuthHeaders.put(Role.user, SecurityUtils.createHeaders(USER_LOGIN, USER_PASSWORD));
-    	basicAuthHeaders.put(Role.admin, SecurityUtils.createHeaders(ADMIN_LOGIN, ADMIN_PASSWORD));
+    	basicAuthHeaders.put(Role.user, SecurityUtils.createBasicAuthHeaders(USER_LOGIN, USER_PASSWORD));
+    	basicAuthHeaders.put(Role.admin, SecurityUtils.createBasicAuthHeaders(ADMIN_LOGIN, ADMIN_PASSWORD));
     	
     	urlVariables.put("port", String.valueOf(port));
     }
