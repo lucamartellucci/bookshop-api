@@ -21,7 +21,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jacoco.plugin.version>0.7.7.201606060606</jacoco.plugin.version>
-		<coveralls.plugin.version>4.2.0</coveralls.plugin.version>
+		<coveralls.plugin.version>4.3.0</coveralls.plugin.version>
 		<snippetsDirectory>${project.build.directory}/generated-snippets</snippetsDirectory>
 	</properties>
 

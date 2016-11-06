@@ -2,7 +2,7 @@ hibernate:
     dialect: org.hibernate.dialect.H2Dialect
     show_sql: false
     hbm2ddl:
-        auto: validate
+        auto: none
 
 jdbc:
     driverClassName: org.h2.Driver
